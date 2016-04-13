@@ -43,8 +43,8 @@ import cn.bmob.v3.listener.FindListener;
 
 /**
  * 登录
- * 
- * 
+ *
+ *
  */
 public class LoginActivity extends BaseActivity implements OnClickListener {
 
@@ -160,7 +160,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		/**使用SSO授权必须添加如下代码 */  
+		/**使用SSO授权必须添加如下代码 */
 	    UMSsoHandler ssoHandler = mController.getConfig().getSsoHandler(requestCode);
 	    if(ssoHandler != null){
 	       ssoHandler.authorizeCallBack(requestCode, resultCode, data);
@@ -365,7 +365,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		    @Override
 		    public void onStart() {
 		        Toast.makeText(LoginActivity.this, "获取平台数据开始...", Toast.LENGTH_SHORT).show();
-		    }                                              
+		    }
 		    @Override
 		        public void onComplete(int status, Map<String, Object> info) {
 		            if(status == 200 && info != null){

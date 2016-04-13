@@ -15,16 +15,6 @@
 
     <!-- 线 -->
 
-    <View
-        android:id="@+id/view1"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/lay_head"
-        android:layout_marginTop="20dp"
-        android:background="@color/line" />
-
-    <!-- 用户名/手机号 -->
-
     <RelativeLayout
         android:id="@+id/login_rl_username1"
         android:layout_width="match_parent"
@@ -56,8 +46,20 @@
             android:maxLength="11"
             android:paddingRight="20dp"
             android:textColorHint="@color/text_hint"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:text="ZhangXue"/>
+        <!--假装有记住密码功能-->
     </RelativeLayout>
+
+    <!-- 用户名/手机号 -->
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/lay_head"
+        android:layout_marginTop="20dp"
+        android:background="@color/line" />
     <!-- 线 -->
 
     <FrameLayout
@@ -109,7 +111,9 @@
             android:inputType="textPassword"
             android:paddingRight="20dp"
             android:textColorHint="@color/text_hint"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:text="zx123456"/>
+        <!--假装有记住密码功能-->
 
         <ImageView
             android:id="@+id/login_pwd_del"

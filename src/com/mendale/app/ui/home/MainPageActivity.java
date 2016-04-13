@@ -193,9 +193,7 @@ public class MainPageActivity extends FragmentActivity implements OnClickListene
 
 	/**
 	 * 切换Fragmentment
-	 * 
-	 * @param homeFragment2
-	 * @param b
+	 *
 	 */
 	private void changeFragment(Fragment fragment, boolean isInit) {
 		if (!fragment.isAdded()) {
