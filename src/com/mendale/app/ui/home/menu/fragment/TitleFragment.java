@@ -14,7 +14,7 @@ public class TitleFragment extends Fragment {
     /**
      * 是否填写完毕
      */
-    public boolean finished;
+    public boolean finished=false;
     /**
      * 教程名称
      */
@@ -29,9 +29,13 @@ public class TitleFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_title, container, false);
-        finished = false;
         initView();
+        isEmpty();
         return view;
+    }
+
+    private void isEmpty() {
+
     }
 
     private void initView() {

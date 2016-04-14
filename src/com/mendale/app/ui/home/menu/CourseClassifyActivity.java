@@ -1,10 +1,16 @@
 package com.mendale.app.ui.home.menu;
 
 import com.mendale.app.R;
+import com.mendale.app.adapters.CourseGvAdapter;
 import com.mendale.app.adapters.MyExpandableListAdapter;
+import com.mendale.app.constants.DataURL;
+import com.mendale.app.constants.Datas;
+import com.mendale.app.pojo.CoursePoJo;
+import com.mendale.app.tasks.CourseTask;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,7 +22,13 @@ import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 教程分类（侧滑菜单部分）
@@ -37,9 +49,65 @@ public class CourseClassifyActivity extends Activity implements OnScrollListener
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_course_classify);
+		intData();
+		formatList(Datas.courseList);
 		initView();
 		setListener();
 	}
+
+	/**
+	 * 临时
+	 * 获取数据
+	 */
+	private Handler mhandler = new Handler() {
+		@SuppressWarnings("unchecked")
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+				case 1:
+					if (msg.obj != null) {
+						Datas.courseList = (List<CoursePoJo>) msg.obj;
+					}
+					break;
+				default:
+					break;
+			}
+		}
+
+
+	};
+	/**
+	 * 初始化数据
+	 */
+	private void intData() {
+
+		new Thread() {
+			public void run() {
+				new CourseTask(CourseClassifyActivity.this, mhandler).send(1, "utf-8", DataURL.COURSE_URL);
+			}
+		}.start();
+	}
+
+	/**
+	 * 提取child的数据
+	 *
+	 * @param courseList
+	 * @return
+	 */
+	private List<Map<String, String>> formatList(List<CoursePoJo> courseList) {
+//		List<Map<String,String>>list=new ArrayList<Map<String,String>>();
+		Datas.list = new ArrayList<Map<String, String>>();
+		Map<String, String> map;
+		for (int i = 0; i < courseList.size(); i++) {
+			for (int j = 0; j < courseList.get(i).getChild().size(); j++) {
+				map = new HashMap<String, String>();
+				map.put("childName", courseList.get(i).getChild().get(j).getName());
+				Datas.list.add(map);
+			}
+		}
+		return Datas.list;
+	}
+
+
 	/**
 	 * 监听事件
 	 */
@@ -146,7 +214,7 @@ public class CourseClassifyActivity extends Activity implements OnScrollListener
 	@Override
 	public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
 		
-		Toast.makeText(this,"pos=="+childPosition, 1000).show();
+		Toast.makeText(this,"pos=="+childPosition, Toast.LENGTH_LONG).show();
 		return false;
 	}
 

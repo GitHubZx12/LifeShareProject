@@ -44,6 +44,7 @@ public class UpLoadCourseActivity extends FragmentActivity implements
     private TextView tv_tool;
     private TextView tv_step;
     private TextView tv_classify;
+    private ImageView iv_pre;
     /**
      * Fragment Manager
      */
@@ -56,6 +57,7 @@ public class UpLoadCourseActivity extends FragmentActivity implements
     ClassifyFragment classifyFragment;
 
     boolean finished;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +77,7 @@ public class UpLoadCourseActivity extends FragmentActivity implements
         ll_step.setOnClickListener(this);
         ll_title.setOnClickListener(this);
         ll_tool.setOnClickListener(this);
+        iv_pre.setOnClickListener(this);
     }
 
     /**
@@ -101,7 +104,7 @@ public class UpLoadCourseActivity extends FragmentActivity implements
         if (classifyFragment == null) {
             classifyFragment = new ClassifyFragment();
         }
-        changeFragment(titleFragment, true,finished);
+        changeFragment(titleFragment, true, finished);
     }
 
     /**
@@ -110,15 +113,13 @@ public class UpLoadCourseActivity extends FragmentActivity implements
      * @param fragment
      * @param isInit
      */
-    private void changeFragment(Fragment fragment, boolean isInit,boolean isFinished) {
+    private void changeFragment(Fragment fragment, boolean isInit, boolean isFinished) {
         if (!fragment.isAdded()) {
             transaction = fm.beginTransaction();
             transaction.replace(R.id.fragment_upload, fragment);
             if (!isInit) {
                 transaction.addToBackStack(null);
             }
-
-
             transaction.commit();
         }
     }
@@ -144,7 +145,7 @@ public class UpLoadCourseActivity extends FragmentActivity implements
         iv_step = (ImageView) findViewById(R.id.iv_step_img);
         iv_title = (ImageView) findViewById(R.id.iv_title_img);
         iv_tool = (ImageView) findViewById(R.id.iv_tool_img);
-
+        iv_pre= (ImageView) findViewById(R.id.iv_pre);
     }
 
     @Override
@@ -153,25 +154,30 @@ public class UpLoadCourseActivity extends FragmentActivity implements
             case R.id.ll_title:// 标题
                 tv_title.setTextColor(Color.WHITE);
                 iv_title.setImageResource(R.drawable.crafter_cguide_stepmark_select);
-                changeFragment(titleFragment, true,finished);
+                changeFragment(titleFragment, true, finished);
                 break;
             case R.id.ll_material:// 材料
                 tv_material.setTextColor(Color.WHITE);
-                changeFragment(materialFragment, true,finished);
+                changeFragment(materialFragment, true, finished);
                 break;
             case R.id.ll_tool:// 工具
                 tv_tool.setTextColor(Color.WHITE);
-                changeFragment(toolFragment, true,finished);
+                changeFragment(toolFragment, true, finished);
                 break;
             case R.id.ll_step:// 步骤
                 tv_step.setTextColor(Color.WHITE);
-                changeFragment(stepFragment, true,finished);
+                changeFragment(stepFragment, true, finished);
                 break;
             case R.id.ll_classify:// 分类
                 tv_classify.setTextColor(Color.WHITE);
-                changeFragment(classifyFragment, true,finished);
+                changeFragment(classifyFragment, true, finished);
                 break;
 
+            case R.id.iv_pre://返回键
+                finish();
+                break;
+            default:
+                break;
         }
 
     }
