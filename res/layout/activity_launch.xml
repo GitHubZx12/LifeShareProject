@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <!-- 发布教程和求教程 -->
+   <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#7EB288"
+        android:gravity="center_vertical">
+         <ImageView
+            android:id="@+id/iv_launch_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingLeft="5dp"
+            android:src="@drawable/crafter_cguide_nextarrow_yes" />
+
+        <TextView
+            android:id="@+id/tv_launch_title"
+            android:text="收藏教程"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/tv_textsize16"
+            android:textColor="@color/white"
+            android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
+
+   <ListView 
+       android:id="@+id/listview_launch"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+   </ListView>
+</LinearLayout>

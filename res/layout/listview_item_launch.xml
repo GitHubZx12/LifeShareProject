@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/tv_paddingLeft"
+    android:orientation="horizontal" >
+
+    <!-- 发布教程和求教程的item -->
+    <ImageView 
+        android:id="@+id/iv_launch_face_pic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_launcher"/>
+    <LinearLayout 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <!-- 标题 -->
+        <TextView 
+            android:id="@+id/tv_launch_title"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="hah"/>
+        <!-- 时间 -->
+        <TextView 
+            android:id="@+id/tv_launch_time"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="lal"/>
+    </LinearLayout>
+    
+
+</LinearLayout>
