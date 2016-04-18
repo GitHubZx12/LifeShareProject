@@ -15,47 +15,47 @@
         android:paddingRight="10dp" >
 
         <com.mendale.app.utils.imageUtils.RoundImageView
-            android:id="@+id/iv_record_head_image"
+            android:id="@+id/iv_course_info_head_image"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/ic_launcher" />
 
         <TextView
-            android:id="@+id/tv_record_username"
+            android:id="@+id/tv_course_info_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:textColor="#A5A5A2"
-            android:text="薰衣草的思念" />
+            android:text="薰衣草的思念"
+            android:textColor="#A5A5A2" />
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/iv_record_image"
+        android:id="@+id/iv_course_info_image"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginBottom="10dp"
         android:src="@drawable/ic_launcher" />
 
     <TextView
-        android:id="@+id/tv_record_content"
+        android:id="@+id/tv_course_info_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="20dp"
         android:paddingRight="10dp"
-        android:textSize="16sp"
-        android:text="这个真的很漂亮，大家可以试试" />
+        android:text="这个真的很漂亮，大家可以试试"
+        android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/tv_record_all"
+        android:id="@+id/tv_course_info_all"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="20dp"
         android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
         android:paddingRight="10dp"
-        android:textColor="#ADA9A8"
-        android:text="26人气/0赞/0收藏/0评论" />
+        android:text="26人气/0赞/0收藏/0评论"
+        android:textColor="#ADA9A8" />
 
 </LinearLayout>

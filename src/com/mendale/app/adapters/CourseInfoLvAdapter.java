@@ -16,19 +16,18 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
- * 教程
+ * 课程详情xiangListView
  * 
  * @author Administrator
  * 
  */
-public class RecordLVAdapter extends BaseAdapter {
+public class CourseInfoLvAdapter extends BaseAdapter {
 
 	private Context context;
 	private List<RecordItemBean> recordList;
 	private DisplayImageOptions options;
 
-	public RecordLVAdapter(Context context, List<RecordItemBean> recordList,
-			DisplayImageOptions options) {
+	public CourseInfoLvAdapter(Context context, List<RecordItemBean> recordList, DisplayImageOptions options) {
 		this.context = context;
 		this.recordList = recordList;
 		this.options = options;
@@ -54,51 +53,40 @@ public class RecordLVAdapter extends BaseAdapter {
 		ViewHolder holder;
 		if (convertView == null) {
 			holder = new ViewHolder();
-			convertView = View.inflate(context, R.layout.listview_item_record,
-					null);
-			holder.name = (TextView) convertView
-					.findViewById(R.id.tv_record_username);
-			holder.headImage = (RoundImageView) convertView
-					.findViewById(R.id.iv_record_head_image);
-			holder.contentImage = (ImageView) convertView
-					.findViewById(R.id.iv_record_image);
-			holder.content = (TextView) convertView
-					.findViewById(R.id.tv_record_content);
-			holder.recordAll = (TextView) convertView
-					.findViewById(R.id.tv_record_all);
-
+			convertView = View.inflate(context, R.layout.listview_item_course_info, null);
+			holder.name = (TextView) convertView.findViewById(R.id.tv_course_info_username);
+			holder.headImage = (RoundImageView) convertView.findViewById(R.id.iv_course_info_head_image);
+			holder.contentImage = (ImageView) convertView.findViewById(R.id.iv_course_info_image);
+			holder.content = (TextView) convertView.findViewById(R.id.tv_course_info_content);
+			holder.recordAll = (TextView) convertView.findViewById(R.id.tv_course_info_all);
 			convertView.setTag(holder);
-		} else {
+		}
+		else {
 			holder = (ViewHolder) convertView.getTag();
 		}
 		//
 		holder.name.setText(recordList.get(position).getUser_name());
 		holder.content.setText(recordList.get(position).getContent());
-		holder.recordAll.setText(recordList.get(position).getView() + "人气/"
-				+ recordList.get(position).getLaud() + "赞/"
-				+ recordList.get(position).getCollect() + "收藏/"
-				+ recordList.get(position).getComment() + "评论");
+		holder.recordAll.setText(recordList.get(position).getView() + "人气/" + recordList.get(position).getLaud() + "赞/"
+				+ recordList.get(position).getCollect() + "收藏/" + recordList.get(position).getComment() + "评论");
 		ImageLoader imageLoader = ImageLoader.getInstance();
-		imageLoader.displayImage(recordList.get(position).getFace_pic(),
-				holder.headImage, options);
-		imageLoader.displayImage(recordList.get(position).getHost_pic(),
-				holder.contentImage, options);
+		imageLoader.displayImage(recordList.get(position).getFace_pic(), holder.headImage, options);
+		imageLoader.displayImage(recordList.get(position).getHost_pic(), holder.contentImage, options);
 		// BitmapUtils bitMapUtils=new BitmapUtils(context);
 		//
 		// bitMapUtils.display(holder.headImage,
 		// recordList.get(position).getFace_pic());
 		// bitMapUtils.display(holder.contentImage,
 		// recordList.get(position).getHost_pic());
-
 		return convertView;
 	}
 
 	class ViewHolder {
+
 		TextView name;
 		RoundImageView headImage;
 		ImageView contentImage;
 		TextView content;
 		TextView recordAll;
 	}
-
 }

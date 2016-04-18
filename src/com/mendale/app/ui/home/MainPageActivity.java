@@ -54,7 +54,7 @@ public class MainPageActivity extends FragmentActivity implements OnClickListene
 	/** 左侧侧滑菜单 */
 	private ImageButton iv_open;
 	/** 右侧 */
-//	private ImageButton iv_list;
+	// private ImageButton iv_list;
 	/** 指示器 */
 	private ImageView mTabline;
 	int mScreen1_3;
@@ -68,11 +68,11 @@ public class MainPageActivity extends FragmentActivity implements OnClickListene
 	private RadioButton rb_charts;
 	/** 记录 */
 	private RadioButton rb_record;
-	/**上传教程*/
+	/** 上传教程 */
 	private TextView tv_menu_upload;
-	/**头像*/
+	/** 头像 */
 	private ImageView iv_menu_icon;
-	/**设置*/
+	/** 设置 */
 	private ImageView iv_menu_setting;
 	private TextView tv_menu_classify;
 	private TextView tv_menu_help;
@@ -89,7 +89,7 @@ public class MainPageActivity extends FragmentActivity implements OnClickListene
 	/** 侧滑菜单 */
 	private SlidingMenu menu;
 	public long exitTime;// 储存点击退出时间
-	//ImageLoader
+	// ImageLoader
 	protected ImageLoader imageLoader = ImageLoader.getInstance();
 
 	@Override
@@ -103,9 +103,7 @@ public class MainPageActivity extends FragmentActivity implements OnClickListene
 		initTabLine();
 		initFragment();
 		setListener();
-		
 	}
-
 
 	/**
 	 * 添加侧滑菜单
@@ -120,7 +118,7 @@ public class MainPageActivity extends FragmentActivity implements OnClickListene
 		menu.attachToActivity(this, SlidingMenu.SLIDING_WINDOW);
 		// 设置菜单滑出后屏幕剩下的宽度
 		menu.setBehindOffset(getWindowManager().getDefaultDisplay().getWidth() / 2);
-//		menu.setBehindOffset(50);
+		// menu.setBehindOffset(50);
 		// 设置菜单的宽度
 		// menu.setBehindWidth(360);
 		// 设置侧滑模式，该设置是左右都可侧滑
@@ -145,15 +143,15 @@ public class MainPageActivity extends FragmentActivity implements OnClickListene
 		rb_course = (RadioButton) findViewById(R.id.rb_course);
 		rb_charts = (RadioButton) findViewById(R.id.rb_charts);
 		rb_record = (RadioButton) findViewById(R.id.rb_record);
-		//侧滑
-		tv_menu_upload=(TextView) findViewById(R.id.tv_menu_upload);
-		tv_menu_classify=(TextView) findViewById(R.id.tv_menu_classify);
-		tv_menu_help=(TextView) findViewById(R.id.tv_menu_help);
-		tv_menu_login=(TextView) findViewById(R.id.tv_menu_login);
-		tv_menu_news=(TextView) findViewById(R.id.tv_menu_news);
-		tv_menu_search=(TextView) findViewById(R.id.tv_menu_search);
-		iv_menu_icon=(ImageView) findViewById(R.id.iv_menu_icon);
-		iv_menu_setting=(ImageView) findViewById(R.id.iv_menu_set);
+		// 侧滑
+		tv_menu_upload = (TextView) findViewById(R.id.tv_menu_upload);
+		tv_menu_classify = (TextView) findViewById(R.id.tv_menu_classify);
+		tv_menu_help = (TextView) findViewById(R.id.tv_menu_help);
+		tv_menu_login = (TextView) findViewById(R.id.tv_menu_login);
+		tv_menu_news = (TextView) findViewById(R.id.tv_menu_news);
+		tv_menu_search = (TextView) findViewById(R.id.tv_menu_search);
+		iv_menu_icon = (ImageView) findViewById(R.id.iv_menu_icon);
+		iv_menu_setting = (ImageView) findViewById(R.id.iv_menu_set);
 		//
 	}
 
@@ -213,7 +211,7 @@ public class MainPageActivity extends FragmentActivity implements OnClickListene
 	 */
 	private void setListener() {
 		iv_open.setOnClickListener(this);
-//		iv_list.setOnClickListener(this);
+		// iv_list.setOnClickListener(this);
 		radioGroup.setOnCheckedChangeListener(this);
 		tv_menu_upload.setOnClickListener(this);
 		iv_menu_icon.setOnClickListener(this);
@@ -279,24 +277,24 @@ public class MainPageActivity extends FragmentActivity implements OnClickListene
 			case R.id.iv_open:
 				menu.showMenu();
 				break;
-			case R.id.tv_menu_upload://上传教程
-				Intent intent=new Intent(this,UpLoadCourseActivity.class);
+			case R.id.tv_menu_upload:// 上传教程
+				Intent intent = new Intent(this, UpLoadCourseActivity.class);
 				startActivity(intent);
 				break;
-			case R.id.iv_menu_icon://个人信息详情
-				Intent intent2=new Intent(this,MyCenterActivity.class);
+			case R.id.iv_menu_icon:// 个人信息详情
+				Intent intent2 = new Intent(this, MyCenterActivity.class);
 				startActivity(intent2);
 				break;
-			case R.id.tv_menu_help://求教程
-				Intent intent3=new Intent(this,HelpMakeCourseActivity.class);
+			case R.id.tv_menu_help:// 求教程
+				Intent intent3 = new Intent(this, HelpMakeCourseActivity.class);
 				startActivity(intent3);
 				break;
-			case R.id.tv_menu_news://消息
-				Intent intent4=new Intent(this,NewsActivity.class);
+			case R.id.tv_menu_news:// 消息
+				Intent intent4 = new Intent(this, NewsActivity.class);
 				startActivity(intent4);
 				break;
-			case R.id.tv_menu_classify://分类
-				Intent intent5=new Intent(this,CourseClassifyActivity.class);
+			case R.id.tv_menu_classify:// 分类
+				Intent intent5 = new Intent(this, CourseClassifyActivity.class);
 				startActivity(intent5);
 				break;
 		}
@@ -320,15 +318,14 @@ public class MainPageActivity extends FragmentActivity implements OnClickListene
 		}
 		return super.onKeyDown(keyCode, event);
 	}
-	
+
 	public void onClearMemoryClick(View view) {
-    	Toast.makeText(this, "清除内存缓存成功", Toast.LENGTH_SHORT).show();
-    	ImageLoader.getInstance().clearMemoryCache();  // 清除内存缓存
+		Toast.makeText(this, "清除内存缓存成功", Toast.LENGTH_SHORT).show();
+		ImageLoader.getInstance().clearMemoryCache(); // 清除内存缓存
 	}
-    
-    public void onClearDiskClick(View view) {
-    	Toast.makeText(this, "清除本地缓存成功", Toast.LENGTH_SHORT).show();
-    	ImageLoader.getInstance().clearDiskCache();  // 清除本地缓存
-    } 
-    
+
+	public void onClearDiskClick(View view) {
+		Toast.makeText(this, "清除本地缓存成功", Toast.LENGTH_SHORT).show();
+		ImageLoader.getInstance().clearDiskCache(); // 清除本地缓存
+	}
 }

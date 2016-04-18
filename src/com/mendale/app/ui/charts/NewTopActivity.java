@@ -64,11 +64,12 @@ public class NewTopActivity extends Activity {
 	 * 初始化数据
 	 */
 	private void initData() {
-		doGet(DataURL.Z_NEW_JIAOCHENG);
+		doGet(DataURL.CHARTS_URL);
 	}
 
 	private void doGet(final String url) {
 		new Thread(new Runnable() {
+
 			@Override
 			public void run() {
 				OkHttpClient okHttpClient = new OkHttpClient();
@@ -88,8 +89,8 @@ public class NewTopActivity extends Activity {
 				});
 			}
 		}).start();
-		
 	}
+
 	/**
 	 * 解析json数据
 	 * 
@@ -117,10 +118,11 @@ public class NewTopActivity extends Activity {
 
 	/**
 	 * Adapter
+	 * 
 	 * @param newsDatas
 	 */
 	private void setListViewAdapter(List<NewTop100> newsDatas) {
-		mAdapter=new NewsTop100LVAdapter(this, newsDatas);
+		mAdapter = new NewsTop100LVAdapter(this, newsDatas);
 		mListView.setAdapter(mAdapter);
 	}
 }

@@ -42,7 +42,6 @@
             android:value="56a6c9c267e58e4c20000036" >
         </meta-data>
 
-        
         <activity
             android:name=".ui.MJAPPActivity"
             android:configChanges="orientation|screenSize"
@@ -53,8 +52,8 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-       
+        </activity>
+
         <!-- 友盟分享 -->
         <activity
             android:name="com.umeng.socialize.editorpage.ShareActivity"
@@ -79,7 +78,7 @@
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-         <!-- 注册-->
+        <!-- 注册 -->
         <activity
             android:name="com.mendale.app.ui.login.RegisterActivity"
             android:configChanges="orientation|screenSize"
@@ -92,7 +91,8 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <!-- 主界面 -->
-        <!-- <activity
+        <!--
+        <activity
             android:name="com.mendale.app.ui.home.MainPageActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
@@ -102,14 +102,15 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> -->
-        
-             <activity
+        </activity>
+        -->
+
+        <activity
             android:name="com.mendale.app.ui.home.MainPageActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
-       
+            android:windowSoftInputMode="stateHidden" />
+
         <!-- 个人中心 -->
         <activity
             android:name="com.mendale.app.ui.mycenter.MyCenterActivity"
@@ -159,7 +160,7 @@
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-         <!-- 消息 -->
+        <!-- 消息 -->
         <activity
             android:name="com.mendale.app.ui.home.menu.NewsActivity"
             android:configChanges="orientation|screenSize"
@@ -177,13 +178,12 @@
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-         <!-- 最新教程Top100 -->
+        <!-- 课程详情 -->
         <activity
-            android:name="com.mendale.app.ui.charts.NewTopActivity"
+            android:name="com.mendale.app.ui.course.CourseInfoActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-            
 
         <uses-library android:name="android.test.runner" />
     </application>

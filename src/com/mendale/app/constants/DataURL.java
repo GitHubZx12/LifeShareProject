@@ -16,7 +16,6 @@ public class DataURL {
 	public static String RECORD_URL = "http://www.shougongke.com/index.php?m=Mobq_opus&type=new&versions=1.2.1";
 	// 首页---热门教程--详情页
 	public static String DETAILS_RMJC = "http://www.shougongke.com/index.php?m=Mobq_course&id=";
-	// 最新教程Top100
-	public static String Z_NEW_JIAOCHENG = "http://www.shougongke.com/index.php?m=Mobq_data&a=tophot&id=n&page=1";
-
+	// 排行榜
+	public static String CHARTS_URL = "http://www.shougongke.com/index.php?m=Mobq_data&a=tophot&id=a&page=1";
 }

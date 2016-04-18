@@ -1,46 +1,29 @@
 package com.mendale.app.tasks;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.SocketTimeoutException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import android.content.Context;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
-import com.mendale.app.pojo.CourseChildPojo;
-import com.mendale.app.pojo.CoursePoJo;
+import com.mendale.app.pojo.ChartsPoJo;
 import com.mendale.app.utils.Utils;
-import com.mendale.app.vo.DarenItemBean;
-import com.mendale.app.vo.HomeAllList;
-import com.mendale.app.vo.HotCourseItemBean;
-import com.mendale.app.vo.TypeItemBean;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
+import com.umeng.socialize.utils.Log;
+
+import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 
 /**
  * 最新教程top100
  */
-public class NewsTop100Task {
+public class ChartsTask2 {
 
 	private static final int TIMEOUT = 30000;// 超时时间
 	private Handler mhandler;// 上下文
@@ -51,7 +34,7 @@ public class NewsTop100Task {
 	 * 
 	 * @param context
 	 */
-	public NewsTop100Task(Context context, Handler mhandler) {
+	public ChartsTask2(Context context, Handler mhandler) {
 		this.context = context;
 		this.mhandler = mhandler;
 	}
@@ -64,11 +47,9 @@ public class NewsTop100Task {
 	 * @return json
 	 */
 	public void send(int id, String encoding, String action) {
-
 		// 实例化返回对象
 		final Message msg = new Message();
 		msg.what = 0;
-
 		if (!Utils.isNetworkConnected(context)) {
 			msg.obj = "网络已断开";
 			mhandler.sendMessage(msg);
@@ -79,22 +60,44 @@ public class NewsTop100Task {
 		// 返回参数
 		StringBuilder sb = new StringBuilder();
 		HttpURLConnection conn = null;
-		OkHttpClient okHttpClient=new OkHttpClient();
-		//创建一个request
-		Request request=new Request.Builder().url(urlPath).build();
-		Call call=okHttpClient.newCall(request);
+		OkHttpClient okHttpClient = new OkHttpClient();
+		// 创建一个request
+		Request request = new Request.Builder().url(urlPath).build();
+		Call call = okHttpClient.newCall(request);
 		call.enqueue(new Callback() {
-			
+
 			@Override
 			public void onResponse(Response arg0) throws IOException {
-				String responseData=arg0.body().toString();
+				String responseData = arg0.body().toString();
+				List<ChartsPoJo> mDatas = parserData(responseData);
+				Log.e("tag", mDatas.toString());
+				msg.what = 1;
+				msg.obj = mDatas;
+				mhandler.sendMessage(msg);
 			}
-			
+
 			@Override
 			public void onFailure(Request arg0, IOException arg1) {
-				// TODO Auto-generated method stub
 			}
 		});
 	}
 
+	/**
+	 * 使用Gson进行解析 List<person>
+	 * 
+	 * @param <t>
+	 * @param jsonString
+	 * @param cls
+	 * @return
+	 */
+	public static <T> List<T> parserData(String jsonString) {
+		List<T> list = new ArrayList<T>();
+		try {
+			Gson gson = new Gson();
+			list = gson.fromJson(jsonString, new TypeToken<List<T>>() {
+			}.getType());
+		} catch (Exception e) {
+		}
+		return list;
+	}
 }

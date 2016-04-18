@@ -7,10 +7,10 @@
     <!-- 记录 -->
 
     <com.mendale.app.utils.pullToRefreshUtils.view.XListView
-        android:visibility="invisible"
         android:id="@+id/listview_record"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
 
     <LinearLayout
         android:id="@+id/ll_record_loading"
