@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@drawable/crafter_cguide_bg"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingTop="10dp" >
+
+    <!-- 排行榜 -->
+
+    <ListView
+        android:id="@+id/listview_charts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:horizontalSpacing="15dp"
+        android:numColumns="4"
+        android:verticalSpacing="15dp"
+        android:visibility="invisible" >
+    </ListView>
+
+    <LinearLayout
+        android:id="@+id/ll_charts_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:paddingTop="20dp" >
+
+        <ImageView
+            android:id="@+id/iv_charts_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/pulltorefresh_icon_loading" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:text="正在加载" />
+    </LinearLayout>
+
+</RelativeLayout>

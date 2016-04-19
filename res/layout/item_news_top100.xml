@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:orientation="horizontal" >
+
+    <!-- 热门类别的的查看更多按钮的Listview的Item -->
+
+    <TextView
+        android:id="@+id/tv_pos_news_top100"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_height="match_parent"
+        android:text="1" />
+
+    <ImageView
+        android:id="@+id/iv_pic_news_top100"
+        android:layout_width="70dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/ic_launcher" />
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_weight="4"
+        android:gravity="center_vertical"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/ll_news_top100"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical" >
+
+            <TextView
+                android:id="@+id/tv_subject_news_top100"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_marginBottom="10dp"
+                android:text="漂亮的百合花" />
+
+            <TextView
+                android:id="@+id/tv_username_news_top100"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_subject_news_top100"
+                android:textColor="#eee"
+                android:text="薰衣草的思念" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_view_news_top100"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll_news_top100"
+            android:layout_alignParentRight="true"
+            android:text="11111111人气"
+            android:layout_marginLeft="3dp"
+            android:textColor="#FF6EB4" />
+    </RelativeLayout>
+
+</LinearLayout>

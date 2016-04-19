@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/mycenter_background_image"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="-100dp"
+        android:background="@drawable/defult_loading"
+        android:focusable="true"
+        android:scaleType="fitXY" />
+
+    <com.mendale.app.utils.background.MyScrollView
+        android:id="@+id/myScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <!-- 上半部分 -->
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
+
+                    <!-- 上半部分上面 -->
+
+                    <TextView
+                        android:id="@+id/mycenter_background_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="2"
+                        android:visibility="invisible" />
+
+                    <!-- 上半部分下面 -->
+
+                    <LinearLayout
+                        android:id="@+id/mycenter_AllData"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:background="#83B989"
+                        android:focusable="false"
+                        android:orientation="horizontal" >
+
+                        <!-- 头像部分位置 -->
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1.5" />
+                        <!-- 姓名，积分位置 -->
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:orientation="vertical" >
+
+                            <!-- 姓名 图标 -->
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1.2"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal" >
+
+                                <TextView
+                                    android:id="@+id/mycenter_name"
+                                    style="@style/mycenter_commontext"
+                                    android:textSize="18sp" />
+
+                                <ImageView
+                                    android:id="@+id/mycenter_sex_image"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:src="@drawable/vip_icon_man" />
+                            </LinearLayout>
+                            <!-- 积分 -->
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:orientation="horizontal" >
+
+                                <TextView
+                                    android:id="@+id/mycenter_total"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="#BC9B36"
+                                    android:textSize="20sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:text=""
+                                    android:textColor="#979797"
+                                    android:textSize="13sp" />
+                            </LinearLayout>
+                        </LinearLayout>
+                        <!-- vip级别位置 -->
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical" >
+
+                            <!-- vip级别图标 -->
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1.5"
+                                android:orientation="horizontal"
+                                android:paddingBottom="5dp" >
+
+                                <ImageView
+                                    android:id="@+id/mycenter_vip_image"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_centerHorizontal="true"
+                                    android:src="@drawable/lv1" />
+                            </RelativeLayout>
+                            <!-- vip级别文字 -->
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center_horizontal"
+                                android:orientation="horizontal" >
+
+                                <TextView
+                                    android:id="@+id/mycenter_vip_name"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="#BC9B36"
+                                    android:textSize="15sp" >
+                                </TextView>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- 第二层 -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal" >
+
+                    <!-- 左半部分 -->
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical" >
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1.5" >
+
+                            <ImageView
+                                android:id="@+id/iv_mycenter_back"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:contentDescription="@null"
+                                android:paddingLeft="10dp"
+                                android:paddingTop="10dp"
+                                android:src="@drawable/crafter_cguide_nextarrow_yes" />
+                        </RelativeLayout>
+
+                        <com.mendale.app.utils.imageUtils.RoundImageView
+                            android:id="@+id/mycenter_head_image"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/defult_avator" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.5"
+                            android:focusable="false" />
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2" >
+
+                        <TextView
+                            android:id="@+id/mycenter_data"
+                            android:layout_width="60dp"
+                            android:layout_height="40dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:focusable="false"
+                            android:gravity="center"
+                            android:text="资料"
+                            android:textColor="#F5F5F5"
+                            android:textSize="15sp" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="#089D15" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="3"
+                android:background="#333436"
+                android:orientation="vertical" >
+
+                <!-- 上部分 -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal" >
+
+                    <!-- left -->
+
+                    <LinearLayout
+                        android:id="@+id/mycenter_mysteward"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/grid_view_item_selector_xml"
+                        android:gravity="center"
+                        android:orientation="vertical" >
+
+                        <!-- 发布教程 -->
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/course_content_upload_opus" />
+
+                        <!-- 文字 -->
+
+                        <TextView
+                            style="@style/mycenter_commontext"
+                            android:layout_marginTop="5dp"
+                            android:text="发布教程" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="0.5dp"
+                        android:layout_height="match_parent"
+                        android:background="#262729" />
+                    <!-- right -->
+
+                    <LinearLayout
+                        android:id="@+id/mycenter_rightscent"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/grid_view_item_selector_xml"
+                        android:gravity="center"
+                        android:orientation="vertical" >
+
+                        <!-- 收藏教程 -->
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/course_content_market_material" />
+                        <!-- 文字 -->
+
+                        <TextView
+                            style="@style/mycenter_commontext"
+                            android:layout_marginTop="15dp"
+                            android:text="收藏教程" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#262729" />
+
+                <!-- 下部分 -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" >
+
+                    <!-- left -->
+
+                    <LinearLayout
+                        android:id="@+id/mycenter_serve"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/grid_view_item_selector_xml"
+                        android:gravity="center"
+                        android:orientation="vertical" >
+
+                        <!-- 图标 -->
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/course_content_to_opus" />
+
+                        <!-- 文字 -->
+
+                        <TextView
+                            style="@style/mycenter_commontext"
+                            android:layout_marginTop="15dp"
+                            android:text="发布记录" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="0.5dp"
+                        android:layout_height="match_parent"
+                        android:background="#262729" />
+                    <!-- right -->
+
+                    <LinearLayout
+                        android:id="@+id/mycenter_setting"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/grid_view_item_selector_xml"
+                        android:gravity="center"
+                        android:orientation="vertical" >
+
+                        <!-- 图标 -->
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/course_content_market" />
+                        <!-- 文字 -->
+
+                        <TextView
+                            style="@style/mycenter_commontext"
+                            android:layout_marginTop="15dp"
+                            android:text="收藏记录" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </com.mendale.app.utils.background.MyScrollView>
+
+</RelativeLayout>

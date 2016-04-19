@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="bark_gray">#BEBEBE</color>
+    <color name="dark_gray">#5C5C5C</color>
+    <color name="bark_white">#F2F2F2</color>
+    <color name="yellow">#FFDB00</color>
+    <color name="darker_blue">#083063</color>
+    <color name="dark_blue">#1A4070</color>
+    <color name="gray">#BEBEBE</color>
+    <color name="zong">#BF3EFF</color>
+    <color name="bg">#CEEFFF</color>
+    <color name="green">#1E90FF</color>
+    <color name="blue_light">#87CEEB</color>
+    <color name="blue_middle">#436EEE</color>
+    <color name="white_light">#F0FFFF</color>
+    <color name="green_dark">#009955</color>
+    <color name="orange_light">#FFD39B</color>
+    <color name="red">#FF0000</color>
+    <color name="line">#B9D3EE</color>
+    <color name="transparent">#00000000</color>
+    <color name="alpha_00">#00000000</color>
+    <color name="titleback">#A9A9A9</color>
+    <color name="title_pop_line">#D7D7D7</color>
+    <color name="click_backgroud_color">#33b5e5</color>
+    <color name="pop_text_color">#287BCE</color>
+    <color name="s_huang">#FFB90F</color>
+    <color name="red_s">#CD0000</color>
+    <color name="blue_s">#0000CD</color>
+    <color name="dark">#ff000000</color>
+    <color name="blue">#0000FF</color>
+    <color name="abc">#696969</color>
+    <!-- listview  二级菜单  按钮点击变色 -->
+    <color name="onclick">#33B5E5</color>
+    <!-- 海军色 -->
+    <color name="select">#300000FF</color>
+    <color name="dispatchStatus">#f39800</color>
+    <color name="serviceType">#287bce</color>
+    <color name="webColor">#0F7BE6</color>
+    <color name="aboutColor">#5E5E5E</color>
+    <!-- 更多 #01216B -->
+    <color name="more_item_selected">#01216B</color>
+    <color name="all_bg">#fbfcfc</color>
+    <color name="text_color">#00688B</color>
+    <color name="gesture_background">#ff303237</color>
+    <color name="color_hei_8">#00000000</color>
+    <color name="order_content">#004e5c</color>
+    <color name="order_title">#006375</color>
+    <color name="order_edit">#567c84</color>
+    <color name="red_button">#ed5565</color>
+    <color name="green_button">#7ea852</color>
+    <color name="blue_button">#4fc1e9</color>
+    <!--  -->
+    <!-- 标题背景颜色 -->
+    <color name="title_bg_black">#333333</color>
+    <!-- 分割线的颜色 -->
+    <color name="list">#d2d2d2</color>
+    <color name="fragment">#81DBA6</color>
+    <color name="title_color">#20c0da</color>
+    <!-- 登录/注册/忘记密码/修改密码a -->
+    <color name="background_color">#f2f2f2</color>
+    <color name="main_color">#4DC060</color>
+    <color name="text_hint">#666666</color>
+    <color name="pwd_text_hint">#000000</color>
+    <color name="login_line">#d2d2d2</color>
+    <color name="text_color_light">#333333</color>
+    <color name="btn_color_light">#20c0da</color>
+    <color name="login_bark_gray">#BEBEBE</color>
+    <color name="gary">#C2C2C2</color>
+    <color name="green_btns">#4dc060</color>
+    <color name="login_white">#ffffff</color>
+    <!-- 友盟分享 -->
+    <color name="umeng_socialize_comments_bg">#F4F4F4</color>
+    <color name="umeng_socialize_color_group">#2c3035</color>
+    <color name="umeng_socialize_list_item_textcolor">#333333</color>
+    <color name="umeng_socialize_list_item_bgcolor">#FFFFFF</color>
+    <color name="umeng_socialize_divider">#E6E6E6</color>
+    <color name="umeng_socialize_text_time">#999999</color>
+    <color name="umeng_socialize_text_title">#464f61</color>
+    <color name="umeng_socialize_text_friends_list">#959696</color>
+    <color name="umeng_socialize_text_share_content">#666666</color>
+    <color name="umeng_socialize_ucenter_bg">#EEEEEE</color>
+    <color name="umeng_socialize_text_ucenter">#595959</color>
+    <color name="umeng_socialize_edit_bg">#C4C4C4</color>
+    <color name="umeng_socialize_grid_divider_line">#F8F8F8</color>
+     <!-- 个人资料个人中心 -->
+    <color name="text_tishi">#b0b0b0</color>
+    <color name="person_bg">#f2f2f2</color>
+    <!-- 首页 -->
+    <color name="see_more">#86E8AD</color>
+     <!-- 统一item背景色 -->
+    <color name="gray_x">#A4C9A3</color>
+    <color name="frame_color">#f0f0f0</color>
+    <!-- 统一的title北京 -->
+    <color name="title_background">#7EB288</color>
+
+</resources>

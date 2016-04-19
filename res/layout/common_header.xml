@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <!-- 头部:Start -->
+
+    <LinearLayout
+        android:id="@+id/navigationLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="2"
+                android:gravity="left|center_vertical"
+                android:orientation="horizontal" >
+
+                <ImageButton
+                    android:id="@+id/navigationLeftImageBtn"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:src="@drawable/icon_back"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/navigationLeftBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:text="返回"
+                    android:textColor="@color/title_color"
+                    android:textSize="@dimen/title_textsize18"
+                    android:visibility="visible" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="3"
+                android:gravity="center" >
+
+                <TextView
+                    android:id="@+id/navigation_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="44dp"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/title_textsize22" />
+
+                <ImageButton
+                    android:id="@+id/navigationCenterImageBtn"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@null"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="2"
+                android:gravity="right|center_vertical"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/navigationRightBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:textColor="@color/title_color"
+                    android:textSize="@dimen/title_textsize18"
+                    android:visibility="gone" />
+
+                <ImageButton
+                    android:id="@+id/navigationRightImageBtn"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@null"
+                    android:textColor="@color/title_bg_black"
+                    android:textSize="@dimen/title_textsize22" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/list" />
+    </LinearLayout>
+
+</LinearLayout>
