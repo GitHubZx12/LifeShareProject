@@ -35,6 +35,7 @@ import com.mendale.app.ui.home.fragment.RecordFragment;
 import com.mendale.app.ui.home.menu.CourseClassifyActivity;
 import com.mendale.app.ui.home.menu.HelpMakeCourseActivity;
 import com.mendale.app.ui.home.menu.NewsActivity;
+import com.mendale.app.ui.home.menu.SearchCourseActivity;
 import com.mendale.app.ui.home.menu.UpLoadCourseActivity;
 import com.mendale.app.ui.mycenter.MyCenterActivity;
 import com.mendale.app.utils.ExitApplication;
@@ -122,7 +123,7 @@ public class MainPageActivity extends FragmentActivity implements OnClickListene
 		// 设置菜单的宽度
 		// menu.setBehindWidth(360);
 		// 设置侧滑模式，该设置是左右都可侧滑
-		menu.setMode(SlidingMenu.LEFT_RIGHT);
+		menu.setMode(SlidingMenu.LEFT);
 		// 设置布局文件（默认左侧）-----左侧的布局根据自身需求来画
 		menu.setMenu(R.layout.item_menu_left);
 		// 设置右侧布局文件-----右侧的布局根据自身需求来画
@@ -218,6 +219,10 @@ public class MainPageActivity extends FragmentActivity implements OnClickListene
 		tv_menu_help.setOnClickListener(this);
 		tv_menu_news.setOnClickListener(this);
 		tv_menu_classify.setOnClickListener(this);
+		tv_menu_search.setOnClickListener(this);
+		
+		
+		
 	}
 
 	@Override
@@ -296,6 +301,10 @@ public class MainPageActivity extends FragmentActivity implements OnClickListene
 			case R.id.tv_menu_classify:// 分类
 				Intent intent5 = new Intent(this, CourseClassifyActivity.class);
 				startActivity(intent5);
+				break;
+			case R.id.tv_menu_search:
+				Intent intent6 = new Intent(this, SearchCourseActivity.class);
+				startActivity(intent6);
 				break;
 		}
 	}

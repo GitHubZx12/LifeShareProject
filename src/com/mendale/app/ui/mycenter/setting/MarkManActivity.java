@@ -8,6 +8,7 @@ import android.widget.PopupWindow;
 
 import com.mendale.app.R;
 import com.mendale.app.ui.base.BaseActivity;
+import com.mendale.app.utils.ExitApplication;
 
 /**
  * 个人资料详情
@@ -24,6 +25,7 @@ public class MarkManActivity extends BaseActivity implements OnClickListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_mark_man);
+		ExitApplication.getInstance().addActivity(this);
 		initHeaderView();
 		initView();
 	}
