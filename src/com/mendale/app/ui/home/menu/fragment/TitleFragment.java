@@ -2,8 +2,10 @@ package com.mendale.app.ui.home.menu.fragment;
 
 import com.mendale.app.R;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +37,12 @@ public class TitleFragment extends Fragment {
     }
 
     private void isEmpty() {
+        String s= String.valueOf(et_title.getText());
+        String s1= String.valueOf(et_title_descript.getText());
+        if (s.equals("")||s1.equals("")){
+            finished=false;
+            Toast.makeText(this.getActivity(),"请填写内容",Toast.LENGTH_LONG).show();
+        }
 
     }
 
@@ -43,11 +51,4 @@ public class TitleFragment extends Fragment {
         et_title_descript = (EditText) view.findViewById(R.id.et_title_descript);
     }
 
-    /**
-     * 是否填写完整
-     * @return
-     */
-    public boolean isFinished() {
-        return finished;
-    }
 }
