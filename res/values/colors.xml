@@ -93,5 +93,7 @@
      <!-- 统一item背景色 -->
     <color name="gray_x">#A4C9A3</color>
     <color name="frame_color">#f0f0f0</color>
+    <!-- 统一的title北京 -->
+    <color name="title_background">#7EB288</color>
 
 </resources>

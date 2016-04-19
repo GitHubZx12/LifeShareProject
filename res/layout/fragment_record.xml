@@ -6,11 +6,24 @@
 
     <!-- 记录 -->
 
-    <com.mendale.app.utils.pullToRefreshUtils.view.XListView
-        android:id="@+id/listview_record"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="invisible" />
+        android:layout_height="match_parent" >
+
+        <com.mendale.app.utils.pullToRefreshUtils.view.XListView
+            android:id="@+id/listview_record"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <TextView 
+            android:id="@+id/iv_record_action"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            android:text="记录"/>
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/ll_record_loading"
@@ -18,7 +31,8 @@
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
-        android:paddingTop="20dp" >
+        android:paddingTop="20dp"
+        android:visibility="gone" >
 
         <ImageView
             android:id="@+id/iv_loading"

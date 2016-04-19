@@ -28,7 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mendale.app.R;
-import com.mendale.app.ui.home.fragment.ChartsFragment;
+import com.mendale.app.ui.home.fragment.QAFragment;
 import com.mendale.app.ui.home.fragment.CourseFragment;
 import com.mendale.app.ui.home.fragment.HomeFragment;
 import com.mendale.app.ui.home.fragment.RecordFragment;
@@ -84,7 +84,7 @@ public class MainPageActivity extends FragmentActivity implements OnClickListene
 	FragmentTransaction transaction;
 	HomeFragment homeFragment;
 	CourseFragment courseFragment;
-	ChartsFragment chartsFragment;
+	QAFragment qaFragment;
 	RecordFragment recordFragment;
 	/** 侧滑菜单 */
 	private SlidingMenu menu;
@@ -141,7 +141,7 @@ public class MainPageActivity extends FragmentActivity implements OnClickListene
 		radioGroup = (RadioGroup) findViewById(R.id.rg);
 		rb_home = (RadioButton) findViewById(R.id.rb_home);
 		rb_course = (RadioButton) findViewById(R.id.rb_course);
-		rb_charts = (RadioButton) findViewById(R.id.rb_charts);
+		rb_charts = (RadioButton) findViewById(R.id.rb_qa);
 		rb_record = (RadioButton) findViewById(R.id.rb_record);
 		// 侧滑
 		tv_menu_upload = (TextView) findViewById(R.id.tv_menu_upload);
@@ -180,8 +180,8 @@ public class MainPageActivity extends FragmentActivity implements OnClickListene
 		if (courseFragment == null) {
 			courseFragment = new CourseFragment();
 		}
-		if (chartsFragment == null) {
-			chartsFragment = new ChartsFragment();
+		if (qaFragment == null) {
+			qaFragment = new QAFragment();
 		}
 		if (recordFragment == null) {
 			recordFragment = new RecordFragment();
@@ -237,11 +237,11 @@ public class MainPageActivity extends FragmentActivity implements OnClickListene
 				tv_title.setText("教程");
 				changeFragment(courseFragment, true);
 				break;
-			case R.id.rb_charts:
+			case R.id.rb_qa:
 				lp.leftMargin = (int) mScreen1_3 * 2;
 				setPressedTextColor(rb_charts);
-				tv_title.setText("排行榜");
-				changeFragment(chartsFragment, true);
+				tv_title.setText("问答");
+				changeFragment(qaFragment, true);
 				break;
 			case R.id.rb_record:
 				lp.leftMargin = (int) mScreen1_3 * 3;

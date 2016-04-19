@@ -1,28 +1,12 @@
 package com.mendale.app.ui.home.fragment;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import android.annotation.SuppressLint;
-import android.os.Bundle;
-import android.os.Handler;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
 import com.mendale.app.R;
-import com.mendale.app.adapters.CourseInfoLvAdapter;
-import com.mendale.app.adapters.RecordLvAdapter;
+import com.mendale.app.adapters.RecordLVAdapter;
 import com.mendale.app.constants.DataURL;
-import com.mendale.app.pojo.RecordPojo;
 import com.mendale.app.tasks.RecordTask;
 import com.mendale.app.utils.pullToRefreshUtils.PullToRefreshConfig;
 import com.mendale.app.utils.pullToRefreshUtils.view.XListView;
@@ -31,60 +15,73 @@ import com.mendale.app.vo.RecordItemBean;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
-/**
- * 记录
- * 
- * @author zhangxue
- * @date 2016年4月17日
- */
-public class RecordFragment extends Fragment implements IXListViewListener {
+import android.annotation.SuppressLint;
+import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+public class RecordFragment extends Fragment implements IXListViewListener,OnClickListener{
 
 	private XListView mListView;
-	private RecordLvAdapter mAdapter;
+	private RecordLVAdapter mAdapter;
 	private DisplayImageOptions options; // DisplayImageOptions是用于设置图片显示的类
 	/** 显示没有更多数据 */
 	private TextView tv_no_data;
-	//
+	//动画相关
 	private ImageView iv_loading;
-	private LinearLayout ll_loading;
-	//
-	private List<RecordPojo> recordList;
-	private Handler mhandler = new Handler() {
+    private LinearLayout ll_loading;
+    /**记录*/
+	private TextView recordAction;
 
+	private Handler mhandler = new Handler() {
 		@SuppressWarnings("unchecked")
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
-				case 1:
-					if (msg.obj != null) {
-						iv_loading.clearAnimation();
-						ll_loading.setVisibility(View.INVISIBLE);
-						mListView.setVisibility(View.VISIBLE);
-//						List<RecordPojo> recordList = (List<RecordPojo>) msg.obj;
-						mAdapter = new RecordLvAdapter(getActivity(), recordList);
-						mListView.setAdapter(mAdapter);
-					}
-					break;
-				default:
-					break;
+			case 1:
+				if (msg.obj != null) {
+					iv_loading.clearAnimation();
+					ll_loading.setVisibility(View.INVISIBLE);
+					mListView.setVisibility(View.VISIBLE);
+					List<RecordItemBean> recordList = (List<RecordItemBean>) msg.obj;
+					mAdapter = new RecordLVAdapter(getActivity(), recordList,
+							options);
+					mListView.setAdapter(mAdapter);
+				}
+				break;
+
+			default:
+				break;
 			}
+
 		};
 	};
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_record, container, false);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View view = inflater
+				.inflate(R.layout.fragment_record, container, false);
 		initView(view);
 		initAnim();
 		initData();
 		initImageOptions();
 		return view;
 	}
-
+	
 	/**
 	 * 初始化动画
 	 */
 	private void initAnim() {
-		Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.loading);
+		Animation animation=AnimationUtils.loadAnimation(getActivity(),R.anim.loading);
 		iv_loading.startAnimation(animation);
 	}
 
@@ -93,7 +90,8 @@ public class RecordFragment extends Fragment implements IXListViewListener {
 	 */
 	private void initImageOptions() {
 		// 使用DisplayImageOptions.Builder()创建DisplayImageOptions
-		options = new DisplayImageOptions.Builder().showStubImage(R.drawable.image_guidestep_defult) // 设置图片下载期间显示的图片
+		options = new DisplayImageOptions.Builder()
+				.showStubImage(R.drawable.image_guidestep_defult) // 设置图片下载期间显示的图片
 				.showImageForEmptyUri(R.drawable.image_guidestep_defult) // 设置图片Uri为空或是错误的时候显示的图片
 				.showImageOnFail(R.drawable.image_guidestep_defult) // 设置图片加载或解码过程中发生错误显示的图片
 				.cacheInMemory(true) // 设置下载的图片是否缓存在内存中
@@ -106,19 +104,11 @@ public class RecordFragment extends Fragment implements IXListViewListener {
 	 * 请求接口
 	 */
 	private void initData() {
-		recordList=new ArrayList<RecordPojo>();
-		RecordPojo recordPojo=new RecordPojo();
-		recordPojo.setDesc("求教程：xxx想请教一下怎么用电饭煲做面包");
-		recordPojo.setUsername("zx");
-		RecordPojo recordPojo2=new RecordPojo();
-		recordPojo2.setDesc("求教程：xxx哈哈哈");
-		recordPojo2.setUsername("yc");
-		recordList.add(recordPojo);
-		recordList.add(recordPojo2);
 		new Thread() {
-
 			public void run() {
-				new RecordTask(getActivity(), mhandler).send(1, "utf-8", DataURL.RECORD_URL);
+
+				new RecordTask(getActivity(), mhandler).send(1, "utf-8",
+						DataURL.RECORD_URL);
 			};
 		}.start();
 	}
@@ -132,22 +122,29 @@ public class RecordFragment extends Fragment implements IXListViewListener {
 		mListView = (XListView) view.findViewById(R.id.listview_record);
 		mListView.setPullRefreshEnable(PullToRefreshConfig.pullRefreshEnable);// 设置是否可以下拉刷新
 		mListView.setPullLoadEnable(PullToRefreshConfig.pullLoadEnable);// 设置是否可以上拉加载
-		mListView.setXListViewListener(this);// 设置监听
 		//
-		iv_loading = (ImageView) view.findViewById(R.id.iv_loading);
-		ll_loading = (LinearLayout) view.findViewById(R.id.ll_record_loading);
+		iv_loading=(ImageView) view.findViewById(R.id.iv_loading);
+		ll_loading=(LinearLayout) view.findViewById(R.id.ll_record_loading);
+		//
+		recordAction=(TextView) view.findViewById(R.id.iv_record_action);
+		//
+		mListView.setXListViewListener(this);// 设置监听
+		recordAction.setOnClickListener(this);
 	}
 
 	/**
 	 * 等待状态，顶部显示上次刷新时间
 	 * 
+	 * @author 张静
+	 * @Time 2015年12月3日下午6:05:12
 	 */
 	@SuppressLint("SimpleDateFormat")
 	private void onLoad() {
 		mListView.stopRefresh();// 停止刷新
 		mListView.stopLoadMore();// 停止"加载更多"
 		// 获得系统当前时间
-		SimpleDateFormat formatter = new SimpleDateFormat(PullToRefreshConfig.strDateFormat);
+		SimpleDateFormat formatter = new SimpleDateFormat(
+				PullToRefreshConfig.strDateFormat);
 		Date curDate = new Date(System.currentTimeMillis());// 获取当前时间
 		String str = formatter.format(curDate);// 格式化
 		mListView.setRefreshTime(str);// 给listview设置刷新时间
@@ -158,11 +155,10 @@ public class RecordFragment extends Fragment implements IXListViewListener {
 		// tv_no_data.setVisibility(View.VISIBLE);// 显示没有更多数据
 		// }
 	}
-
+	
 	@Override
 	public void onRefresh() {
 		mhandler.postDelayed(new Runnable() {
-
 			@Override
 			public void run() {
 				onLoad();
@@ -173,11 +169,18 @@ public class RecordFragment extends Fragment implements IXListViewListener {
 	@Override
 	public void onLoadMore() {
 		mhandler.postDelayed(new Runnable() {
-
 			@Override
 			public void run() {
 				onLoad();
 			}
 		}, 2000);
+	}
+
+	/**
+	 * 上传记录
+	 */
+	@Override
+	public void onClick(View v) {
+		
 	}
 }
