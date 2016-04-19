@@ -7,8 +7,6 @@ import android.os.Bundle;
 
 /**
  * 侧滑菜单--搜索教程
- * 根据名称搜索
- * 输入关键字搜索符合的分类名称
  * @author zx
  *
  */
