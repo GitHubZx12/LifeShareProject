@@ -216,7 +216,7 @@ public class MyCenterActivity extends BaseActivity implements OnClickListener,
 		case R.id.mycenter_mysteward:// 发布教程
 			mycenter_mysteward.setBackgroundColor(getResources()
 					.getColor(R.color.gray_x));
-			startActivity(UpLoadCourseActivity.class);
+			startActivity(LaunchCourseActivity.class);
 			break;
 		case R.id.mycenter_rightscent:// 收藏教程
 			mycenter_rightscent.setBackgroundColor(getResources().getColor(
@@ -226,15 +226,15 @@ public class MyCenterActivity extends BaseActivity implements OnClickListener,
 		case R.id.mycenter_setting:// 发布记录
 			mycenter_setting.setBackgroundColor(getResources().getColor(
 					R.color.gray_x));
-			intent.putExtra("recordflag",1);
-			startActivity(intent);
+//			intent.putExtra("recordflag",1);
+			startActivity(LaunchRecordActivity.class);
 			break;
 		case R.id.mycenter_serve://收藏记录
 			mycenter_serve.setBackgroundColor(getResources().getColor(
 					R.color.gray_x));
-//			startActivity(CollectRecordActivity.class);
-			intent.putExtra("recordflag",2);
-			startActivity(intent);
+			startActivity(CollectRecordActivity.class);
+//			intent.putExtra("recordflag",2);
+//			startActivity(intent);
 			break;
 		case R.id.mycenter_background_view:// 服务记录
 			showPhoneDialog(1);

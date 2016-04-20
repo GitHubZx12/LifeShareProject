@@ -7,6 +7,7 @@ import com.mendale.app.adapters.HotCourseGVAdapter;
 import com.mendale.app.constants.DataURL;
 import com.mendale.app.tasks.HomeTask;
 import com.mendale.app.ui.home.ShowDetailsActivity;
+import com.mendale.app.utils.ExitApplication;
 import com.mendale.app.vo.HomeAllList;
 import com.mendale.app.vo.HotCourseItemBean;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -55,7 +56,7 @@ public class CollectCourseActivity extends Activity implements OnClickListener,O
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_launch);
-		
+		ExitApplication.getInstance().addActivity(this);
 		initData();
 		initView();
 	}
