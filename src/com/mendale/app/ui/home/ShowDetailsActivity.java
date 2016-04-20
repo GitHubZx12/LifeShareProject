@@ -8,6 +8,11 @@ import com.mendale.app.adapters.DetailsPagerAdapter;
 import com.mendale.app.tasks.HotCourseDetailsTask;
 import com.mendale.app.vo.CourseDetailsItemBean;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.controller.UMServiceFactory;
+import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.sso.UMSsoHandler;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -48,6 +53,8 @@ public class ShowDetailsActivity extends Activity implements
 	private String detail_url;
 	private int step;
 	private ImageLoader imageLoader;
+	//友盟分享相关
+	private UMSocialService mController;
 	
 	private Handler mhandler=new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -73,6 +80,14 @@ public class ShowDetailsActivity extends Activity implements
 		setContentView(R.layout.activity_details);
 		getIntentData();
 		requestData();
+		
+		//首先在您的Activity中添加如下成员变量
+		mController = UMServiceFactory.getUMSocialService("com.umeng.share");
+		// 设置分享内容
+		mController.setShareContent("友盟社会化组件（SDK）让移动应用快速整合社交分享功能，http://www.umeng.com/social");
+		// 设置分享图片, 参数2为图片的url地址
+		mController.setShareMedia(new UMImage(this, 
+		                                      "http://www.umeng.com/images/pic/banner_module_social.png"));
 	}
 
 	/**
@@ -257,10 +272,25 @@ public class ShowDetailsActivity extends Activity implements
 			Toast.makeText(this, "收集", Toast.LENGTH_SHORT).show();
 			break;
 		case R.id.details_iv_share:// 分享
-			Toast.makeText(this, "分享", Toast.LENGTH_SHORT).show();
+			mController.getConfig().removePlatform(SHARE_MEDIA.RENREN, SHARE_MEDIA.DOUBAN);
+			 // 是否只有已登录用户才能打开分享选择页
+	        mController.openShare(this, false);
 			break;
 		}
 
+	}
+	
+	/**
+	 * 友盟分享授权回调
+	 */
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		/**使用SSO授权必须添加如下代码 */
+	    UMSsoHandler ssoHandler = mController.getConfig().getSsoHandler(requestCode) ;
+	    if(ssoHandler != null){
+	       ssoHandler.authorizeCallBack(requestCode, resultCode, data);
+	    }
 	}
 
 	/**
