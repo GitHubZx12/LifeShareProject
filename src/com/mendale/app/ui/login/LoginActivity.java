@@ -44,7 +44,7 @@ import cn.bmob.v3.listener.FindListener;
 /**
  * 登录
  * 
- * 
+ * 友盟三方登录4.3版本的
  */
 public class LoginActivity extends BaseActivity implements OnClickListener {
 
