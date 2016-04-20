@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.mendale.app.R;
-import com.mendale.app.adapters.RecordLVAdapter;
+import com.mendale.app.adapters.RecordLvAdapter;
 import com.mendale.app.constants.DataURL;
 import com.mendale.app.tasks.RecordTask;
 import com.mendale.app.utils.pullToRefreshUtils.PullToRefreshConfig;
@@ -32,7 +32,7 @@ import android.widget.TextView;
 public class RecordFragment extends Fragment implements IXListViewListener,OnClickListener{
 
 	private XListView mListView;
-	private RecordLVAdapter mAdapter;
+	private RecordLvAdapter mAdapter;
 	private DisplayImageOptions options; // DisplayImageOptions是用于设置图片显示的类
 	/** 显示没有更多数据 */
 	private TextView tv_no_data;
@@ -52,7 +52,7 @@ public class RecordFragment extends Fragment implements IXListViewListener,OnCli
 					ll_loading.setVisibility(View.INVISIBLE);
 					mListView.setVisibility(View.VISIBLE);
 					List<RecordItemBean> recordList = (List<RecordItemBean>) msg.obj;
-					mAdapter = new RecordLVAdapter(getActivity(), recordList,
+					mAdapter = new RecordLvAdapter(getActivity(), recordList,
 							options);
 					mListView.setAdapter(mAdapter);
 				}

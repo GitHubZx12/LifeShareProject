@@ -3,6 +3,12 @@ package com.mendale.app.ui.home;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mendale.app.R;
+import com.mendale.app.adapters.DetailsPagerAdapter;
+import com.mendale.app.tasks.HotCourseDetailsTask;
+import com.mendale.app.vo.CourseDetailsItemBean;
+import com.nostra13.universalimageloader.core.ImageLoader;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -18,13 +24,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.mendale.app.R;
-import com.mendale.app.adapters.DetailsPagerAdapter;
-import com.mendale.app.tasks.HotCourseDetailsTask;
-import com.mendale.app.vo.CourseDetailsItemBean;
-import com.mendale.app.vo.HotCourseItemBean;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
  * 热门教程 详情界面
@@ -258,7 +257,6 @@ public class ShowDetailsActivity extends Activity implements
 			Toast.makeText(this, "收集", Toast.LENGTH_SHORT).show();
 			break;
 		case R.id.details_iv_share:// 分享
-			// d
 			Toast.makeText(this, "分享", Toast.LENGTH_SHORT).show();
 			break;
 		}

@@ -21,13 +21,13 @@ import android.widget.TextView;
  * @author Administrator
  * 
  */
-public class RecordLVAdapter extends BaseAdapter {
+public class RecordLvAdapter extends BaseAdapter {
 
 	private Context context;
 	private List<RecordItemBean> recordList;
 	private DisplayImageOptions options;
 
-	public RecordLVAdapter(Context context, List<RecordItemBean> recordList,
+	public RecordLvAdapter(Context context, List<RecordItemBean> recordList,
 			DisplayImageOptions options) {
 		this.context = context;
 		this.recordList = recordList;
