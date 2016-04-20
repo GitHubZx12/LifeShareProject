@@ -31,98 +31,96 @@ import android.widget.TextView;
 
 /**
  * 最新教程Top100
- * 
- * @author Administrator
  *
+ * @author Administrator
  */
 public class NewTopActivity extends Activity {
 
-	private List<NewTop100> newTop100List = null;
-	private NewsTop100LVAdapter mAdapter;
-	private ListView mListView;
-	private TextView title;
-	private ImageView back;
+    private List<NewTop100> newTop100List = null;
+    private NewsTop100LVAdapter mAdapter;
+    private ListView mListView;
+    private TextView title;
+    private ImageView back;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_charts);
-		initData();
-		initView();
-	}
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_charts);
+        initData();
+        initView();
+    }
 
-	/**
-	 * 初始化view
-	 */
-	private void initView() {
-		title = (TextView) findViewById(R.id.tv_charts_title);
-		back = (ImageView) findViewById(R.id.iv_charts_back);
-		mListView = (ListView) findViewById(R.id.listview_charts);
-	}
+    /**
+     * 初始化view
+     */
+    private void initView() {
+        title = (TextView) findViewById(R.id.tv_charts_title);
+        back = (ImageView) findViewById(R.id.iv_charts_back);
+        mListView = (ListView) findViewById(R.id.listview_charts);
+    }
 
-	/**
-	 * 初始化数据
-	 */
-	private void initData() {
-		doGet(DataURL.CHARTS_URL);
-	}
+    /**
+     * 初始化数据
+     */
+    private void initData() {
+        doGet(DataURL.Z_NEW_JIAOCHENG);
+    }
 
-	private void doGet(final String url) {
-		new Thread(new Runnable() {
+    private void doGet(final String url) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                OkHttpClient okHttpClient = new OkHttpClient();
+                // 创建一个request
+                Request request = new Request.Builder().url(url).build();
+                Call call = okHttpClient.newCall(request);
+                call.enqueue(new Callback() {
+                    @Override
+                    public void onResponse(Response arg0) throws IOException {
+                        parserData(arg0.body().string());
+                    }
 
-			@Override
-			public void run() {
-				OkHttpClient okHttpClient = new OkHttpClient();
-				// 创建一个request
-				Request request = new Request.Builder().url(url).build();
-				Call call = okHttpClient.newCall(request);
-				call.enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Request arg0, IOException arg1) {
+                    }
+                });
+            }
+        }).start();
 
-					@Override
-					public void onResponse(Response arg0) throws IOException {
-						parserData(arg0.body().string());
-					}
+    }
 
-					@Override
-					public void onFailure(Request arg0, IOException arg1) {
-					}
-				});
-			}
-		}).start();
-	}
+    /**
+     * 解析json数据
+     *
+     * @param string
+     */
+    private void parserData(String string) {
+        List<NewTop100> newsDatas = null;
+        Gson gson = new Gson();
+        if (!Utils.isEmpty(string)) {
+            try {
+                JSONObject jsonObject = new JSONObject(string);
+                JSONArray top100 = jsonObject.getJSONArray("list");
+                newsDatas = new ArrayList<NewTop100>();
+                for (int i = 0; i < top100.length(); i++) {
+                    NewTop100 item = gson.fromJson(top100.get(i).toString(), new TypeToken<NewTop100>() {
+                    }.getType());
+                    newsDatas.add(item);
+                }
+                setListViewAdapter(newsDatas);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
-	/**
-	 * 解析json数据
-	 * 
-	 * @param string
-	 */
-	private void parserData(String string) {
-		List<NewTop100> newsDatas = null;
-		Gson gson = new Gson();
-		if (!Utils.isEmpty(string)) {
-			try {
-				JSONObject jsonObject = new JSONObject(string);
-				JSONArray top100 = jsonObject.getJSONArray("list");
-				newsDatas = new ArrayList<NewTop100>();
-				for (int i = 0; i < top100.length(); i++) {
-					NewTop100 item = gson.fromJson(top100.get(i).toString(), new TypeToken<NewTop100>() {
-					}.getType());
-					newsDatas.add(item);
-				}
-				setListViewAdapter(newsDatas);
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	/**
-	 * Adapter
-	 * 
-	 * @param newsDatas
-	 */
-	private void setListViewAdapter(List<NewTop100> newsDatas) {
-		mAdapter = new NewsTop100LVAdapter(this, newsDatas);
-		mListView.setAdapter(mAdapter);
-	}
+    /**
+     * Adapter
+     *
+     * @param newsDatas
+     */
+    private void setListViewAdapter(List<NewTop100> newsDatas) {
+        mAdapter = new NewsTop100LVAdapter(this, newsDatas);
+        mListView.setAdapter(mAdapter);
+    }
 }

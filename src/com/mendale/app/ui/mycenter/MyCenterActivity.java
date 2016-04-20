@@ -23,6 +23,9 @@ import com.mendale.app.R;
 import com.mendale.app.constants.URLS;
 import com.mendale.app.pojo.MemberPojo;
 import com.mendale.app.ui.base.BaseActivity;
+import com.mendale.app.ui.home.MainPageActivity;
+import com.mendale.app.ui.home.fragment.RecordFragment;
+import com.mendale.app.ui.home.menu.UpLoadCourseActivity;
 import com.mendale.app.ui.mycenter.setting.MarkManActivity;
 import com.mendale.app.utils.ExitApplication;
 import com.mendale.app.utils.Utils;
@@ -176,7 +179,7 @@ public class MyCenterActivity extends BaseActivity implements OnClickListener,
 	/**
 	 * 弹出选择相册的dialog
 	 * 
-	 * @param view
+	 * @param
 	 */
 	public void showPhoneDialog(final int flag) {
 		showDigLog("相册", "取消", new OnClickListener() {
@@ -200,6 +203,7 @@ public class MyCenterActivity extends BaseActivity implements OnClickListener,
 	 */
 	@Override
 	public void onClick(View v) {
+		Intent intent=new Intent(this,MainPageActivity.class);
 		switch (v.getId()) {
 		case R.id.mycenter_background_image:// 背景
 			showPhoneDialog(1);
@@ -212,7 +216,7 @@ public class MyCenterActivity extends BaseActivity implements OnClickListener,
 		case R.id.mycenter_mysteward:// 发布教程
 			mycenter_mysteward.setBackgroundColor(getResources()
 					.getColor(R.color.gray_x));
-			startActivity(LaunchCourseActivity.class);
+			startActivity(UpLoadCourseActivity.class);
 			break;
 		case R.id.mycenter_rightscent:// 收藏教程
 			mycenter_rightscent.setBackgroundColor(getResources().getColor(
@@ -222,12 +226,15 @@ public class MyCenterActivity extends BaseActivity implements OnClickListener,
 		case R.id.mycenter_setting:// 发布记录
 			mycenter_setting.setBackgroundColor(getResources().getColor(
 					R.color.gray_x));
-			startActivity(LaunchRecordActivity.class);
+			intent.putExtra("recordflag",1);
+			startActivity(intent);
 			break;
 		case R.id.mycenter_serve://收藏记录
 			mycenter_serve.setBackgroundColor(getResources().getColor(
 					R.color.gray_x));
-			startActivity(CollectRecordActivity.class);
+//			startActivity(CollectRecordActivity.class);
+			intent.putExtra("recordflag",2);
+			startActivity(intent);
 			break;
 		case R.id.mycenter_background_view:// 服务记录
 			showPhoneDialog(1);

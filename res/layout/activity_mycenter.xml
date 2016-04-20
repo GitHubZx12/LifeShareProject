@@ -339,7 +339,7 @@
                         <TextView
                             style="@style/mycenter_commontext"
                             android:layout_marginTop="15dp"
-                            android:text="发布记录" />
+                            android:text="收藏记录" />
                     </LinearLayout>
 
                     <View
@@ -368,7 +368,7 @@
                         <TextView
                             style="@style/mycenter_commontext"
                             android:layout_marginTop="15dp"
-                            android:text="收藏记录" />
+                            android:text="发布记录" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
