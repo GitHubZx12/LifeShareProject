@@ -2,18 +2,18 @@ package com.mendale.app.adapters;
 
 import java.util.List;
 
+import com.mendale.app.R;
+import com.mendale.app.utils.imageUtils.RoundImageView;
+import com.mendale.app.vo.RecordItemBean;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.mendale.app.R;
-import com.mendale.app.utils.imageUtils.RoundImageView;
-import com.mendale.app.vo.RecordItemBean;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
  * 课程详情xiangListView
