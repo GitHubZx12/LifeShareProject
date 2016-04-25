@@ -1,6 +1,5 @@
 package com.mendale.app.adapters;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.mendale.app.R;
@@ -11,8 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 /**
  * 上传--材料
@@ -42,26 +41,15 @@ public class UpLoadAddMaterialAdaper extends BaseAdapter {
 		return position;
 	}
 
-	public void getStr(int pos){
-		String name=holder.name.getText().toString();
-		String amount=holder.amount.getText().toString();
-		
-		MaterialPoJo mp=new MaterialPoJo();
-		mp.setName(name);
-		mp.setDesc(amount);
-		mp.setFlag(false);
-		text.add(mp);
-		notifyDataSetChanged();
-	}
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		 holder = new ViewHolder();
 		if (convertView == null) {
 			convertView = mInflater.inflate(R.layout.listview_item_material, null);
 			holder.del = (ImageButton) convertView
 					.findViewById(R.id.iv_material_del);
-			holder.name = (EditText) convertView
+			holder.name = (TextView)convertView
 					.findViewById(R.id.et_material_name);
-			holder.amount = (EditText) convertView
+			holder.amount = (TextView) convertView
 					.findViewById(R.id.et_material_amount);
 			convertView.setTag(holder);
 		} else {
@@ -81,9 +69,9 @@ public class UpLoadAddMaterialAdaper extends BaseAdapter {
 	}
 
 	public final class ViewHolder {
-		public EditText name;
+		public TextView name;
 		public ImageButton del;
-		public EditText amount;
+		public TextView amount;
 
 	}
 }
