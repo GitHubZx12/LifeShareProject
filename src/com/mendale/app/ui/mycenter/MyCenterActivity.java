@@ -4,7 +4,9 @@ import java.io.File;
 import java.util.Date;
 
 import com.mendale.app.R;
+import com.mendale.app.application.MobileApplication;
 import com.mendale.app.constants.URLS;
+import com.mendale.app.pojo.LoginUser;
 import com.mendale.app.pojo.MemberPojo;
 import com.mendale.app.ui.base.BaseActivity;
 import com.mendale.app.ui.home.MainPageActivity;
@@ -36,13 +38,10 @@ import android.widget.TextView;
 /**
  * 我的主界面
  * 
- * @author ouyanghao
  * 
  */
-public class MyCenterActivity extends BaseActivity implements OnClickListener,
-		OnTouchListener {
+public class MyCenterActivity extends BaseActivity implements OnClickListener {
 
-	/** 本界面用到的控件 */
 	/**
 	 * 背景
 	 */
@@ -68,48 +67,44 @@ public class MyCenterActivity extends BaseActivity implements OnClickListener,
 	 */
 	private ImageView mycenter_sex_image;
 	/**
-	 * 积分
+	 * 城市
 	 */
 	private TextView mycenter_total;
 	/**
-	 * vip级别图标
+	 * 级别图标
 	 */
 	private ImageView mycenter_vip_image;
 	/**
-	 * vip级别名称
-	 */
-	private TextView mycenter_vip_name;
-	/**
-	 * 我的管家
+	 * 发布教程
 	 */
 	private LinearLayout mycenter_mysteward;
 	/**
-	 * 权益中心
+	 * 收藏教程
 	 */
 	private LinearLayout mycenter_rightscent;
-	/**返回*/
-	private ImageView iv_back;
 	/**
-	 * 服务记录
+	 * 收藏记录
 	 */
 	private LinearLayout mycenter_serve;
 	/**
-	 * 设置
+	 * 发布记录
 	 */
-	
+	private LinearLayout mycenter_setting;
+	/**
+	 * 返回
+	 */
+	private ImageView iv_back;
 	private MyScrollView scrollview;
 	private TextView view;
-	LinearLayout mycenter_setting;
 	private MemberPojo memberbean;
 	private Context context;
-	
 	private int current_id;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_mycenter);
-		/**加入全局退出队列------------规范：都要加*/
+		/** 加入全局退出队列------------规范：都要加 */
 		ExitApplication.getInstance().addAllActivity(this);
 		init();
 		setLinstener();
@@ -126,14 +121,12 @@ public class MyCenterActivity extends BaseActivity implements OnClickListener,
 		mycenter_sex_image = (ImageView) findViewById(R.id.mycenter_sex_image);
 		mycenter_total = (TextView) findViewById(R.id.mycenter_total);
 		mycenter_vip_image = (ImageView) findViewById(R.id.mycenter_vip_image);
-		mycenter_vip_name = (TextView) findViewById(R.id.mycenter_vip_name);
 		mycenter_mysteward = (LinearLayout) findViewById(R.id.mycenter_mysteward);
 		mycenter_rightscent = (LinearLayout) findViewById(R.id.mycenter_rightscent);
 		mycenter_serve = (LinearLayout) findViewById(R.id.mycenter_serve);
 		mycenter_setting = (LinearLayout) findViewById(R.id.mycenter_setting);
 		mycenter_AllData = (LinearLayout) findViewById(R.id.mycenter_AllData);
-		iv_back=(ImageView) findViewById(R.id.iv_mycenter_back);
-
+		iv_back = (ImageView) findViewById(R.id.iv_mycenter_back);
 		view = (TextView) findViewById(R.id.mycenter_background_view);
 		scrollview = (MyScrollView) findViewById(R.id.myScrollView);
 		scrollview.setImageView(mycenter_background_image);
@@ -144,14 +137,13 @@ public class MyCenterActivity extends BaseActivity implements OnClickListener,
 	 * 给控件赋值
 	 */
 	private void initData() {
+		MobileApplication application = (MobileApplication) getApplication();
 		mycenter_background_image.setImageResource(R.drawable.crafter_personal_bg);
 		mycenter_head_image.setImageResource(R.drawable.defult_avator);
-		mycenter_name.setText("陈女士");
+		mycenter_name.setText(application.getmUserInfo().getUserName());
 		mycenter_total.setText("江苏徐州");
-		mycenter_vip_name.setText("一级");
 		mycenter_vip_image.setImageResource(R.drawable.lv1);
 		mycenter_sex_image.setImageResource(R.drawable.vip_icon_wowam);
-		
 	}
 
 	/**
@@ -175,194 +167,57 @@ public class MyCenterActivity extends BaseActivity implements OnClickListener,
 	}
 
 	/**
-	 * 弹出选择相册的dialog
-	 * 
-	 * @param
-	 */
-	public void showPhoneDialog(final int flag) {
-		showDigLog("相册", "取消", new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				Utils.openSysPhone(flag, MyCenterActivity.this);
-				closeDialog();
-			}
-		}, new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				closeDialog();
-			}
-		});
-	}
-
-	/**
 	 * onclick 事件
 	 */
 	@Override
 	public void onClick(View v) {
-		Intent intent=new Intent(this,MainPageActivity.class);
 		switch (v.getId()) {
-		case R.id.mycenter_background_image:// 背景
-			showPhoneDialog(1);
-			break;
-		case R.id.mycenter_AllData:// 为了不触发背景点击事件
-			break;
-		case R.id.mycenter_data:// 资料
-			startActivity(MarkManActivity.class);
-			break;
-		case R.id.mycenter_mysteward:// 发布教程
-			mycenter_mysteward.setBackgroundColor(getResources()
-					.getColor(R.color.gray_x));
-			startActivity(LaunchCourseActivity.class);
-			break;
-		case R.id.mycenter_rightscent:// 收藏教程
-			mycenter_rightscent.setBackgroundColor(getResources().getColor(
-					R.color.gray_x));
-			startActivity(CollectCourseActivity.class);
-			break;
-		case R.id.mycenter_setting:// 发布记录
-			mycenter_setting.setBackgroundColor(getResources().getColor(
-					R.color.gray_x));
-//			intent.putExtra("recordflag",1);
-			startActivity(LaunchRecordActivity.class);
-			break;
-		case R.id.mycenter_serve://收藏记录
-			mycenter_serve.setBackgroundColor(getResources().getColor(
-					R.color.gray_x));
-			startActivity(CollectRecordActivity.class);
-//			intent.putExtra("recordflag",2);
-//			startActivity(intent);
-			break;
-		case R.id.mycenter_background_view:// 服务记录
-			showPhoneDialog(1);
-			break;
-		case R.id.iv_mycenter_back:
-			this.finish();
-			break;
+			case R.id.mycenter_background_image:// 背景
+				// showPhoneDialog(1);
+				break;
+			case R.id.mycenter_AllData:// 为了不触发背景点击事件
+				break;
+			case R.id.mycenter_data:// 资料
+				Intent intent = new Intent(this, MarkManActivity.class);
+				startActivityForResult(intent, 2);
+				break;
+			case R.id.mycenter_mysteward:// 发布教程
+				mycenter_mysteward.setBackgroundColor(getResources().getColor(R.color.gray_x));
+				startActivity(LaunchCourseActivity.class);
+				break;
+			case R.id.mycenter_rightscent:// 收藏教程
+				mycenter_rightscent.setBackgroundColor(getResources().getColor(R.color.gray_x));
+				startActivity(CollectCourseActivity.class);
+				break;
+			case R.id.mycenter_setting:// 发布记录
+				mycenter_setting.setBackgroundColor(getResources().getColor(R.color.gray_x));
+				startActivity(LaunchRecordActivity.class);
+				break;
+			case R.id.mycenter_serve:// 收藏记录
+				mycenter_serve.setBackgroundColor(getResources().getColor(R.color.gray_x));
+				startActivity(CollectRecordActivity.class);
+				break;
+			case R.id.mycenter_background_view:// 背景
+				// showPhoneDialog(1);
+				break;
+			case R.id.iv_mycenter_back:
+				this.finish();
+				break;
 		}
-	}
-
-	@Override
-	public boolean onTouchEvent(MotionEvent event) {
-		return super.onTouchEvent(event);
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (resultCode == Activity.RESULT_OK) {
-			String sdStatus = Environment.getExternalStorageState();
-			if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) { // 检测sd是否可用
-				showToast("请确认已经插入SD卡");
-				return;
-			}
-			if (data.getData() == null) {
-				showToast("返回路径为空");
-				return;
-			}
-			Uri originalUri = data.getData(); // 在系统中图片的路径
-			if (originalUri == null) {
-				showToast("图片不存在");
-				return;
-			}
-			String path = getrealPath(originalUri);
-			switch (requestCode) {
-			case 1:
-				mycenter_background_image.setTag(path);
-				ImageOpera.getInstance(context).loadImage(
-						"file://" + path,
-						mycenter_background_image,
-						new imageListener("background"));
+		super.onActivityResult(requestCode, resultCode, data);
+		switch (requestCode) {
+			case 2:
+				LoginUser loginUser=(LoginUser) data.getSerializableExtra("userinof");
+				showToast(loginUser.toString());
 				break;
 			default:
 				break;
-			}
 		}
+		
+		
 	}
-
-	/**
-	 * 这里没有用类实现接口是因为需要传名字过来，来给图片命名。
-	 * 
-	 * @author jsx
-	 * 
-	 */
-	class imageListener implements ImageLoadingListener {
-
-		private String name;
-
-		private imageListener(String name) {
-			this.name = name;
-		}
-
-		@Override
-		public void onLoadingCancelled(String arg0, View arg1) {
-			System.out.println(1);
-		}
-
-		@Override
-		public void onLoadingComplete(String arg0, View arg1, Bitmap arg2) {
-			if (arg2 != null) {
-				File file = new File(URLS.SDCARD_DIR + "ButlerImage");
-				if (!file.exists()) {
-					file.mkdirs();
-				}
-				try {
-					String path = file.getCanonicalPath() + "/" + new Date().getTime() + ".jpg";
-					// 保存到本地
-					ImageOpera.getInstance(context).compressToFile(arg2, path,
-							200).recycle();
-					arg1.setTag(path);
-					// 假如修改背景，直接上传
-//					if (arg1.getId() == R.id.head_image) {
-//						showLoadDialog("正在修改背景,请稍候");
-//						closeLoadDialog();
-//						showToast("修改背景成功");
-//					}
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-
-		@Override
-		public void onLoadingFailed(String arg0, View arg1, FailReason arg2) {
-			System.out.println(1);
-		}
-
-		@Override
-		public void onLoadingStarted(String arg0, View arg1) {
-			System.out.println(1);
-		}
-	}
-
-	/**
-	 * 得到图片所在的sd卡路径
-	 * 
-	 * @param mImageCaptureUri
-	 *            系统路径
-	 */
-	@SuppressWarnings("finally")
-	private String getrealPath(Uri mImageCaptureUri) {
-		String path = null;
-		Cursor cursor = null;
-		try {
-			cursor = this.getContentResolver().query(mImageCaptureUri, null,
-					null, null, null);
-			if (cursor.moveToFirst()) {
-				path = cursor.getString(cursor.getColumnIndex("_data"));// 获取绝对路径
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			cursor.close();
-			return path;
-		}
-	}
-
-	
-	public boolean onTouch(View v, MotionEvent event) {
-		return false;
-	}
-
 }

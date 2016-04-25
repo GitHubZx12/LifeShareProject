@@ -29,7 +29,7 @@
             android:textColor="@color/text_color_light"
             android:textSize="17sp" />
 
-        <ImageView
+        <com.mendale.app.utils.imageUtils.RoundImageView
             android:id="@+id/iv_changeHead"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -54,17 +54,19 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:text="账号"
+            android:text="姓名"
             android:textColor="@color/text_color_light"
             android:textSize="17sp" />
 
-        <TextView
+        <EditText
+            android:id="@+id/et_mark_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/tv_accout"
             android:layout_alignBottom="@+id/tv_accout"
             android:layout_centerHorizontal="true"
-            android:text="请输入您的账号"
+            android:text="请输入您的姓名"
+            android:background="@color/white"
             android:textColor="@color/text_tishi"
             android:textSize="17sp" />
 
@@ -85,17 +87,19 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:text="姓名"
+            android:text="生日"
             android:textColor="@color/text_color_light"
             android:textSize="17sp" />
 
-        <TextView
+        <EditText
+            android:id="@+id/et_mark_birthy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/tv_name"
             android:layout_alignBottom="@+id/tv_name"
             android:layout_centerHorizontal="true"
-            android:text="请输入您的姓名"
+            android:text="请输入您的生日"
+            android:background="@color/white"
             android:textColor="@color/text_tishi"
             android:textSize="17sp" />
 
@@ -120,7 +124,8 @@
             android:textColor="@color/text_color_light"
             android:textSize="17sp" />
 
-        <TextView
+        <EditText
+            android:id="@+id/et_mark_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/tv_phone"
@@ -128,6 +133,7 @@
             android:layout_centerHorizontal="true"
             android:text="请输入您的手机号码"
             android:textColor="@color/text_tishi"
+            android:background="@color/white"
             android:textSize="17sp" />
 
     </RelativeLayout>
@@ -151,7 +157,8 @@
             android:textColor="@color/text_color_light"
             android:textSize="17sp" />
 
-        <TextView
+        <EditText
+            android:id="@+id/et_mark_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/tv_email"
@@ -159,6 +166,7 @@
             android:layout_centerHorizontal="true"
             android:text="请输入您的邮箱地址"
             android:textColor="@color/text_tishi"
+            android:background="@color/white"
             android:textSize="17sp" />
 
     </RelativeLayout>

@@ -4,11 +4,16 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.mendale.app.R;
+import com.mendale.app.pojo.LoginUser;
+import com.mendale.app.ui.base.BaseActivity;
+import com.mendale.app.utils.CheckUtils;
+import com.mendale.app.utils.DialogUtil;
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MotionEvent;
@@ -21,12 +26,6 @@ import android.widget.Toast;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
-
-import com.mendale.app.R;
-import com.mendale.app.pojo.LoginUser;
-import com.mendale.app.ui.base.BaseActivity;
-import com.mendale.app.utils.CheckUtils;
-import com.mendale.app.utils.DialogUtil;
 
 /**
  * 注册
@@ -100,44 +99,48 @@ public class RegisterActivity extends BaseActivity implements OnClickListener, O
 	public void onClick(View arg0) {
 		switch (arg0.getId()) {
 			case R.id.register_btn_confirm:// 注册
-				String name = userName.getText().toString();// 获得用户输入的用户名
+				final String name = userName.getText().toString();// 获得用户输入的用户名
 				String p1 = password.getText().toString();// 获得用户输入的密码
 				if (CheckUtils.checkPwd(this, p1, password)) {
 					// 与已经存在的用户进行判断（不可重复）
 					BmobQuery<LoginUser> bmobQuery = new BmobQuery<LoginUser>();
 					bmobQuery.addWhereEqualTo("userName", name);
-					bmobQuery.findObjects(RegisterActivity.this, new FindListener<LoginUser>() {
-
+					bmobQuery.findObjects(this, new FindListener<LoginUser>() {
+						
 						@Override
-						public void onSuccess(List<LoginUser> loginUsers) {// 查询成功，说明重复
-							String result="";
-							for (LoginUser loginUser : loginUsers) {
-								result+=loginUser.getUserName();
+						public void onSuccess(List<LoginUser> arg0) {
+							for(int i=0;i<arg0.size();i++){
+								if(name.equals(arg0.get(i).getUserName())){
+									Toast.makeText(RegisterActivity.this,"用户名已经存在", Toast.LENGTH_SHORT).show();
+									userName.setText(null);
+									password.setText(null);
+									return;
+								}
 							}
-							//查询到此用户名，说明已经存在，则不可注册
-							if(!userName.getText().toString().equals(result)){
-								LoginUser loginUser = new LoginUser();
-								loginUser.setUserName(userName.getText().toString().trim());
-								loginUser.setPassword(password.getText().toString().trim());
-								loginUser.save(RegisterActivity.this, new SaveListener() {
-
-									@Override
-									public void onSuccess() {
-										registerSuccess("注册成功");
-									}
-
-									@Override
-									public void onFailure(int arg0, String arg1) {
-										// TODO Auto-generated method stub
-									}
-								});
-							}else{
-								Toast.makeText(RegisterActivity.this,"此用户名已经存在", Toast.LENGTH_SHORT).show();;
-								userName.setText(null);
-								password.setText(null);
-							}
+							//跳转
+							Intent intent=new Intent(RegisterActivity.this,LoginActivity.class);
+							intent.putExtra("username", userName.getText().toString());
+							intent.putExtra("password", password.getText().toString());
+							startActivity(intent);
+							//保存到bmob云端
+							LoginUser user=new LoginUser();
+							user.setUserName(userName.getText().toString());
+							user.setPassword(password.getText().toString());
+							user.save(RegisterActivity.this, new SaveListener() {
+								
+								@Override
+								public void onSuccess() {
+									showToast("注册成功");
+								}
+								
+								@Override
+								public void onFailure(int arg0, String arg1) {
+									showToast("注册失败");
+								}
+							});
+							
 						}
-
+						
 						@Override
 						public void onError(int arg0, String arg1) {
 							
@@ -149,7 +152,6 @@ public class RegisterActivity extends BaseActivity implements OnClickListener, O
 				break;
 		}
 	}
-
 	@SuppressLint("ClickableViewAccessibility")
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {

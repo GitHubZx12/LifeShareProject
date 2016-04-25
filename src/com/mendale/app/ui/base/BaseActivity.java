@@ -39,6 +39,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mendale.app.R;
+import com.mendale.app.ui.mycenter.MyCenterActivity;
 import com.mendale.app.utils.ExitApplication;
 import com.mendale.app.utils.Utils;
 

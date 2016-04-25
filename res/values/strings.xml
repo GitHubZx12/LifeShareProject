@@ -175,6 +175,7 @@
     <string name="hot_category">热门类别</string>
     
     <string name="see_more">查看更多</string>
+    <dimen name="textsize_m">15sp</dimen>
      
     
 </resources>

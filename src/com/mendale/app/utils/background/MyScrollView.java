@@ -101,7 +101,7 @@ public class MyScrollView extends ScrollView {
 				break;
 			case MotionEvent.ACTION_UP:
 				if (Math.abs(lineUp_current_Top-ev.getRawX())<20  &&Math.abs(lineUp_current_Bottom-ev.getRawY())<20) {
-					((MyCenterActivity) context).showPhoneDialog(1);
+//					((MyCenterActivity) context).showPhoneDialog(1);
 					return;
 				}
 				/** 回缩动画 **/

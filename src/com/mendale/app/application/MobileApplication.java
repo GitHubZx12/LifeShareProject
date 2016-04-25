@@ -29,10 +29,12 @@ public class MobileApplication extends Application {
 	public LoginUser getmUserInfo() {
 		return mUserInfo;
 	}
+	
 
 	public void setmUserInfo(LoginUser mUserInfo) {
 		this.mUserInfo = mUserInfo;
 	}
+	
 
 	public String getCertUserName() {
 		return certUserName;

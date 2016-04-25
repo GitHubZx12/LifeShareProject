@@ -1,6 +1,7 @@
 package com.mendale.app.ui.home;
 
 import com.mendale.app.R;
+import com.mendale.app.application.MobileApplication;
 import com.mendale.app.ui.home.fragment.CourseFragment;
 import com.mendale.app.ui.home.fragment.HomeFragment;
 import com.mendale.app.ui.home.fragment.QAFragment;
@@ -15,6 +16,7 @@ import com.mendale.app.utils.ExitApplication;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.slidingmenu.lib.SlidingMenu;
 
+import android.app.Application;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -149,6 +151,8 @@ public class MainPageActivity extends FragmentActivity implements OnClickListene
 		iv_menu_icon = (ImageView) findViewById(R.id.iv_menu_icon);
 		iv_menu_setting = (ImageView) findViewById(R.id.iv_menu_set);
 		//
+		MobileApplication application=(MobileApplication) this.getApplication();
+		tv_menu_login.setText(application.getmUserInfo().getUserName());
 	}
 
 	/**

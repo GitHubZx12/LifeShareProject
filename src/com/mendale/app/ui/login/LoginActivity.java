@@ -61,6 +61,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	private Dialog loading;
 	/** 友盟第三方登录 */
 	private UMSocialService mController;
+	private boolean isFirstLogin = true;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -160,48 +161,15 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		/**使用SSO授权必须添加如下代码 */  
-	    UMSsoHandler ssoHandler = mController.getConfig().getSsoHandler(requestCode);
-	    if(ssoHandler != null){
-	       ssoHandler.authorizeCallBack(requestCode, resultCode, data);
-	    }
+		/** 使用SSO授权必须添加如下代码 */
+		UMSsoHandler ssoHandler = mController.getConfig().getSsoHandler(requestCode);
+		if (ssoHandler != null) {
+			ssoHandler.authorizeCallBack(requestCode, resultCode, data);
+		}
 	};
 
 	/**
-	 * 登录方法 (请求网路的)
-	 */
-	// private void loginM() {
-	// // 用户信息上传，封装到map集合，传递到接口中
-	// final Map<String, String> map2 = new HashMap<String, String>();
-	// map2.put("loginUpload.bname", username.getText().toString());
-	// map2.put("loginUpload.password", password.getText().toString());
-	// Thread thread = new Thread(new Runnable() {
-	//
-	// @Override
-	// public void run() {
-	// // 输入客户信息并登录
-	// LoginTask loginTask = new LoginTask(LoginActivity.this);
-	// String logReturn = loginTask.sendLogin(map2, "UTF-8");
-	//// String logReturn = "S";
-	// if (logReturn.equals("S")) {
-	// Message msg = handler.obtainMessage();
-	// msg.what = 1;
-	// msg.sendToTarget();
-	// }
-	// else {
-	// Message msg = handler.obtainMessage();
-	// msg.what = 2;
-	// Bundle bundle = new Bundle();
-	// bundle.putString("prompt", logReturn);
-	// msg.setData(bundle);
-	// msg.sendToTarget();
-	// }
-	// }
-	// });
-	// thread.start();
-	// }
-	/**
-	 * 登陆方法，先用bmob模拟一下
+	 * 登陆方法，bmob
 	 */
 	private void loginM() {
 		// 查找Person表里面id为6b6c11c537的数据
@@ -241,44 +209,28 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	@SuppressLint("HandlerLeak")
 	private Handler handler = new Handler() {
 
+		@SuppressLint("CommitPrefEdits")
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 				case 1:
 					// 成功
 					dismissProgressDialog();
-					showToast("登陆成功!");
 					// 保存用户信息
-					String sapaccount = username.getText().toString();// 用户名
-					String psd = password.getText().toString();// 密码
 					SharedPreferences sp = LoginActivity.this.getSharedPreferences("user", MODE_PRIVATE);
-					String name = sp.getString("userName", null);
-					String pwd = sp.getString("password", null);
-					// 没有,则保存
-					if (TextUtils.isEmpty(name) && TextUtils.isEmpty(pwd)) {
-						// 获取application
-						Application application = LoginActivity.this.getApplication();
-						MobileApplication mApplication = (MobileApplication) application;
-						// 得到平台账号密码
-						LoginUser loginUser = new LoginUser();
-						loginUser.setUserName(name);
-						loginUser.setPassword(pwd);
-						Editor edit = sp.edit();
-						edit.putString("userName", name);
-						edit.putString("password", pwd);
-						// 插入后取出存application
-						mApplication.setmUserInfo(loginUser);
-					}
-					else {
-						// 存入application;
-						Application application = LoginActivity.this.getApplication();
-						MobileApplication mApplication = (MobileApplication) application;
-						// 如果数据库里有这个账号的信息 则取出存入application;
-						LoginUser loginUser = new LoginUser();
-						loginUser.setUserName(name);
-						loginUser.setPassword(pwd);
-						mApplication.setmUserInfo(loginUser);
-					}
+					Editor editor = sp.edit();
+					editor.putBoolean("isFirstLogin", false);
+					editor.putString("userName", username.getText().toString());
+					editor.putString("password", password.getText().toString());
+					editor.commit();//不要忘记
+					// 获取application
+					Application application = LoginActivity.this.getApplication();
+					MobileApplication mApplication = (MobileApplication) application;
+					// 得到平台账号密码
+					LoginUser loginUser = new LoginUser();
+					loginUser.setUserName(username.getText().toString());
+					loginUser.setPassword(password.getText().toString());
+					mApplication.setmUserInfo(loginUser);
 					// 跳转到主页
 					startActivity(MainPageActivity.class);
 					LoginActivity.this.finish();
@@ -324,7 +276,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	 * 微博登陆
 	 */
 	private void loginSina() {
-		//配置sina SSO(免登录)开关
+		// 配置sina SSO(免登录)开关
 		mController.getConfig().setSsoHandler(new SinaSsoHandler());
 		// 授权接口
 		mController.doOauthVerify(this, SHARE_MEDIA.SINA, new UMAuthListener() {
@@ -362,26 +314,29 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	 */
 	private void getSinaData() {
 		mController.getPlatformInfo(LoginActivity.this, SHARE_MEDIA.SINA, new UMDataListener() {
-		    @Override
-		    public void onStart() {
-		        Toast.makeText(LoginActivity.this, "获取平台数据开始...", Toast.LENGTH_SHORT).show();
-		    }                                              
-		    @Override
-		        public void onComplete(int status, Map<String, Object> info) {
-		            if(status == 200 && info != null){
-		                StringBuilder sb = new StringBuilder();
-		                Set<String> keys = info.keySet();
-		                for(String key : keys){
-		                   sb.append(key+"="+info.get(key).toString()+"\r\n");
-		                }
-		                Log.d("TestData",sb.toString());
-		            }else{
-		               Log.d("TestData","发生错误："+status);
-		           }
-		        }
-		});
 
+			@Override
+			public void onStart() {
+				Toast.makeText(LoginActivity.this, "获取平台数据开始...", Toast.LENGTH_SHORT).show();
+			}
+
+			@Override
+			public void onComplete(int status, Map<String, Object> info) {
+				if (status == 200 && info != null) {
+					StringBuilder sb = new StringBuilder();
+					Set<String> keys = info.keySet();
+					for (String key : keys) {
+						sb.append(key + "=" + info.get(key).toString() + "\r\n");
+					}
+					Log.d("TestData", sb.toString());
+				}
+				else {
+					Log.d("TestData", "发生错误：" + status);
+				}
+			}
+		});
 	}
+
 	private void loginWeiXin() {
 		// TODO Auto-generated method stub
 	}
