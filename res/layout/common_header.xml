@@ -10,7 +10,7 @@
         android:id="@+id/navigationLayout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/white"
+        android:background="@color/title_background"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -32,7 +32,7 @@
                     android:layout_height="30dp"
                     android:background="@null"
                     android:gravity="center"
-                    android:src="@drawable/icon_back"
+                    android:src="@drawable/crafter_cguide_lastarrow_yes"
                     android:textColor="@color/white"
                     android:textSize="18sp" />
 
@@ -43,7 +43,7 @@
                     android:background="@null"
                     android:gravity="center"
                     android:text="返回"
-                    android:textColor="@color/title_color"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/title_textsize18"
                     android:visibility="visible" />
             </LinearLayout>
@@ -60,7 +60,7 @@
                     android:layout_height="44dp"
                     android:background="@null"
                     android:gravity="center"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/title_textsize22" />
 
                 <ImageButton
@@ -89,7 +89,7 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:gravity="center"
-                    android:textColor="@color/title_color"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/title_textsize18"
                     android:visibility="gone" />
 

@@ -1,5 +1,20 @@
 package com.mendale.app.ui.home;
 
+import com.mendale.app.R;
+import com.mendale.app.ui.home.fragment.CourseFragment;
+import com.mendale.app.ui.home.fragment.HomeFragment;
+import com.mendale.app.ui.home.fragment.QAFragment;
+import com.mendale.app.ui.home.fragment.RecordFragment;
+import com.mendale.app.ui.home.menu.CourseClassifyActivity;
+import com.mendale.app.ui.home.menu.HelpMakeCourseActivity;
+import com.mendale.app.ui.home.menu.NewsActivity;
+import com.mendale.app.ui.home.menu.SearchCourseActivity;
+import com.mendale.app.ui.home.menu.fragment.TitleActivity;
+import com.mendale.app.ui.mycenter.MyCenterActivity;
+import com.mendale.app.utils.ExitApplication;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.slidingmenu.lib.SlidingMenu;
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -13,11 +28,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.AnimationUtils;
-import android.view.animation.RotateAnimation;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,21 +36,6 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.mendale.app.R;
-import com.mendale.app.ui.home.fragment.QAFragment;
-import com.mendale.app.ui.home.fragment.CourseFragment;
-import com.mendale.app.ui.home.fragment.HomeFragment;
-import com.mendale.app.ui.home.fragment.RecordFragment;
-import com.mendale.app.ui.home.menu.CourseClassifyActivity;
-import com.mendale.app.ui.home.menu.HelpMakeCourseActivity;
-import com.mendale.app.ui.home.menu.NewsActivity;
-import com.mendale.app.ui.home.menu.SearchCourseActivity;
-import com.mendale.app.ui.home.menu.UpLoadCourseActivity;
-import com.mendale.app.ui.mycenter.MyCenterActivity;
-import com.mendale.app.utils.ExitApplication;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.slidingmenu.lib.SlidingMenu;
 
 /**
  * 使用TabView的Activity
@@ -280,7 +275,7 @@ public class MainPageActivity extends FragmentActivity implements OnClickListene
 				menu.showMenu();
 				break;
 			case R.id.tv_menu_upload:// 上传教程
-				Intent intent = new Intent(this, UpLoadCourseActivity.class);
+				Intent intent = new Intent(this, TitleActivity.class);
 				startActivity(intent);
 				break;
 			case R.id.iv_menu_icon:// 个人信息详情

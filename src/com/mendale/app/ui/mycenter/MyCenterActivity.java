@@ -3,6 +3,20 @@ package com.mendale.app.ui.mycenter;
 import java.io.File;
 import java.util.Date;
 
+import com.mendale.app.R;
+import com.mendale.app.constants.URLS;
+import com.mendale.app.pojo.MemberPojo;
+import com.mendale.app.ui.base.BaseActivity;
+import com.mendale.app.ui.home.MainPageActivity;
+import com.mendale.app.ui.mycenter.setting.MarkManActivity;
+import com.mendale.app.utils.ExitApplication;
+import com.mendale.app.utils.Utils;
+import com.mendale.app.utils.background.MyScrollView;
+import com.mendale.app.utils.imageUtils.ImageOpera;
+import com.mendale.app.utils.imageUtils.RoundImageView;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -18,22 +32,6 @@ import android.view.View.OnTouchListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.mendale.app.R;
-import com.mendale.app.constants.URLS;
-import com.mendale.app.pojo.MemberPojo;
-import com.mendale.app.ui.base.BaseActivity;
-import com.mendale.app.ui.home.MainPageActivity;
-import com.mendale.app.ui.home.fragment.RecordFragment;
-import com.mendale.app.ui.home.menu.UpLoadCourseActivity;
-import com.mendale.app.ui.mycenter.setting.MarkManActivity;
-import com.mendale.app.utils.ExitApplication;
-import com.mendale.app.utils.Utils;
-import com.mendale.app.utils.background.MyScrollView;
-import com.mendale.app.utils.imageUtils.ImageOpera;
-import com.mendale.app.utils.imageUtils.RoundImageView;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 /**
  * 我的主界面

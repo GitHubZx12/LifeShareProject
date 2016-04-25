@@ -4,20 +4,17 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:background="@drawable/crafter_cguide_bg"
-    android:orientation="vertical"
-    android:paddingLeft="10dp"
-    android:paddingTop="10dp" >
+    android:orientation="vertical" >
 
-    <!-- 排行榜 -->
-
+    <!-- 评论 -->
+    
     <ListView
         android:id="@+id/listview_charts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:horizontalSpacing="15dp"
         android:numColumns="4"
-        android:verticalSpacing="15dp"
-        android:visibility="invisible" >
+        android:verticalSpacing="15dp" >
     </ListView>
 
     <LinearLayout

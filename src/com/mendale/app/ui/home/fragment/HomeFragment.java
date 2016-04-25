@@ -2,6 +2,18 @@ package com.mendale.app.ui.home.fragment;
 
 import java.util.List;
 
+import com.mendale.app.R;
+import com.mendale.app.adapters.DarenGVAdapter;
+import com.mendale.app.adapters.HotCourseGVAdapter;
+import com.mendale.app.adapters.HotTypeGVAdapter;
+import com.mendale.app.constants.DataURL;
+import com.mendale.app.tasks.HomeTask;
+import com.mendale.app.ui.home.ShowDetailsActivity;
+import com.mendale.app.vo.HomeAllList;
+import com.mendale.app.vo.HotCourseItemBean;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,18 +32,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.mendale.app.R;
-import com.mendale.app.adapters.DarenGVAdapter;
-import com.mendale.app.adapters.HotCourseGVAdapter;
-import com.mendale.app.adapters.HotTypeGVAdapter;
-import com.mendale.app.constants.DataURL;
-import com.mendale.app.tasks.HomeTask;
-import com.mendale.app.ui.home.ShowDetailsActivity;
-import com.mendale.app.vo.HomeAllList;
-import com.mendale.app.vo.HotCourseItemBean;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 public class HomeFragment extends Fragment implements OnClickListener,OnItemClickListener{
 

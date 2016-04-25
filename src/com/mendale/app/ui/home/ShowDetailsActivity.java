@@ -5,17 +5,22 @@ import java.util.List;
 
 import com.mendale.app.R;
 import com.mendale.app.adapters.DetailsPagerAdapter;
+import com.mendale.app.constants.Constants;
 import com.mendale.app.tasks.HotCourseDetailsTask;
 import com.mendale.app.vo.CourseDetailsItemBean;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.umeng.socialize.bean.LIKESTATUS;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.bean.SocializeEntity;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.controller.listener.SocializeListeners.SocializeClientListener;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.sso.UMSsoHandler;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -54,7 +59,12 @@ public class ShowDetailsActivity extends Activity implements
 	private int step;
 	private ImageLoader imageLoader;
 	//友盟分享相关
-	private UMSocialService mController;
+	UMSocialService mController = UMServiceFactory
+			.getUMSocialService(Constants.DESCRIPTOR);
+	UMSocialService controller = UMServiceFactory.getUMSocialService("com.umeng.like");
+	private Context mContext;
+	private int flag;
+
 	
 	private Handler mhandler=new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -81,6 +91,8 @@ public class ShowDetailsActivity extends Activity implements
 		getIntentData();
 		requestData();
 		
+		//7友盟评论相关
+		mContext=this;
 		//首先在您的Activity中添加如下成员变量
 		mController = UMServiceFactory.getUMSocialService("com.umeng.share");
 		// 设置分享内容
@@ -237,9 +249,7 @@ public class ShowDetailsActivity extends Activity implements
 		public void onClick(View v) {
 			switch (v.getId()) {
 			case R.id.details_2_fl:// 评论
-//				Intent intent = new Intent();
-//				intent.setClass(showDetailsActivity.this, UserCommentActivity.class);
-//				startActivity(intent);
+				mController.openComment(mContext, false);
 				break;
 
 			default:
@@ -256,7 +266,7 @@ public class ShowDetailsActivity extends Activity implements
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.details_iv_back:// 退
-
+			this.finish();
 			break;
 		case R.id.details_iv_material:// 材料
 //			Intent intent = new Intent();
@@ -267,9 +277,9 @@ public class ShowDetailsActivity extends Activity implements
 			// 动画、、服务器、插入到数据库中
 			Toast.makeText(this, "点赞", Toast.LENGTH_SHORT).show();
 			break;
-		case R.id.details_iv_collect:// 收集
+		case R.id.details_iv_collect:// 收藏
 			// 动画、、服务器、插入到数据库中
-			Toast.makeText(this, "收集", Toast.LENGTH_SHORT).show();
+		    Collection();
 			break;
 		case R.id.details_iv_share:// 分享
 			mController.getConfig().removePlatform(SHARE_MEDIA.RENREN, SHARE_MEDIA.DOUBAN);
@@ -280,6 +290,31 @@ public class ShowDetailsActivity extends Activity implements
 
 	}
 	
+	/**
+	 * 收藏
+	 */
+	
+	private void Collection() {
+		controller.likeChange(mContext, new SocializeClientListener() {
+		    @Override
+		    public void onStart() {
+		    }
+		    @Override
+		    public void onComplete(int status, SocializeEntity entity) {
+		    	if (entity != null) {
+					 LIKESTATUS likestatus =entity.getLikeStatus();
+					 if(likestatus.ordinal()==1){//
+						 collect.setImageResource(R.drawable.crafter_laud_no);
+						 Toast.makeText(ShowDetailsActivity.this, "收藏成功", Toast.LENGTH_SHORT).show();
+					 }else{
+						 collect.setImageResource(R.drawable.course_collect);
+						 Toast.makeText(ShowDetailsActivity.this, "取消收藏", Toast.LENGTH_SHORT).show();
+					 }
+				}
+		    }
+		});
+	}
+
 	/**
 	 * 友盟分享授权回调
 	 */

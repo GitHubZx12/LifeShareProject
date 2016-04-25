@@ -2,18 +2,30 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/title_background"
     android:orientation="vertical" >
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/common_header" />
 
     <EditText
         android:id="@+id/et_title"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:hint="请填写教程名称" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:hint="请填写教程名称"
+        android:minHeight="40dp" />
 
     <EditText
         android:id="@+id/et_title_descript"
         android:layout_width="match_parent"
-        android:layout_height="300dp" 
-        android:hint="请填写教程简介"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:hint="请填写教程简介"
+        android:minHeight="300dp" />
 
 </LinearLayout>
