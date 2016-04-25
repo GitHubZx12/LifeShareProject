@@ -1,8 +1,10 @@
 package com.mendale.app.adapters;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.mendale.app.R;
+import com.mendale.app.pojo.MaterialPoJo;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -20,9 +22,10 @@ import android.widget.ImageButton;
 public class UpLoadAddMaterialAdaper extends BaseAdapter {
 
 	private LayoutInflater mInflater;
-	private ArrayList<String> text;
+	private List<MaterialPoJo> text;
+	ViewHolder holder;
 
-	public UpLoadAddMaterialAdaper(Context context, ArrayList<String> text) {
+	public UpLoadAddMaterialAdaper(Context context, List<MaterialPoJo> text) {
 		this.mInflater = LayoutInflater.from(context);
 		this.text = text;
 	}
@@ -31,7 +34,7 @@ public class UpLoadAddMaterialAdaper extends BaseAdapter {
 		return text.size();
 	}
 
-	public Object getItem(int position) {
+	public MaterialPoJo getItem(int position) {
 		return text.get(position);
 	}
 
@@ -39,8 +42,19 @@ public class UpLoadAddMaterialAdaper extends BaseAdapter {
 		return position;
 	}
 
+	public void getStr(int pos){
+		String name=holder.name.getText().toString();
+		String amount=holder.amount.getText().toString();
+		
+		MaterialPoJo mp=new MaterialPoJo();
+		mp.setName(name);
+		mp.setDesc(amount);
+		mp.setFlag(false);
+		text.add(mp);
+		notifyDataSetChanged();
+	}
 	public View getView(final int position, View convertView, ViewGroup parent) {
-		ViewHolder holder = new ViewHolder();
+		 holder = new ViewHolder();
 		if (convertView == null) {
 			convertView = mInflater.inflate(R.layout.listview_item_material, null);
 			holder.del = (ImageButton) convertView
@@ -56,12 +70,12 @@ public class UpLoadAddMaterialAdaper extends BaseAdapter {
 		holder.del.setOnClickListener(new View.OnClickListener() {// 添加按钮
 
 					public void onClick(View v) {
-
 //						text.remove(text.size() - 1);// 删除按钮
 						text.remove(position);// 删除按钮
 						notifyDataSetChanged();
 					}
 				});
+	
 
 		return convertView;
 	}
