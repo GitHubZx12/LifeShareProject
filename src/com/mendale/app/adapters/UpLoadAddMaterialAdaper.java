@@ -55,6 +55,9 @@ public class UpLoadAddMaterialAdaper extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
+		//
+		holder.name.setText(text.get(position).getName());
+		holder.amount.setText(text.get(position).getDesc());
 		holder.del.setOnClickListener(new View.OnClickListener() {// 添加按钮
 
 					public void onClick(View v) {
