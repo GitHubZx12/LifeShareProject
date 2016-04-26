@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="180dp"
+    android:layout_height="wrap_content"
     android:orientation="vertical" >
 
     <!-- 材料 -->
@@ -12,22 +12,19 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:background="#ffffff"
-        android:orientation="vertical" >
+        android:orientation="horizontal" >
 
         <ImageView
             android:id="@+id/iv_replay_pic"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@null"
-            android:hint="请输入材料名称"
-            android:textColor="#000000"
-            android:textSize="12sp" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_launcher" />
 
         <TextView
             android:id="@+id/et_replay_desc"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@null"
+            android:text="mei"
             android:textColor="@color/black"
             android:textSize="12sp" />
     </LinearLayout>
@@ -36,9 +33,10 @@
         android:id="@+id/iv_replay_del"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/ll_fragment_material"
-        android:layout_centerVertical="true"
         android:background="@null"
+        android:layout_margin="5dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
         android:src="@drawable/crafter_clear_text_bt" />
 
 </RelativeLayout>
