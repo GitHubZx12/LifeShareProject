@@ -63,8 +63,9 @@ public class TitleActivity extends BaseActivity {
 	@Override
 	public void rightImageButtonOnClick() {
 		super.rightImageButtonOnClick();
-		Toast.makeText(this, "下一步", Toast.LENGTH_SHORT).show();
-		isEmpty();
+		startActivity(MaterialActivity.class);
+//		Toast.makeText(this, "下一步", Toast.LENGTH_SHORT).show();
+//		isEmpty();
 	}
 	
 	/**

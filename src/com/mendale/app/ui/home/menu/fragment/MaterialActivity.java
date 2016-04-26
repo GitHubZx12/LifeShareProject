@@ -9,6 +9,7 @@ import com.mendale.app.pojo.MaterialPoJo;
 import com.mendale.app.ui.base.BaseActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -70,6 +71,7 @@ public class MaterialActivity extends BaseActivity {
 	@Override
 	public void rightImageButtonOnClick() {
 		super.rightImageButtonOnClick();
+		startActivity(ToolActivity.class);
 		// TODO 保存到数据库中
 	}
 

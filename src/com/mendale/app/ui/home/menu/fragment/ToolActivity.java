@@ -51,7 +51,7 @@ public class ToolActivity extends BaseActivity {
 	 * 初始化頭部
 	 */
 	private void initHeadView() {
-		setNavigationTitle("材料");
+		setNavigationTitle("工具");
 		setNavigationRightBtnImage(R.drawable.crafter_cguide_lastarrow_yes_selected);
 		setNavigationLeftBtnText("");
 	}
@@ -70,6 +70,7 @@ public class ToolActivity extends BaseActivity {
 	@Override
 	public void rightImageButtonOnClick() {
 		super.rightImageButtonOnClick();
+		startActivity(ReplyActivity.class);
 		// TODO 保存到数据库中
 	}
 

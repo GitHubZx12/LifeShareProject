@@ -62,7 +62,7 @@ public class NewsActivity extends FragmentActivity implements
 		ReplyActivity replyFragment = new ReplyActivity();
 		PrivateLettersFragment pLettersFragment = new PrivateLettersFragment();
 		fragmentList.add(commentFragment);
-		fragmentList.add(replyFragment);
+//		fragmentList.add(replyFragment);
 		fragmentList.add(pLettersFragment);
 
 		changTextColr(rb_message_comment, "评论");
