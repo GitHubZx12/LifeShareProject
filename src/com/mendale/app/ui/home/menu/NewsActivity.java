@@ -22,7 +22,7 @@ import com.mendale.app.R;
 import com.mendale.app.adapters.ViewPageAdapter;
 import com.mendale.app.ui.home.menu.fragment.CommentFragment;
 import com.mendale.app.ui.home.menu.fragment.PrivateLettersFragment;
-import com.mendale.app.ui.home.menu.fragment.ReplyFragment;
+import com.mendale.app.ui.home.menu.fragment.ReplyActivity;
 import com.mendale.app.utils.ExitApplication;
 
 /**
@@ -59,7 +59,7 @@ public class NewsActivity extends FragmentActivity implements
 	private void initViewPage() {
 		fragmentList = new ArrayList<Fragment>();
 		CommentFragment commentFragment = new CommentFragment();
-		ReplyFragment replyFragment = new ReplyFragment();
+		ReplyActivity replyFragment = new ReplyActivity();
 		PrivateLettersFragment pLettersFragment = new PrivateLettersFragment();
 		fragmentList.add(commentFragment);
 		fragmentList.add(replyFragment);

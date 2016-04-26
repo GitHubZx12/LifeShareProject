@@ -234,6 +234,25 @@
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
+         <!-- 工具 -->
+         <activity
+            android:name="com.mendale.app.ui.home.menu.fragment.ToolActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+          <!-- 步骤-->
+         <activity
+            android:name="com.mendale.app.ui.home.menu.fragment.ReplyActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+         <!-- 分类-->
+         <activity
+            android:name="com.mendale.app.ui.home.menu.fragment.ClassifyActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+         <!-- 上传教程结束 -->
         <!-- 求教程 -->
         <activity
             android:name="com.mendale.app.ui.home.menu.HelpMakeCourseActivity"

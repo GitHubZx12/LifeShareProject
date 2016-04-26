@@ -33,7 +33,7 @@ public class TitleActivity extends BaseActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.fragment_title);
+		setContentView(R.layout.activity_title);
 		ExitApplication.getInstance().addActivity(this);
 		initHeaderView();
 		initView();

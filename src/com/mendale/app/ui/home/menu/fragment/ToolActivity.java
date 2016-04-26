@@ -24,12 +24,12 @@ import android.widget.PopupWindow;
 import android.widget.Toast;
 
 /**
- * 上传教程--材料
+ * 上传教程--工具
  * 
  * @author Administrator
  * 
  */
-public class MaterialActivity extends BaseActivity {
+public class ToolActivity extends BaseActivity {
 
 	private ListView listView;
 	/** 添加 */
@@ -74,16 +74,14 @@ public class MaterialActivity extends BaseActivity {
 	}
 
 	/**
-	 * 点击事件
+	 * 点击事件,增加
 	 */
 	private void addListener() {
 		btn_add.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				
-				// 增加
-				showPopWindow(MaterialActivity.this, v);
+				showPopWindow(ToolActivity.this, v);
 			}
 		});
 	}
