@@ -87,23 +87,36 @@ public class MaterialActivity extends BaseActivity {
 		});
 	}
 
+	/**
+	 * 增加的popwindow
+	 * @param context
+	 * @param parent
+	 */
 	private void showPopWindow(Context context, View parent) {
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		final View vPopWindow = inflater.inflate(R.layout.popwindow_add_item, null, false);
-		// 宽300 高300
-		final PopupWindow popWindow = new PopupWindow(vPopWindow, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT,
-				true);
+		View vPopWindow = inflater.inflate(R.layout.popwindow_add_item, null, false);
+		final PopupWindow popWindow = new PopupWindow(vPopWindow, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, true);
 		final EditText name = (EditText) vPopWindow.findViewById(R.id.et_additem_name);
 		EditText amount = (EditText) vPopWindow.findViewById(R.id.et_additem_amount);
-		Button add=(Button) vPopWindow.findViewById(R.id.btn_additem_add);
-		Button cacel=(Button) vPopWindow.findViewById(R.id.btn_additem_cacel);
+		Button add = (Button) vPopWindow.findViewById(R.id.btn_additem_add);
+		Button cacel = (Button) vPopWindow.findViewById(R.id.btn_additem_cacel);
 		popWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
-		
-		add.setOnClickListener(new OnClickListener() {
-			
+
+		add.setOnClickListener(new OnClickListener() {//增加
+
 			@Override
 			public void onClick(View v) {
 				showToast(name.getText().toString());
+				popWindow.dismiss();
+			}
+		});
+		cacel.setOnClickListener(new OnClickListener() {//取消
+			
+			@Override
+			public void onClick(View v) {
+				if(popWindow.isShowing()){
+					popWindow.dismiss();
+				}
 			}
 		});
 	}
@@ -113,12 +126,6 @@ public class MaterialActivity extends BaseActivity {
 	 */
 	private void initData() {
 		text = new ArrayList<MaterialPoJo>();
-		MaterialPoJo mp = new MaterialPoJo();
-		mp.setDesc("haha");
-		mp.setName("haha");
-		mp.setFlag(false);
-		text.add(mp);
-		mAdapter = new UpLoadAddMaterialAdaper(this, text);
 	}
 
 	/**
