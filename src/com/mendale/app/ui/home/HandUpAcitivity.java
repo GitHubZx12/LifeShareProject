@@ -137,6 +137,6 @@ public class HandUpAcitivity extends BaseActivity{
 	 *初始化view
 	 */
 	private void initView() {
-		mListView = (ListView) findViewById(R.id.listview_charts);
+		mListView = (ListView) findViewById(R.id.listview_hot_course);
 	}
 }

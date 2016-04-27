@@ -26,7 +26,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -341,7 +340,6 @@ public class ShowDetailsActivity extends Activity implements
 
 	@Override
 	public void onPageSelected(int position) {
-		Log.i("test", "onPageSelected" + position);
 		// page切换则修改步骤
 		if (position == 0) {
 			text.setVisibility(View.INVISIBLE);
