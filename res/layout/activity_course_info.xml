@@ -1,36 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <!-- 课程详情-->
+    <!-- 课程详情 -->
 
-    <com.mendale.app.utils.pullToRefreshUtils.view.XListView
-        android:id="@+id/listview_course_info"
+    <include
+        android:id="@+id/include"
+        layout="@layout/common_header" />
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="invisible" />
+        android:layout_height="match_parent" >
 
-    <LinearLayout
-        android:id="@+id/ll_course_info_loading"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:paddingTop="20dp" >
+        <com.mendale.app.utils.pullToRefreshUtils.view.XListView
+            android:id="@+id/listview_course_info"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible" />
 
-        <ImageView
-            android:id="@+id/iv_course_info_loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/pulltorefresh_icon_loading" />
+        <LinearLayout
+            android:id="@+id/ll_course_info_loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:paddingTop="20dp" >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:text="正在加载" />
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/iv_course_info_loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/pulltorefresh_icon_loading" />
 
-</RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:text="正在加载" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>
