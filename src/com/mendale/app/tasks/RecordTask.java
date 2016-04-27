@@ -121,7 +121,6 @@ public class RecordTask {
 				System.out.println("上传流量:" + entitydata.length / 1024 + "K");
 				System.out.println("下载流量:" + responseData.getBytes().length
 						/ 1024 + "K");
-				Log.d("http", responseData.toString());
 				// responseData是请求服务器返回的结果（json格式的）
 				if (!Utils.isEmpty(responseData)) {
 					JSONObject json = new JSONObject(responseData);

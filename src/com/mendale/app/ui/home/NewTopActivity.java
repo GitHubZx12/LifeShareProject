@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mendale.app.R;
 import com.mendale.app.adapters.NewsTop100LVAdapter;
+import com.mendale.app.constants.DataURL;
 import com.mendale.app.pojo.NewTop100;
 import com.mendale.app.utils.Utils;
 import com.squareup.okhttp.Call;
@@ -19,6 +20,7 @@ import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
+import com.umeng.socialize.utils.Log;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -39,6 +41,7 @@ public class NewTopActivity extends Activity {
 	private ListView mListView;
 	private TextView title;
 	private ImageView back;
+	private List<NewTop100> newsDatas = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +64,7 @@ public class NewTopActivity extends Activity {
 	 * 初始化数据
 	 */
 	private void initData() {
-//		doGet(DataURL.Z_NEW_JIAOCHENG);
+		doGet(DataURL.Z_NEW_JIAOCHENG);
 	}
 
 	private void doGet(final String url) {
@@ -93,7 +96,6 @@ public class NewTopActivity extends Activity {
 	 * @param string
 	 */
 	private void parserData(String string) {
-		List<NewTop100> newsDatas = null;
 		Gson gson = new Gson();
 		if (!Utils.isEmpty(string)) {
 			try {
@@ -105,7 +107,15 @@ public class NewTopActivity extends Activity {
 					}.getType());
 					newsDatas.add(item);
 				}
-				setListViewAdapter(newsDatas);
+				runOnUiThread(new Runnable() {
+					
+					@Override
+					public void run() {
+						Log.e("tag6666",newsDatas.toString());
+						setListViewAdapter(newsDatas);
+					}
+				});
+				
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}

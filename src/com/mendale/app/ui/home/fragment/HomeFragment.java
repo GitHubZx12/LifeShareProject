@@ -8,6 +8,7 @@ import com.mendale.app.adapters.HotCourseGVAdapter;
 import com.mendale.app.adapters.HotTypeGVAdapter;
 import com.mendale.app.constants.DataURL;
 import com.mendale.app.tasks.HomeTask;
+import com.mendale.app.ui.home.NewTopActivity;
 import com.mendale.app.ui.home.ShowDetailsActivity;
 import com.mendale.app.vo.HomeAllList;
 import com.mendale.app.vo.HotCourseItemBean;
@@ -174,12 +175,13 @@ public class HomeFragment extends Fragment implements OnClickListener, OnItemCli
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.tv_course_see_more:
-
-			break;
-
 		case R.id.btn_course_see_more:
 
+			Intent intent=new Intent(getActivity(),NewTopActivity.class);
+			startActivity(intent);
 			break;
+
+		
 		case R.id.tv_hand_up_see_more:
 
 			break;
