@@ -175,7 +175,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity>
         -->
 
         <activity
@@ -301,9 +301,15 @@
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-         <!-- 热门教程 -->
+        <!-- 热门教程 -->
         <activity
-            android:name="com.mendale.app.ui.home.NewTopActivity"
+            android:name="com.mendale.app.ui.home.HotCourseActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <!-- 手工达人 -->
+        <activity
+            android:name="com.mendale.app.ui.home.HandUpAcitivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />

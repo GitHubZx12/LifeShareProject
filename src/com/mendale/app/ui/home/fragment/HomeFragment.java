@@ -8,7 +8,7 @@ import com.mendale.app.adapters.HotCourseGVAdapter;
 import com.mendale.app.adapters.HotTypeGVAdapter;
 import com.mendale.app.constants.DataURL;
 import com.mendale.app.tasks.HomeTask;
-import com.mendale.app.ui.home.NewTopActivity;
+import com.mendale.app.ui.home.HotCourseActivity;
 import com.mendale.app.ui.home.ShowDetailsActivity;
 import com.mendale.app.vo.HomeAllList;
 import com.mendale.app.vo.HotCourseItemBean;
@@ -177,7 +177,7 @@ public class HomeFragment extends Fragment implements OnClickListener, OnItemCli
 		case R.id.tv_course_see_more:
 		case R.id.btn_course_see_more:
 
-			Intent intent=new Intent(getActivity(),NewTopActivity.class);
+			Intent intent=new Intent(getActivity(),HotCourseActivity.class);
 			startActivity(intent);
 			break;
 

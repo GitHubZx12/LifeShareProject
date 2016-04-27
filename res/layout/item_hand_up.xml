@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:orientation="horizontal" >
+
+    <!-- 手工达人的的查看更多按钮的Listview的Item -->
+
+    <TextView
+        android:id="@+id/tv_hand_up_pos"
+        android:layout_width="0dp"
+        android:layout_weight="0.5"
+        android:gravity="center"
+        android:layout_height="match_parent"
+        android:text="1" />
+
+    <com.mendale.app.utils.imageUtils.RoundImageView
+        android:id="@+id/iv_hand_up_pic"
+        android:layout_width="70dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/ic_launcher" />
+
+    <TextView 
+        android:id="@+id/tv_hand_up_name"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

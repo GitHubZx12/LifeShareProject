@@ -3,7 +3,7 @@ package com.mendale.app.adapters;
 import java.util.List;
 
 import com.mendale.app.R;
-import com.mendale.app.pojo.NewTop100;
+import com.mendale.app.pojo.HotCoursePoJo;
 
 import android.content.Context;
 import android.view.View;
@@ -11,12 +11,16 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+/**
+ * 热门教程
+ * @author zhangxue 
+   @date 2016年4月27日
+ */
+public class HotCourseLvAdapter extends BaseAdapter{
 
-public class NewsTop100LVAdapter extends BaseAdapter{
-
-	public List<NewTop100> mDatas;
+	public List<HotCoursePoJo> mDatas;
 	private Context context;
-	public NewsTop100LVAdapter(Context context,List<NewTop100> mDatas){
+	public HotCourseLvAdapter(Context context,List<HotCoursePoJo> mDatas){
 		this.mDatas=mDatas;
 		this.context=context;
 		
@@ -41,7 +45,7 @@ public class NewsTop100LVAdapter extends BaseAdapter{
 		ViewHolder holder;
 		if(convertView==null){
 			holder=new ViewHolder();
-			convertView=View.inflate(context, R.layout.item_news_top100,null);
+			convertView=View.inflate(context, R.layout.item_hot_course,null);
 			
 			holder.pos=(TextView) convertView.findViewById(R.id.tv_pos_news_top100);
 			holder.subject=(TextView) convertView.findViewById(R.id.tv_subject_news_top100);

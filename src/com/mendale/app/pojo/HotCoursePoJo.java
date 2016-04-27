@@ -6,7 +6,7 @@ package com.mendale.app.pojo;
  * @author zhangxue 
    @date 2016年4月10日
  */
-public class NewTop100 {
+public class HotCoursePoJo {
 	private String hand_id;
     private String subject; //标题
     private String host_pic;

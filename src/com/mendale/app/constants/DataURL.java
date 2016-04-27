@@ -18,6 +18,8 @@ public class DataURL {
 	public static String DETAILS_RMJC = "http://www.shougongke.com/index.php?m=Mobq_course&id=";
 	// 排行榜
 	public static String CHARTS_URL = "http://www.shougongke.com/index.php?m=Mobq_data&a=tophot&id=a&page=1";
-	// 最新教程Top100
-	public static String Z_NEW_JIAOCHENG = "http://www.shougongke.com/index.php?m=Mobq_data&a=tophot&id=n&page=1";
+	// 首页-热门教程--更多
+	public static String Z_NEW_JIAOCHENG = "http://www.shougongke.com/index.php?m=Mobq_data&a=tophot&id=a&page=1";
+	//首页--手工达人--更多
+	public static String HAND_UP="http://www.shougongke.com/index.php?m=Mobq_data&a=topren&id=w&page=1";
 }
