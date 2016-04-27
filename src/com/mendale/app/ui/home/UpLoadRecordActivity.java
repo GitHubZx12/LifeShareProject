@@ -18,7 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 /**
- * 上传记录
+ * 上传记录。。
  * @author zx
  *
  */

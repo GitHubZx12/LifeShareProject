@@ -31,6 +31,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+/**
+ * 记录
+ * @author zx
+ *
+ */
 public class RecordFragment extends Fragment implements IXListViewListener,OnClickListener{
 
 	private XListView mListView;

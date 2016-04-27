@@ -21,7 +21,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
- * 分类
+ * 上传教程-分类
  * 
  * @author zx
  *

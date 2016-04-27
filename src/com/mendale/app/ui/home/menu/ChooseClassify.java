@@ -17,7 +17,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 /**
- * 上传教程--分类--选择分类
+ * 上传教程--分类--选择分类修改
  * @author zx
  *
  */

@@ -5,6 +5,7 @@
     android:background="@color/bark_gray"
     android:orientation="vertical" >
 
+    <!-- 头部 -->
     <include 
         android:id="@+id/include"
         layout="@layout/common_header"/>
