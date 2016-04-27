@@ -70,7 +70,7 @@ public class ToolActivity extends BaseActivity {
 	@Override
 	public void rightImageButtonOnClick() {
 		super.rightImageButtonOnClick();
-		startActivity(ReplyActivity.class);
+		startActivity(StepActivity.class);
 		// TODO 保存到数据库中
 	}
 

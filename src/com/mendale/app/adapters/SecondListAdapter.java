@@ -3,6 +3,7 @@ package com.mendale.app.adapters;
 import java.util.List;
 
 import com.mendale.app.R;
+import com.mendale.app.pojo.MainMenu;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -18,10 +19,10 @@ public class SecondListAdapter extends BaseAdapter {
 	@SuppressWarnings("unused")
 	private Context context;
 	/** 数据 */
-	private List<String> list;
+	private List<MainMenu> list;
 	private LayoutInflater inflater;
 
-	public SecondListAdapter(Context context, List<String> list) {
+	public SecondListAdapter(Context context, List<MainMenu> list) {
 		this.context = context;
 		this.list = list;
 		inflater = LayoutInflater.from(context);
@@ -56,7 +57,7 @@ public class SecondListAdapter extends BaseAdapter {
 		else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		holder.textViewSecondListName.setText(list.get(position));
+		holder.textViewSecondListName.setText(list.get(position).getName());
 //		holder.imageViewSecondListIcon.setBackgroundResource(list.get(position).getBg());
 		return convertView;
 	}

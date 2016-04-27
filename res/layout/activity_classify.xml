@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <include 
+        android:id="@+id/header"
+        layout="@layout/common_header"/>
+    <!-- 分类 -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2" 
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="设置封面" 
+            android:textSize="@dimen/tv_textsize16"
+            android:layout_marginBottom="@dimen/common_margin_10dp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp" >
+
+            <ImageView
+                android:id="@+id/iv_classify_pic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_launcher"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_classify_pic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="点击设置封面" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="选择分类" 
+            android:layout_marginBottom="@dimen/common_margin_10dp"
+            android:textSize="@dimen/tv_textsize16"/>
+
+        <Button
+            android:id="@+id/btn_classify_choose_classify"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/bark_gray" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="小贴士"
+            android:layout_marginBottom="@dimen/common_margin_10dp"
+            android:textSize="@dimen/tv_textsize16" />
+
+        <EditText
+            android:id="@+id/et_classify_tip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/gary"
+            android:minLines="5" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.mendale.app.R;
 import com.mendale.app.adapters.SecondListAdapter;
+import com.mendale.app.pojo.MainMenu;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -34,9 +35,13 @@ public class SearchCourseActivity extends Activity implements TextWatcher,OnClic
 	private ImageView iv_search;
 	private EditText et_search;
 	/** 搜索之后符合要求的数据 */
-	private List<String> searchData;
+	private List<MainMenu> searchData;
 	/** 所有的数据 */
-	private List<String> allData;
+	private List<MainMenu> allData;
+	private String[] name={"心情","问答","生活","美食","橡皮泥","运动","表演艺术","旧物改造","绘画","心里课堂"};
+	private int[] pic={R.drawable.ic_launcher,R.drawable.ic_launcher,R.drawable.ic_launcher,
+			R.drawable.ic_launcher,R.drawable.ic_launcher,R.drawable.ic_launcher,
+			R.drawable.ic_launcher,R.drawable.ic_launcher,R.drawable.ic_launcher,R.drawable.ic_launcher};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,13 +55,11 @@ public class SearchCourseActivity extends Activity implements TextWatcher,OnClic
 	 * 初始化数据
 	 */
 	private void initData() {
-		allData=new ArrayList<String>();
-		allData.add("吃饭");
-		allData.add("吃饭1");
-		allData.add("看电视");
-		allData.add("看电影");
-		allData.add("看综艺");
-		searchData=new ArrayList<String>();
+		allData=new ArrayList<MainMenu>();
+		for (int i = 0; i <name.length; i++) {
+			allData.add(new MainMenu(name[i], pic[i]));
+		}
+		searchData=new ArrayList<MainMenu>();
 	}
 
 	/**
@@ -105,7 +108,7 @@ public class SearchCourseActivity extends Activity implements TextWatcher,OnClic
 		}
 		// 遍历
 		for (int i = 0; i < allData.size(); i++) {
-			if (allData.get(i).contains(keyWord)) {// 包含
+			if (allData.get(i).getName().contains(keyWord)) {// 包含
 				searchData.add(allData.get(i));
 			}
 		}

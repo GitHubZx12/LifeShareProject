@@ -242,13 +242,19 @@
             android:windowSoftInputMode="stateHidden" />
           <!-- 步骤-->
          <activity
-            android:name="com.mendale.app.ui.home.menu.fragment.ReplyActivity"
+            android:name="com.mendale.app.ui.home.menu.fragment.StepActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
          <!-- 分类-->
          <activity
             android:name="com.mendale.app.ui.home.menu.fragment.ClassifyActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+         <!-- 选择分类 -->
+          <activity
+            android:name="com.mendale.app.ui.home.menu.ChooseClassify"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
