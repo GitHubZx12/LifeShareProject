@@ -8,9 +8,11 @@ import com.mendale.app.adapters.HotCourseGVAdapter;
 import com.mendale.app.adapters.HotTypeGVAdapter;
 import com.mendale.app.constants.DataURL;
 import com.mendale.app.tasks.HomeTask;
+import com.mendale.app.ui.course.CourseInfoActivity;
 import com.mendale.app.ui.home.HandUpAcitivity;
 import com.mendale.app.ui.home.HotCourseActivity;
 import com.mendale.app.ui.home.ShowDetailsActivity;
+import com.mendale.app.ui.mycenter.MyCenterActivity;
 import com.mendale.app.vo.HomeAllList;
 import com.mendale.app.vo.HotCourseItemBean;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -60,32 +62,31 @@ public class HomeFragment extends Fragment implements OnClickListener, OnItemCli
 	private DisplayImageOptions options;
 	// 数据
 	private List<HotCourseItemBean> courseData;
-
+	private HomeAllList allList;
 	@SuppressLint("HandlerLeak")
 	Handler mhandler = new Handler() {
+
 		@SuppressWarnings("unchecked")
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
-			case 1:
-				if (msg.obj != null) {
-					iv_loading.clearAnimation();
-					ll_loading.setVisibility(View.INVISIBLE);
-					ll_main.setVisibility(View.VISIBLE);
-					HomeAllList allList = (HomeAllList) msg.obj;
-					courseData = allList.getCourseData();
-					courseAdapter = new HotCourseGVAdapter(getActivity(), courseData, options);
-					gv_Course.setAdapter(courseAdapter);
-					handUpAdapter = new DarenGVAdapter(getActivity(), allList.getDarenData(), options);
-					gv_HandUp.setAdapter(handUpAdapter);
-					typeAdapter = new HotTypeGVAdapter(getActivity(), allList.getTypeData(), options);
-					lv_Type.setAdapter(typeAdapter);
-				}
-				break;
-
-			default:
-				break;
+				case 1:
+					if (msg.obj != null) {
+						iv_loading.clearAnimation();
+						ll_loading.setVisibility(View.INVISIBLE);
+						ll_main.setVisibility(View.VISIBLE);
+						allList = (HomeAllList) msg.obj;
+						courseData = allList.getCourseData();
+						courseAdapter = new HotCourseGVAdapter(getActivity(), courseData, options);
+						gv_Course.setAdapter(courseAdapter);
+						handUpAdapter = new DarenGVAdapter(getActivity(), allList.getDarenData(), options);
+						gv_HandUp.setAdapter(handUpAdapter);
+						typeAdapter = new HotTypeGVAdapter(getActivity(), allList.getTypeData(), options);
+						lv_Type.setAdapter(typeAdapter);
+					}
+					break;
+				default:
+					break;
 			}
-
 		};
 	};
 
@@ -127,8 +128,8 @@ public class HomeFragment extends Fragment implements OnClickListener, OnItemCli
 	 */
 	private void requestData() {
 		new Thread() {
-			public void run() {
 
+			public void run() {
 				new HomeTask(getActivity(), mhandler).send(1, "utf-8", DataURL.HOME_URL);
 			};
 		}.start();
@@ -143,8 +144,24 @@ public class HomeFragment extends Fragment implements OnClickListener, OnItemCli
 		tv_HandUp_SeeMore.setOnClickListener(this);
 		tv_Type_SeeMore.setOnClickListener(this);
 		btn_Type_SeeMore.setOnClickListener(this);
-
 		gv_Course.setOnItemClickListener(this);
+		gv_HandUp.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+				Intent intent = new Intent(getActivity(), MyCenterActivity.class);
+				startActivity(intent);
+			}
+		});
+		lv_Type.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+				Intent intent = new Intent(getActivity(), CourseInfoActivity.class);
+				intent.putExtra("title",allList.getTypeData().get(arg2).getCate_name());
+				startActivity(intent);
+			}
+		});
 	}
 
 	/**
@@ -158,11 +175,9 @@ public class HomeFragment extends Fragment implements OnClickListener, OnItemCli
 		tv_HandUp_SeeMore = (TextView) view.findViewById(R.id.tv_hand_up_see_more);
 		tv_Type_SeeMore = (TextView) view.findViewById(R.id.tv_type_see_more);
 		btn_Type_SeeMore = (Button) view.findViewById(R.id.btn_type_see_more);
-
 		gv_Course = (GridView) view.findViewById(R.id.gv_coursee);
 		gv_HandUp = (GridView) view.findViewById(R.id.gv_hand_up);
 		lv_Type = (ListView) view.findViewById(R.id.lv_type);
-
 		iv_loading = (ImageView) view.findViewById(R.id.iv_loading);
 		ll_loading = (LinearLayout) view.findViewById(R.id.ll_home_loading);
 		ll_main = (LinearLayout) view.findViewById(R.id.ll_main);
@@ -175,36 +190,39 @@ public class HomeFragment extends Fragment implements OnClickListener, OnItemCli
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.tv_course_see_more:
-		case R.id.btn_course_see_more:
-			Intent intent=new Intent(getActivity(),HotCourseActivity.class);
-			startActivity(intent);
-			break;
-		case R.id.tv_hand_up_see_more:
-			Intent intent2=new Intent(getActivity(),HandUpAcitivity.class);
-			startActivity(intent2);
-			break;
-		case R.id.tv_type_see_more:
-		case R.id.btn_type_see_more:
-			if(cFragment!=null){
-				cFragment.changeFragmentClick();
-			}
-			break;
+			case R.id.tv_course_see_more:
+			case R.id.btn_course_see_more:
+				Intent intent = new Intent(getActivity(), HotCourseActivity.class);
+				startActivity(intent);
+				break;
+			case R.id.tv_hand_up_see_more:
+				Intent intent2 = new Intent(getActivity(), HandUpAcitivity.class);
+				startActivity(intent2);
+				break;
+			case R.id.tv_type_see_more:
+			case R.id.btn_type_see_more:
+				if (cFragment != null) {
+					cFragment.changeFragmentClick();
+				}
+				break;
 		}
-
 	}
+
 	public ChangeFragment cFragment;
+
 	public ChangeFragment getcFragment() {
 		return cFragment;
 	}
+
 	public void setcFragment(ChangeFragment cFragment) {
 		this.cFragment = cFragment;
 	}
-	//通过回调实现fragment的切换
-	public interface ChangeFragment{
+
+	// 通过回调实现fragment的切换
+	public interface ChangeFragment {
+
 		public void changeFragmentClick();
 	}
-	
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -215,5 +233,4 @@ public class HomeFragment extends Fragment implements OnClickListener, OnItemCli
 		intent.putExtra("step", courseData.get(position).getStep_count());
 		startActivity(intent);
 	}
-
 }
