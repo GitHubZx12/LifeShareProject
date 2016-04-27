@@ -8,6 +8,7 @@ import com.mendale.app.R;
 import com.mendale.app.adapters.CourseInfoLvAdapter;
 import com.mendale.app.constants.DataURL;
 import com.mendale.app.tasks.RecordTask;
+import com.mendale.app.ui.base.BaseActivity;
 import com.mendale.app.utils.pullToRefreshUtils.PullToRefreshConfig;
 import com.mendale.app.utils.pullToRefreshUtils.view.XListView;
 import com.mendale.app.utils.pullToRefreshUtils.view.XListView.IXListViewListener;
@@ -26,7 +27,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class CourseInfoActivity extends Activity implements IXListViewListener {
+/**
+ * 课程详情页
+ * @author zhangxue 
+   @date 2016年4月27日
+ */
+public class CourseInfoActivity extends BaseActivity implements IXListViewListener {
 
 	private XListView mListView;
 	private CourseInfoLvAdapter mAdapter;
@@ -57,14 +63,28 @@ public class CourseInfoActivity extends Activity implements IXListViewListener {
 		};
 	};
 
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_course_info);
+		initHeaderView();
 		initView();
 		initAnim();
 		initData();
 		initImageOptions();
 	};
+
+	/**
+	 * 初始化头部
+	 */
+	private void initHeaderView() {
+		setNavigationTitle(getIntent().getStringExtra("title"));
+		setNavigationLeftBtnText("");
+	}
+	@Override
+	public void leftButtonOnClick() {
+		super.leftButtonOnClick();
+		this.finish();
+	}
 
 	/**
 	 * 初始化动画

@@ -7,8 +7,11 @@ import com.mendale.app.constants.DataURL;
 import com.mendale.app.constants.Datas;
 import com.mendale.app.pojo.CoursePoJo;
 import com.mendale.app.tasks.CourseTask;
+import com.mendale.app.ui.base.BaseActivity;
+import com.mendale.app.ui.course.CourseInfoActivity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -36,9 +39,8 @@ import java.util.Map;
  *
  * @author zx
  */
-public class CourseClassifyActivity extends Activity implements OnScrollListener, OnChildClickListener {
+public class CourseClassifyActivity extends BaseActivity implements OnScrollListener, OnChildClickListener {
 
-    private ImageView back;
     private ExpandableListView listView;
     private MyExpandableListAdapter mAdapter;
 
@@ -47,14 +49,26 @@ public class CourseClassifyActivity extends Activity implements OnScrollListener
     private int indicatorGroupHeight;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_classify);
         intData();
+        initHeaderView();
         initView();
         setListener();
     }
-
+    /**
+	 * 初始化标题
+	 */
+	private void initHeaderView() {
+		setNavigationTitle("课程分类");
+		setNavigationLeftBtnText("");
+	}
+	@Override
+	public void leftButtonOnClick() {
+		super.leftButtonOnClick();
+		this.finish();
+	}
     /**
      * 临时
      * 获取数据
@@ -119,14 +133,6 @@ public class CourseClassifyActivity extends Activity implements OnScrollListener
         listView.setOnScrollListener(this);
         listView.setGroupIndicator(null);
         listView.setOnChildClickListener(this);
-        back.setOnClickListener(new OnClickListener() {//返回
-
-            @Override
-            public void onClick(View v) {
-                CourseClassifyActivity.this.finish();
-            }
-        });
-
     }
 
     /**
@@ -135,8 +141,6 @@ public class CourseClassifyActivity extends Activity implements OnScrollListener
     private void initView() {
         listView = (ExpandableListView) findViewById(R.id.expand_lv_course_classify);
         indicatorGroup = (FrameLayout) findViewById(R.id.fl_course_classify_group);
-        back = (ImageView) findViewById(R.id.iv_classify_back);
-
     }
 
     @Override
@@ -219,8 +223,9 @@ public class CourseClassifyActivity extends Activity implements OnScrollListener
     //子item的点击事件，跳转到详情页
     @Override
     public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-
-        Toast.makeText(this, "pos==" + childPosition, Toast.LENGTH_LONG).show();
+    	Intent intent = new Intent(this, CourseInfoActivity.class);
+		intent.putExtra("title", Datas.list.get(childPosition).get("childName"));
+		startActivity(intent);
         return false;
     }
 

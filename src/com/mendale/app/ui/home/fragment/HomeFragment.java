@@ -8,6 +8,7 @@ import com.mendale.app.adapters.HotCourseGVAdapter;
 import com.mendale.app.adapters.HotTypeGVAdapter;
 import com.mendale.app.constants.DataURL;
 import com.mendale.app.tasks.HomeTask;
+import com.mendale.app.ui.home.HandUpAcitivity;
 import com.mendale.app.ui.home.HotCourseActivity;
 import com.mendale.app.ui.home.ShowDetailsActivity;
 import com.mendale.app.vo.HomeAllList;
@@ -176,18 +177,14 @@ public class HomeFragment extends Fragment implements OnClickListener, OnItemCli
 		switch (v.getId()) {
 		case R.id.tv_course_see_more:
 		case R.id.btn_course_see_more:
-
 			Intent intent=new Intent(getActivity(),HotCourseActivity.class);
 			startActivity(intent);
 			break;
-
-		
 		case R.id.tv_hand_up_see_more:
-
+			Intent intent2=new Intent(getActivity(),HandUpAcitivity.class);
+			startActivity(intent2);
 			break;
 		case R.id.tv_type_see_more:
-
-			break;
 		case R.id.btn_type_see_more:
 			if(cFragment!=null){
 				cFragment.changeFragmentClick();
@@ -200,12 +197,9 @@ public class HomeFragment extends Fragment implements OnClickListener, OnItemCli
 	public ChangeFragment getcFragment() {
 		return cFragment;
 	}
-
 	public void setcFragment(ChangeFragment cFragment) {
 		this.cFragment = cFragment;
 	}
-
-
 	//通过回调实现fragment的切换
 	public interface ChangeFragment{
 		public void changeFragmentClick();

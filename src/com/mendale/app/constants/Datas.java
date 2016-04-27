@@ -7,7 +7,9 @@ import com.mendale.app.pojo.CoursePoJo;
 
 public class Datas {
 	
+	/**课程*/
 	public static List<CoursePoJo> courseList;
+	/**课程子标题*/
 	public static List<Map<String,String>>list;
 
 }

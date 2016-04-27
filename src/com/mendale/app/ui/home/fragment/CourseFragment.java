@@ -69,7 +69,6 @@ public class CourseFragment extends Fragment implements OnItemClickListener {
 	 * @return
 	 */
 	private List<Map<String, String>> formatList(List<CoursePoJo> courseList) {
-		// List<Map<String,String>>list=new ArrayList<Map<String,String>>();
 		Datas.list = new ArrayList<Map<String, String>>();
 		Map<String, String> map;
 		for (int i = 0; i < courseList.size(); i++) {
@@ -122,8 +121,9 @@ public class CourseFragment extends Fragment implements OnItemClickListener {
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+	public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
 		Intent intent = new Intent(getActivity(), CourseInfoActivity.class);
+		intent.putExtra("title", Datas.list.get(pos).get("childName"));
 		startActivity(intent);
 	}
 }
