@@ -10,11 +10,11 @@
 
     <!-- ###################声明SDK使用的相关权限###################### -->
     <!-- 检测网络状态 -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />  
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- 获取mac地址作为用户的备用唯一标识 -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />     
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <!-- 获取用户手机的IMEI，用来唯一的标识用户 -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />      
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!-- 缓存资源优先存入SDcard -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!-- 允许应用程序联网，以便向我们的服务器端发送数据 -->
@@ -63,8 +63,8 @@
         </activity>
 
         <!-- 友盟分享 -->
-         <!-- ###################注册SDK使用的Activity###################### -->
-        <!--分享编辑页-->
+        <!-- ###################注册SDK使用的Activity###################### -->
+        <!-- 分享编辑页 -->
         <activity
             android:name="com.umeng.socialize.view.ShareActivity"
             android:configChanges="orientation|keyboard"
@@ -84,13 +84,14 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <!-- 100424468，如果你使用的公用账号，则不需要修改；否则修改成你在QQ开放平台申请的 APP ID-->
-                <data android:scheme="tencent100424468" /> 
+                <!-- 100424468，如果你使用的公用账号，则不需要修改；否则修改成你在QQ开放平台申请的 APP ID -->
+                <data android:scheme="tencent100424468" />
             </intent-filter>
         </activity>
-        <activity android:name="com.tencent.connect.common.AssistActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:screenOrientation="portrait">
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
         </activity>
 
         <!-- 微信 -->
@@ -117,7 +118,7 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" >
         </activity>
-        
+
         <!-- 评论相关注册  START -->
         <activity
             android:name="com.umeng.socialize.view.CommentActivity"
@@ -142,8 +143,7 @@
             android:name="com.sina.weibo.sdk.net.DownloadService"
             android:exported="false" >
         </service>
-        
-        
+
         <!-- 友盟分享 end -->
         <!-- 登录 -->
         <activity
@@ -175,7 +175,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity>
         -->
 
         <activity
@@ -229,36 +229,36 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <!-- 材料 -->
-         <activity
+        <activity
             android:name="com.mendale.app.ui.home.menu.fragment.MaterialActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-         <!-- 工具 -->
-         <activity
+        <!-- 工具 -->
+        <activity
             android:name="com.mendale.app.ui.home.menu.fragment.ToolActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-          <!-- 步骤-->
-         <activity
+        <!-- 步骤 -->
+        <activity
             android:name="com.mendale.app.ui.home.menu.fragment.StepActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-         <!-- 分类-->
-         <activity
+        <!-- 分类 -->
+        <activity
             android:name="com.mendale.app.ui.home.menu.fragment.ClassifyActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-         <!-- 选择分类 -->
-          <activity
+        <!-- 选择分类 -->
+        <activity
             android:name="com.mendale.app.ui.home.menu.ChooseClassify"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-         <!-- 上传教程结束 -->
+        <!-- 上传教程结束 -->
         <!-- 求教程 -->
         <activity
             android:name="com.mendale.app.ui.home.menu.HelpMakeCourseActivity"
@@ -292,6 +292,12 @@
         <!-- 搜索 -->
         <activity
             android:name="com.mendale.app.ui.home.menu.SearchCourseActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <!-- 上传记录 -->
+        <activity
+            android:name="com.mendale.app.ui.home.UpLoadRecordActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
