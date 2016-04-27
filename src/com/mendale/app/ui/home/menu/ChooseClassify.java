@@ -8,8 +8,12 @@ import com.mendale.app.R;
 import com.mendale.app.adapters.SecondListAdapter;
 import com.mendale.app.pojo.MainMenu;
 import com.mendale.app.ui.base.BaseActivity;
+import com.mendale.app.ui.home.UpLoadRecordActivity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 /**
@@ -17,7 +21,7 @@ import android.widget.ListView;
  * @author zx
  *
  */
-public class ChooseClassify extends BaseActivity{
+public class ChooseClassify extends BaseActivity implements OnItemClickListener{
 	
 	private ListView mListView;
 	/** 集合 */
@@ -52,6 +56,7 @@ public class ChooseClassify extends BaseActivity{
 	 */
 	private void initView() {
 		mListView=(ListView) findViewById(R.id.lv_choose_classify);
+		mListView.setOnItemClickListener(this);
 		
 	}
 
@@ -77,6 +82,18 @@ public class ChooseClassify extends BaseActivity{
 	@Override
 	public void rightButtonOnClick() {
 		super.rightButtonOnClick();
+	}
+
+	/**
+	 * 
+	 * @param parent
+	 * @param view
+	 * @param position
+	 * @param id
+	 */
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		startActivity(UpLoadRecordActivity.class);
 	}
 
 }

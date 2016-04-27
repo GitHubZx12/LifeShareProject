@@ -1,9 +1,8 @@
-package com.mendale.app.ui.home.menu.fragment;
+package com.mendale.app.ui.home;
 
 import com.mendale.app.R;
-import com.mendale.app.constants.URLS;
 import com.mendale.app.ui.base.BaseActivity;
-import com.mendale.app.ui.home.menu.ChooseClassify;
+import com.mendale.app.ui.home.menu.fragment.ClassifyActivity;
 import com.mendale.app.utils.Utils;
 import com.mendale.app.utils.imageUtils.ImageOpera;
 
@@ -15,107 +14,74 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 /**
- * 分类
- * 
+ * 上传记录
  * @author zx
  *
  */
-public class ClassifyActivity extends BaseActivity implements OnClickListener {
-
-	/** 上传图片 */
-	private TextView tvLauchPic;
-	/** 图片 */
-	private ImageView ivPic;
-	/** 分类按钮 */
-	private Button btnClassify;
-	/** 注意的地方 */
-	private EditText etTips;
+public class UpLoadRecordActivity extends BaseActivity implements OnClickListener{
 	
+	private EditText title;
+	private ImageView pic;
+	private EditText share;
 	//相册选中图片路径
 	private static String iconpath;
-
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_classify);
+		setContentView(R.layout.activity_upload_record);
+		
 		initHeaderView();
 		initView();
-		setListener();
 	}
 
 	/**
-	 * 设置点击事件
-	 */
-	private void setListener() {
-		tvLauchPic.setOnClickListener(this);
-		btnClassify.setOnClickListener(this);
-	}
-
-	/**
-	 * 初始化头部
+	 * 初始化view
 	 */
 	private void initHeaderView() {
-		setNavigationTitle("分类");
+		setNavigationTitle("上传记录");
 		setNavigationLeftBtnText("");
-		setNavigationRightBtnText("发布");
-	}
-
-	@Override
-	public void leftButtonOnClick() {
-		super.leftButtonOnClick();
-		this.finish();
-	}
-
-	@Override
-	public void rightButtonOnClick() {
-		super.rightButtonOnClick();
+		setNavigationRightBtnText("完成");
 	}
 
 	/**
 	 * 初始化view
 	 */
 	private void initView() {
-		tvLauchPic=(TextView) findViewById(R.id.tv_classify_pic);
-		ivPic=(ImageView) findViewById(R.id.iv_classify_pic);
-		btnClassify=(Button) findViewById(R.id.btn_classify_choose_classify);
-		etTips=(EditText) findViewById(R.id.et_classify_tip);
-
+		title=(EditText) findViewById(R.id.et_uprecord_title);
+		share=(EditText) findViewById(R.id.et_uprecord_share);
+		pic=(ImageView) findViewById(R.id.iv_uprecord_show_pic);
+		
+		pic.setOnClickListener(this);
+		
+	}
+	@Override
+	public void leftButtonOnClick() {
+		super.leftButtonOnClick();
+		this.finish();
+	}
+	@Override
+	public void rightButtonOnClick() {
+		super.rightButtonOnClick();
+		showToast("完成");
 	}
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.tv_classify_pic:// 上传封面
+		case R.id.iv_uprecord_show_pic:
 			addmage(5);
 			break;
 
-		case R.id.btn_classify_choose_classify:// 选择分类
-			startActivity(ChooseClassify.class);
+		default:
 			break;
 		}
 	}
-	
-	/**
-	 * 页面控件赋值
-	 */
-	private void setViewData() {
-		ImageOpera opera = ImageOpera.getInstance(this);
-		if (iconpath != "") {
-			tvLauchPic.setVisibility(View.GONE);
-			ivPic.setVisibility(View.VISIBLE);
-			ImageOpera.getInstance(this).loadImage(iconpath, ivPic);
-		} else {
-			tvLauchPic.setVisibility(View.VISIBLE);
-			ivPic.setVisibility(View.GONE);
-			ivPic.setImageResource(R.drawable.defult_avator);
-		}
-	}
+
 	/**
 	 * 更换头像 弹出选择相册的dialog
 	 */
@@ -124,7 +90,7 @@ public class ClassifyActivity extends BaseActivity implements OnClickListener {
 
 			@Override
 			public void onClick(View v) {
-				Utils.openSysPhone(flag, ClassifyActivity.this);
+				Utils.openSysPhone(flag, UpLoadRecordActivity.this);
 				closeDialog();
 			}
 		}, new OnClickListener() {
@@ -160,13 +126,25 @@ public class ClassifyActivity extends BaseActivity implements OnClickListener {
 			}
 			switch (requestCode) {
 			case 5:
-				ImageOpera.getInstance(this).loadImage("file://" + path, ivPic);
+				ImageOpera.getInstance(this).loadImage("file://" + path, pic);
 				iconpath = "file://" + path;
 				setViewData();
 				break;
 			default:
 				break;
 			}
+		}
+	}
+	/**
+	 * 页面控件赋值
+	 */
+	private void setViewData() {
+		ImageOpera opera = ImageOpera.getInstance(this);
+		if (iconpath != "") {
+			pic.setVisibility(View.VISIBLE);
+			ImageOpera.getInstance(this).loadImage(iconpath, pic);
+		} else {
+			pic.setImageResource(R.drawable.defult_avator);
 		}
 	}
 	/**
@@ -191,5 +169,4 @@ public class ClassifyActivity extends BaseActivity implements OnClickListener {
 			return path;
 		}
 	}
-	
 }

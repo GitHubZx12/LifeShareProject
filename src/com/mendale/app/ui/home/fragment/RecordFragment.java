@@ -8,6 +8,7 @@ import com.mendale.app.R;
 import com.mendale.app.adapters.RecordLvAdapter;
 import com.mendale.app.constants.DataURL;
 import com.mendale.app.tasks.RecordTask;
+import com.mendale.app.ui.home.menu.ChooseClassify;
 import com.mendale.app.utils.pullToRefreshUtils.PullToRefreshConfig;
 import com.mendale.app.utils.pullToRefreshUtils.view.XListView;
 import com.mendale.app.utils.pullToRefreshUtils.view.XListView.IXListViewListener;
@@ -16,6 +17,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -181,6 +183,15 @@ public class RecordFragment extends Fragment implements IXListViewListener,OnCli
 	 */
 	@Override
 	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.iv_record_action://记录
+			Intent intent=new Intent(getActivity(),ChooseClassify.class);
+			startActivity(intent);
+			break;
+
+		default:
+			break;
+		}
 		
 	}
 }
