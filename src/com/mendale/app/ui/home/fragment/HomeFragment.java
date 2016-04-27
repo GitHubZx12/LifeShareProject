@@ -27,53 +27,55 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class HomeFragment extends Fragment implements OnClickListener,OnItemClickListener{
+public class HomeFragment extends Fragment implements OnClickListener, OnItemClickListener {
 
-	/**查看更多*/
-	private TextView tv_Course_SeeMore;
-	private TextView tv_HandUp_SeeMore;
+	/** 查看更多 */
+	private TextView tv_Course_SeeMore;// 热门教程查看更多
+	private Button btn_Course_SeeMore;
+	private TextView tv_HandUp_SeeMore;// 手工达人
 	private TextView tv_Type_SeeMore;
-	/**GridView*/
+	private Button btn_Type_SeeMore;
+	/** GridView */
 	private GridView gv_Course;
 	private GridView gv_HandUp;
 	private ListView lv_Type;
 	//
 	private ImageView iv_loading;
-    private LinearLayout ll_loading;
-    private LinearLayout ll_main;
-	/**adapter*/
+	private LinearLayout ll_loading;
+	private LinearLayout ll_main;
+	/** adapter */
 	private HotCourseGVAdapter courseAdapter;
 	private DarenGVAdapter handUpAdapter;
 	private HotTypeGVAdapter typeAdapter;
-	/**DisplayImageOptions*/
+	/** DisplayImageOptions */
 	private DisplayImageOptions options;
-	//数据
-	private List<HotCourseItemBean>courseData;
-	
-	
+	// 数据
+	private List<HotCourseItemBean> courseData;
+
 	@SuppressLint("HandlerLeak")
-	Handler mhandler=new Handler(){
+	Handler mhandler = new Handler() {
 		@SuppressWarnings("unchecked")
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case 1:
-				if(msg.obj!=null){
+				if (msg.obj != null) {
 					iv_loading.clearAnimation();
 					ll_loading.setVisibility(View.INVISIBLE);
 					ll_main.setVisibility(View.VISIBLE);
-					HomeAllList allList=(HomeAllList) msg.obj;
-					courseData=allList.getCourseData();
-					courseAdapter=new HotCourseGVAdapter(getActivity(),courseData,options);
+					HomeAllList allList = (HomeAllList) msg.obj;
+					courseData = allList.getCourseData();
+					courseAdapter = new HotCourseGVAdapter(getActivity(), courseData, options);
 					gv_Course.setAdapter(courseAdapter);
-					handUpAdapter=new DarenGVAdapter(getActivity(),allList.getDarenData(),options);
+					handUpAdapter = new DarenGVAdapter(getActivity(), allList.getDarenData(), options);
 					gv_HandUp.setAdapter(handUpAdapter);
-					typeAdapter=new HotTypeGVAdapter(getActivity(),allList.getTypeData(),options);
+					typeAdapter = new HotTypeGVAdapter(getActivity(), allList.getTypeData(), options);
 					lv_Type.setAdapter(typeAdapter);
 				}
 				break;
@@ -81,11 +83,10 @@ public class HomeFragment extends Fragment implements OnClickListener,OnItemClic
 			default:
 				break;
 			}
-			
+
 		};
 	};
-	
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_home, container, false);
@@ -101,16 +102,16 @@ public class HomeFragment extends Fragment implements OnClickListener,OnItemClic
 	 * 初始化动画
 	 */
 	private void initAnim() {
-		Animation animation=AnimationUtils.loadAnimation(getActivity(),R.anim.loading);
+		Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.loading);
 		iv_loading.startAnimation(animation);
 	}
+
 	/**
 	 * 初始化图片的相关参数
 	 */
 	private void initImageOptions() {
 		// 使用DisplayImageOptions.Builder()创建DisplayImageOptions
-		options = new DisplayImageOptions.Builder()
-				.showStubImage(R.drawable.image_guidestep_defult) // 设置图片下载期间显示的图片
+		options = new DisplayImageOptions.Builder().showStubImage(R.drawable.image_guidestep_defult) // 设置图片下载期间显示的图片
 				.showImageForEmptyUri(R.drawable.image_guidestep_defult) // 设置图片Uri为空或是错误的时候显示的图片
 				.showImageOnFail(R.drawable.image_guidestep_defult) // 设置图片加载或解码过程中发生错误显示的图片
 				.cacheInMemory(true) // 设置下载的图片是否缓存在内存中
@@ -119,68 +120,104 @@ public class HomeFragment extends Fragment implements OnClickListener,OnItemClic
 				.build(); // 创建配置过得DisplayImageOption对象
 	}
 
-
 	/**
 	 * 请求网络数据
 	 */
 	private void requestData() {
-		new Thread(){
+		new Thread() {
 			public void run() {
-				
+
 				new HomeTask(getActivity(), mhandler).send(1, "utf-8", DataURL.HOME_URL);
 			};
 		}.start();
 	}
 
 	/**
-	 *点击事件
+	 * 点击事件
 	 */
 	private void addListener() {
 		tv_Course_SeeMore.setOnClickListener(this);
+		btn_Course_SeeMore.setOnClickListener(this);
 		tv_HandUp_SeeMore.setOnClickListener(this);
 		tv_Type_SeeMore.setOnClickListener(this);
-		
+		btn_Type_SeeMore.setOnClickListener(this);
+
 		gv_Course.setOnItemClickListener(this);
 	}
 
-
 	/**
 	 * 初始化界面
+	 * 
 	 * @param view
 	 */
 	private void initView(View view) {
-		tv_Course_SeeMore=(TextView) view.findViewById(R.id.tv_course_see_more);
-		tv_HandUp_SeeMore=(TextView) view.findViewById(R.id.tv_hand_up_see_more);
-		tv_Type_SeeMore=(TextView) view.findViewById(R.id.tv_type_see_more);
-		
-		gv_Course=(GridView) view.findViewById(R.id.gv_coursee);
-		gv_HandUp=(GridView) view.findViewById(R.id.gv_hand_up);
-		lv_Type=(ListView) view.findViewById(R.id.lv_type);
-		
-		iv_loading=(ImageView) view.findViewById(R.id.iv_loading);
-		ll_loading=(LinearLayout) view.findViewById(R.id.ll_home_loading);
-		ll_main=(LinearLayout) view.findViewById(R.id.ll_main);
-		//加载数据库中的数据
-//		courseData=new ArrayList<HotCourseList>();
-//		courseAdapter=new HotCourseGVAdapter();
-//		gv_Course.setAdapter(courseAdapter);
-	}
+		tv_Course_SeeMore = (TextView) view.findViewById(R.id.tv_course_see_more);
+		btn_Course_SeeMore = (Button) view.findViewById(R.id.btn_course_see_more);
+		tv_HandUp_SeeMore = (TextView) view.findViewById(R.id.tv_hand_up_see_more);
+		tv_Type_SeeMore = (TextView) view.findViewById(R.id.tv_type_see_more);
+		btn_Type_SeeMore = (Button) view.findViewById(R.id.btn_type_see_more);
 
+		gv_Course = (GridView) view.findViewById(R.id.gv_coursee);
+		gv_HandUp = (GridView) view.findViewById(R.id.gv_hand_up);
+		lv_Type = (ListView) view.findViewById(R.id.lv_type);
+
+		iv_loading = (ImageView) view.findViewById(R.id.iv_loading);
+		ll_loading = (LinearLayout) view.findViewById(R.id.ll_home_loading);
+		ll_main = (LinearLayout) view.findViewById(R.id.ll_main);
+		// 加载数据库中的数据
+		// courseData=new ArrayList<HotCourseList>();
+		// courseAdapter=new HotCourseGVAdapter();
+		// gv_Course.setAdapter(courseAdapter);
+	}
 
 	@Override
 	public void onClick(View v) {
-		
+		switch (v.getId()) {
+		case R.id.tv_course_see_more:
+
+			break;
+
+		case R.id.btn_course_see_more:
+
+			break;
+		case R.id.tv_hand_up_see_more:
+
+			break;
+		case R.id.tv_type_see_more:
+
+			break;
+		case R.id.btn_type_see_more:
+			if(cFragment!=null){
+				cFragment.changeFragmentClick();
+			}
+			break;
+		}
+
+	}
+	public ChangeFragment cFragment;
+	public ChangeFragment getcFragment() {
+		return cFragment;
 	}
 
+	public void setcFragment(ChangeFragment cFragment) {
+		this.cFragment = cFragment;
+	}
+
+
+	//通过回调实现fragment的切换
+	public interface ChangeFragment{
+		public void changeFragmentClick();
+	}
+	
+
 	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id) {
-		Intent intent=new Intent(getActivity(),ShowDetailsActivity.class);
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		Intent intent = new Intent(getActivity(), ShowDetailsActivity.class);
 		// 进入详情页
-		String detail_url = DataURL.DETAILS_RMJC+courseData.get(position).getHand_id();
+		String detail_url = DataURL.DETAILS_RMJC + courseData.get(position).getHand_id();
 		intent.putExtra("detail_url", detail_url);
 		intent.putExtra("step", courseData.get(position).getStep_count());
 		startActivity(intent);
 	}
-	
+
 }

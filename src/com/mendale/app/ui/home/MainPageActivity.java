@@ -6,6 +6,7 @@ import com.mendale.app.ui.home.fragment.CourseFragment;
 import com.mendale.app.ui.home.fragment.HomeFragment;
 import com.mendale.app.ui.home.fragment.QAFragment;
 import com.mendale.app.ui.home.fragment.RecordFragment;
+import com.mendale.app.ui.home.fragment.HomeFragment.ChangeFragment;
 import com.mendale.app.ui.home.menu.CourseClassifyActivity;
 import com.mendale.app.ui.home.menu.HelpMakeCourseActivity;
 import com.mendale.app.ui.home.menu.NewsActivity;
@@ -45,7 +46,7 @@ import android.widget.Toast;
  * @author zhangxue
  * @date 2016-1-8
  */
-public class MainPageActivity extends FragmentActivity implements OnClickListener, OnCheckedChangeListener {
+public class MainPageActivity extends FragmentActivity implements OnClickListener, OnCheckedChangeListener,ChangeFragment {
 
 	/** 标题 */
 	private TextView tv_title;
@@ -89,6 +90,7 @@ public class MainPageActivity extends FragmentActivity implements OnClickListene
 	public long exitTime;// 储存点击退出时间
 	// ImageLoader
 	protected ImageLoader imageLoader = ImageLoader.getInstance();
+	private LinearLayout.LayoutParams lp;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -224,7 +226,7 @@ public class MainPageActivity extends FragmentActivity implements OnClickListene
 	@Override
 	public void onCheckedChanged(RadioGroup group, int checkedId) {
 		resertColor();
-		LinearLayout.LayoutParams lp = (android.widget.LinearLayout.LayoutParams) mTabline.getLayoutParams();
+		lp = (android.widget.LinearLayout.LayoutParams) mTabline.getLayoutParams();
 		switch (checkedId) {
 			case R.id.rb_home:
 				lp.leftMargin = (int) 0;
@@ -252,6 +254,8 @@ public class MainPageActivity extends FragmentActivity implements OnClickListene
 				break;
 		}
 	}
+	
+	
 
 	/**
 	 * 设置选中的颜色
@@ -332,5 +336,14 @@ public class MainPageActivity extends FragmentActivity implements OnClickListene
 	public void onClearDiskClick(View view) {
 		Toast.makeText(this, "清除本地缓存成功", Toast.LENGTH_SHORT).show();
 		ImageLoader.getInstance().clearDiskCache(); // 清除本地缓存
+	}
+
+	@Override
+	public void changeFragmentClick() {
+		resertColor();
+		lp.leftMargin = (int) mScreen1_3 * 1;
+		setPressedTextColor(rb_course);
+		tv_title.setText("教程");
+		changeFragment(courseFragment, true);
 	}
 }
