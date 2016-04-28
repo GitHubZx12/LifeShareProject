@@ -11,7 +11,7 @@ import com.mendale.app.ui.home.menu.CourseClassifyActivity;
 import com.mendale.app.ui.home.menu.HelpMakeCourseActivity;
 import com.mendale.app.ui.home.menu.NewsActivity;
 import com.mendale.app.ui.home.menu.SearchCourseActivity;
-import com.mendale.app.ui.home.menu.fragment.TitleActivity;
+import com.mendale.app.ui.home.menu.TitleActivity;
 import com.mendale.app.ui.mycenter.MyCenterActivity;
 import com.mendale.app.utils.ExitApplication;
 import com.nostra13.universalimageloader.core.ImageLoader;

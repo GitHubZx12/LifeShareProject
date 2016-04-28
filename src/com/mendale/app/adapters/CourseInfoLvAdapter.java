@@ -3,12 +3,15 @@ package com.mendale.app.adapters;
 import java.util.List;
 
 import com.mendale.app.R;
+import com.mendale.app.constants.DataURL;
+import com.mendale.app.ui.home.ShowDetailsActivity;
 import com.mendale.app.utils.imageUtils.RoundImageView;
 import com.mendale.app.vo.RecordItemBean;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -78,6 +81,13 @@ public class CourseInfoLvAdapter extends BaseAdapter {
 		// recordList.get(position).getFace_pic());
 		// bitMapUtils.display(holder.contentImage,
 		// recordList.get(position).getHost_pic());
+		
+		Intent intent = new Intent(context, ShowDetailsActivity.class);
+		// 进入详情页
+		String detail_url = DataURL.DETAILS_RMJC + recordList.get(position).getHand_id();
+		intent.putExtra("detail_url", detail_url);
+		intent.putExtra("step", courseData.get(position).getStep_count());
+		context.startActivity(intent);
 		return convertView;
 	}
 

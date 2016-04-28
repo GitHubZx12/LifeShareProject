@@ -3,8 +3,8 @@ package com.mendale.app.adapters;
 import java.util.List;
 
 import com.mendale.app.R;
-import com.mendale.app.ui.home.RecordDetailsActivity;
 import com.mendale.app.ui.mycenter.MyCenterActivity;
+import com.mendale.app.ui.record.RecordDetailsActivity;
 import com.mendale.app.utils.imageUtils.RoundImageView;
 import com.mendale.app.vo.RecordItemBean;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;

@@ -2,13 +2,12 @@ package com.mendale.app.ui.home.menu;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import com.mendale.app.R;
 import com.mendale.app.adapters.SecondListAdapter;
 import com.mendale.app.pojo.MainMenu;
 import com.mendale.app.ui.base.BaseActivity;
-import com.mendale.app.ui.home.UpLoadRecordActivity;
+import com.mendale.app.ui.record.UpLoadRecordActivity;
 
 import android.os.Bundle;
 import android.view.View;

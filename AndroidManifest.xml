@@ -224,32 +224,32 @@
         <!-- 上传教程 -->
         <!-- 标题 -->
         <activity
-            android:name="com.mendale.app.ui.home.menu.fragment.TitleActivity"
+            android:name="com.mendale.app.ui.home.menu.up.TitleActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <!-- 材料 -->
         <activity
-            android:name="com.mendale.app.ui.home.menu.fragment.MaterialActivity"
+            android:name="com.mendale.app.ui.home.menu.up.MaterialActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <!-- 工具 -->
         <activity
-            android:name="com.mendale.app.ui.home.menu.fragment.ToolActivity"
-            android:configChanges="orientation|screenSize"
+            android:name="com.mendale.com.mendale.app.ui.home.menu.up.ToolActivity"
+               android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <!-- 步骤 -->
         <activity
-            android:name="com.mendale.app.ui.home.menu.fragment.StepActivity"
-            android:configChanges="orientation|screenSize"
+            android:name="com.mendale.com.mendale.app.ui.home.menu.up.StepActivity"
+               android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <!-- 分类 -->
         <activity
-            android:name="com.mendale.app.ui.home.menu.fragment.ClassifyActivity"
-            android:configChanges="orientation|screenSize"
+            android:name="com.mendale.com.mendale.app.ui.home.menu.up.ClassifyActivity"
+               android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <!-- 选择分类 -->
@@ -297,7 +297,7 @@
             android:windowSoftInputMode="stateHidden" />
         <!-- 上传记录 -->
         <activity
-            android:name="com.mendale.app.ui.home.UpLoadRecordActivity"
+            android:name="com.mendale.app.ui.record.UpLoadRecordActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
@@ -315,7 +315,7 @@
             android:windowSoftInputMode="stateHidden" />
         <!-- 记录详情 -->
  <activity
-            android:name="com.mendale.app.ui.home.RecordDetailsActivity"
+            android:name="com.mendale.app.ui.record.RecordDetailsActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
