@@ -1,8 +1,8 @@
-package com.mendale.app.ui.home;
+package com.mendale.app.ui.record;
 
 import com.mendale.app.R;
 import com.mendale.app.ui.base.BaseActivity;
-import com.mendale.app.ui.home.menu.fragment.ClassifyActivity;
+import com.mendale.app.ui.home.menu.ClassifyActivity;
 import com.mendale.app.utils.Utils;
 import com.mendale.app.utils.imageUtils.ImageOpera;
 
