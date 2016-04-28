@@ -1,4 +1,4 @@
-package com.mendale.app.ui.home.menu.fragment;
+package com.mendale.app.ui.home.menu;
 
 import java.util.ArrayList;
 import java.util.List;

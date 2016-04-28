@@ -1,4 +1,4 @@
-package com.mendale.app.ui.home.menu.fragment;
+package com.mendale.app.ui.home.menu;
 
 import com.mendale.app.R;
 import com.mendale.app.ui.base.BaseActivity;
