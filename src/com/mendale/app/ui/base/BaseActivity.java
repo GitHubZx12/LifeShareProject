@@ -410,21 +410,21 @@ public class BaseActivity extends Activity implements NavigationOnClickListener 
 	/**
 	 * 再按一次退出程序
 	 */
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
-			if ((System.currentTimeMillis() - exitTime) > 2000) {
-				Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
-				exitTime = System.currentTimeMillis();
-			}
-			else {
-				/** 全局退出，相当于有些app的一键退出 */
-				ExitApplication.getInstance().exitAll();
-			}
-			return true;
-		}
-		return super.onKeyDown(keyCode, event);
-	}
+//	@Override
+//	public boolean onKeyDown(int keyCode, KeyEvent event) {
+//		if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+//			if ((System.currentTimeMillis() - exitTime) > 2000) {
+//				Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
+//				exitTime = System.currentTimeMillis();
+//			}
+//			else {
+//				/** 全局退出，相当于有些app的一键退出 */
+//				ExitApplication.getInstance().exitAll();
+//			}
+//			return true;
+//		}
+//		return super.onKeyDown(keyCode, event);
+//	}
 
 	private void initCommonView() {
 		leftImgBtn = (ImageButton) findViewById(R.id.navigationLeftImageBtn);

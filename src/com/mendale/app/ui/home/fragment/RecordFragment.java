@@ -30,13 +30,15 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 
 /**
  * 记录
  * @author zx
  *
  */
-public class RecordFragment extends Fragment implements IXListViewListener,OnClickListener{
+public class RecordFragment extends Fragment implements IXListViewListener,OnClickListener,OnItemClickListener{
 
 	private XListView mListView;
 	private RecordLvAdapter mAdapter;
@@ -136,6 +138,7 @@ public class RecordFragment extends Fragment implements IXListViewListener,OnCli
 		recordAction=(TextView) view.findViewById(R.id.iv_record_action);
 		//
 		mListView.setXListViewListener(this);// 设置监听
+		mListView.setOnItemClickListener(this);
 		recordAction.setOnClickListener(this);
 	}
 
@@ -198,5 +201,18 @@ public class RecordFragment extends Fragment implements IXListViewListener,OnCli
 			break;
 		}
 		
+	}
+
+	/**
+	 * 
+	 * @param parent
+	 * @param view
+	 * @param position
+	 * @param id
+	 */
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		ImageView host_pic=(ImageView) view.findViewById(R.id.iv_record_head_image);
+		ImageView face_pic=(ImageView) view.findViewById(R.id.iv_record_image);
 	}
 }

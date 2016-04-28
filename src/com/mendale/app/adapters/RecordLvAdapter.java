@@ -3,13 +3,17 @@ package com.mendale.app.adapters;
 import java.util.List;
 
 import com.mendale.app.R;
+import com.mendale.app.ui.home.RecordDetailsActivity;
+import com.mendale.app.ui.mycenter.MyCenterActivity;
 import com.mendale.app.utils.imageUtils.RoundImageView;
 import com.mendale.app.vo.RecordItemBean;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -89,6 +93,25 @@ public class RecordLvAdapter extends BaseAdapter {
 		// recordList.get(position).getFace_pic());
 		// bitMapUtils.display(holder.contentImage,
 		// recordList.get(position).getHost_pic());
+		//点击事件
+		holder.headImage.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent=new Intent();
+				intent.setClass(context, MyCenterActivity.class);
+				context.startActivity(intent);
+			}
+		});
+		holder.contentImage.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent=new Intent();
+				intent.setClass(context, RecordDetailsActivity.class);
+				context.startActivity(intent);
+			}
+		});
 
 		return convertView;
 	}

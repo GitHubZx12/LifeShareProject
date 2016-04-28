@@ -313,7 +313,12 @@
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-
+        <!-- 记录详情 -->
+ <activity
+            android:name="com.mendale.app.ui.home.RecordDetailsActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
         <uses-library android:name="android.test.runner" />
     </application>
 

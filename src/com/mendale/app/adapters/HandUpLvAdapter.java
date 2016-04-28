@@ -48,7 +48,7 @@ public class HandUpLvAdapter extends BaseAdapter {
 		ViewHolder holder;
 		if (convertView == null) {
 			holder = new ViewHolder();
-			convertView = View.inflate(context, R.layout.item_hot_course, null);
+			convertView = View.inflate(context, R.layout.item_hand_up, null);
 			holder.pos = (TextView) convertView.findViewById(R.id.tv_hand_up_pos);
 			holder.username = (TextView) convertView.findViewById(R.id.tv_hand_up_name);
 			holder.host_pic = (ImageView) convertView.findViewById(R.id.iv_hand_up_pic);

@@ -102,7 +102,6 @@ public class HandUpAcitivity extends BaseActivity{
 					
 					@Override
 					public void run() {
-						Log.e("tag6666",mDatas.toString());
 						setListViewAdapter(mDatas);
 					}
 				});
