@@ -1,9 +1,7 @@
-package com.mendale.app.ui.home.menu.fragment;
+package com.mendale.app.ui.home.menu;
 
 import com.mendale.app.R;
-import com.mendale.app.constants.URLS;
 import com.mendale.app.ui.base.BaseActivity;
-import com.mendale.app.ui.home.menu.ChooseClassify;
 import com.mendale.app.utils.Utils;
 import com.mendale.app.utils.imageUtils.ImageOpera;
 
