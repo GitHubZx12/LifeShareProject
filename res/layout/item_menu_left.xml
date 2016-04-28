@@ -3,7 +3,7 @@
     android:id="@+id/left_meun"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#7EB288"
+    android:background="@color/background_color"
     android:orientation="vertical" >
 
     <!-- 侧滑菜单 -->
@@ -17,9 +17,9 @@
         <ImageView
             android:id="@+id/iv_menu_icon"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/no_login_pic" />
+            android:src="@drawable/defult_avator" />
 
         <TextView
             android:id="@+id/tv_menu_login"
@@ -27,7 +27,6 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:text="登录/注册"
-            android:textColor="#ffffff"
             android:paddingTop="5dp"
             android:layout_below="@+id/iv_menu_icon"
             android:textSize="16sp" />
@@ -56,8 +55,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="求教程"
-            android:textColor="#ffffff" />
+            android:text="求教程"/>
 
         <TextView
             android:id="@+id/tv_menu_upload"
@@ -65,8 +63,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="上传教程"
-            android:textColor="#ffffff" />
+            android:text="上传教程"/>
 
         <TextView
             android:id="@+id/tv_menu_classify"
@@ -74,8 +71,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="分类"
-            android:textColor="#ffffff" />
+            android:text="分类"/>
 
         <TextView
             android:id="@+id/tv_menu_search"
@@ -83,8 +79,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="搜索"
-            android:textColor="#ffffff" />
+            android:text="搜索"/>
 
         <TextView
             android:id="@+id/tv_menu_news"
@@ -92,8 +87,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="消息"
-            android:textColor="#ffffff" />
+            android:text="消息" />
 
         <TextView
             android:id="@+id/tv_menurecommond"
@@ -101,8 +95,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="应用推荐"
-            android:textColor="#ffffff" />
+            android:text="应用推荐" />
         <View 
             android:layout_width="match_parent"
             android:layout_height="0dp"

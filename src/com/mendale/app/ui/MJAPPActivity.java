@@ -15,7 +15,7 @@ import cn.bmob.v3.Bmob;
 import com.mendale.app.R;
 import com.mendale.app.application.MobileApplication;
 import com.mendale.app.constants.URLS;
-import com.mendale.app.pojo.LoginUser;
+import com.mendale.app.pojo.LSUser;
 import com.mendale.app.ui.base.BaseActivity;
 import com.mendale.app.ui.home.MainPageActivity;
 import com.mendale.app.ui.login.LoginActivity;
@@ -87,7 +87,7 @@ public class MJAPPActivity extends BaseActivity {
 			Application application = this.getApplication();
 			MobileApplication mApplication = (MobileApplication) application;
 			// 得到平台账号密码
-			LoginUser loginUser = new LoginUser();
+			LSUser loginUser = new LSUser();
 			loginUser.setUserName(name);
 			loginUser.setPassword(pwd);
 			mApplication.setmUserInfo(loginUser);

@@ -6,7 +6,7 @@ import java.util.Date;
 import com.mendale.app.R;
 import com.mendale.app.application.MobileApplication;
 import com.mendale.app.constants.URLS;
-import com.mendale.app.pojo.LoginUser;
+import com.mendale.app.pojo.LSUser;
 import com.mendale.app.pojo.MemberPojo;
 import com.mendale.app.ui.base.BaseActivity;
 import com.mendale.app.ui.home.MainPageActivity;
@@ -211,8 +211,10 @@ public class MyCenterActivity extends BaseActivity implements OnClickListener {
 		super.onActivityResult(requestCode, resultCode, data);
 		switch (requestCode) {
 			case 2:
-				LoginUser loginUser=(LoginUser) data.getSerializableExtra("userinof");
-				showToast(loginUser.toString());
+				if(null!= data.getSerializableExtra("userinfo")){
+					LSUser loginUser=(LSUser) data.getSerializableExtra("userinfo");
+					showToast(loginUser.toString());
+				}
 				break;
 			default:
 				break;

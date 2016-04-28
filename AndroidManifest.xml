@@ -224,31 +224,31 @@
         <!-- 上传教程 -->
         <!-- 标题 -->
         <activity
-            android:name="com.mendale.app.ui.home.menu.up.TitleActivity"
+            android:name="com.mendale.app.ui.home.menu.TitleActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <!-- 材料 -->
         <activity
-            android:name="com.mendale.app.ui.home.menu.up.MaterialActivity"
+            android:name="com.mendale.app.ui.home.menu.MaterialActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <!-- 工具 -->
         <activity
-            android:name="com.mendale.com.mendale.app.ui.home.menu.up.ToolActivity"
+            android:name="com.mendale.app.ui.home.menu.ToolActivity"
                android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <!-- 步骤 -->
         <activity
-            android:name="com.mendale.com.mendale.app.ui.home.menu.up.StepActivity"
+            android:name="com.mendale.app.ui.home.menu.StepActivity"
                android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <!-- 分类 -->
         <activity
-            android:name="com.mendale.com.mendale.app.ui.home.menu.up.ClassifyActivity"
+            android:name="com.mendale.app.ui.home.menu.ClassifyActivity"
                android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />

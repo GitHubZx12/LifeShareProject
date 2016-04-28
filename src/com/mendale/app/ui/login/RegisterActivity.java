@@ -5,7 +5,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.mendale.app.R;
-import com.mendale.app.pojo.LoginUser;
+import com.mendale.app.pojo.LSUser;
 import com.mendale.app.ui.base.BaseActivity;
 import com.mendale.app.utils.CheckUtils;
 import com.mendale.app.utils.DialogUtil;
@@ -103,12 +103,12 @@ public class RegisterActivity extends BaseActivity implements OnClickListener, O
 				String p1 = password.getText().toString();// 获得用户输入的密码
 				if (CheckUtils.checkPwd(this, p1, password)) {
 					// 与已经存在的用户进行判断（不可重复）
-					BmobQuery<LoginUser> bmobQuery = new BmobQuery<LoginUser>();
+					BmobQuery<LSUser> bmobQuery = new BmobQuery<LSUser>();
 					bmobQuery.addWhereEqualTo("userName", name);
-					bmobQuery.findObjects(this, new FindListener<LoginUser>() {
+					bmobQuery.findObjects(this, new FindListener<LSUser>() {
 						
 						@Override
-						public void onSuccess(List<LoginUser> arg0) {
+						public void onSuccess(List<LSUser> arg0) {
 							for(int i=0;i<arg0.size();i++){
 								if(name.equals(arg0.get(i).getUserName())){
 									Toast.makeText(RegisterActivity.this,"用户名已经存在", Toast.LENGTH_SHORT).show();
@@ -123,7 +123,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener, O
 							intent.putExtra("password", password.getText().toString());
 							startActivity(intent);
 							//保存到bmob云端
-							LoginUser user=new LoginUser();
+							LSUser user=new LSUser();
 							user.setUserName(userName.getText().toString());
 							user.setPassword(password.getText().toString());
 							user.save(RegisterActivity.this, new SaveListener() {

@@ -8,6 +8,7 @@ import com.mendale.app.R;
 import com.mendale.app.adapters.CourseInfoLvAdapter;
 import com.mendale.app.constants.DataURL;
 import com.mendale.app.tasks.RecordTask;
+import com.mendale.app.ui.base.BaseActivity;
 import com.mendale.app.utils.pullToRefreshUtils.PullToRefreshConfig;
 import com.mendale.app.utils.pullToRefreshUtils.view.XListView;
 import com.mendale.app.utils.pullToRefreshUtils.view.XListView.IXListViewListener;
@@ -31,7 +32,7 @@ import android.widget.TextView;
  * @author zx
  *
  */
-public class CollectRecordActivity extends Activity implements IXListViewListener {
+public class CollectRecordActivity extends BaseActivity implements IXListViewListener {
 
 	private XListView mListView;
 	private CourseInfoLvAdapter mAdapter;
@@ -62,14 +63,27 @@ public class CollectRecordActivity extends Activity implements IXListViewListene
 		};
 	};
 
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_course_info);
+		initHeaderView();
 		initView();
 		initAnim();
 		initData();
 		initImageOptions();
-	};
+	}
+	/**
+	 * 初始化头部
+	 */
+	private void initHeaderView() {
+		setNavigationTitle("收藏记录");
+		setNavigationLeftBtnText("");
+	}
+	@Override
+	public void leftButtonOnClick() {
+		super.leftButtonOnClick();
+		this.finish();
+	}
 
 	/**
 	 * 初始化动画

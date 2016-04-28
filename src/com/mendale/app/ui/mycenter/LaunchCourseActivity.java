@@ -6,6 +6,7 @@ import com.mendale.app.R;
 import com.mendale.app.adapters.HotCourseGVAdapter;
 import com.mendale.app.constants.DataURL;
 import com.mendale.app.tasks.HomeTask;
+import com.mendale.app.ui.base.BaseActivity;
 import com.mendale.app.ui.home.ShowDetailsActivity;
 import com.mendale.app.vo.HomeAllList;
 import com.mendale.app.vo.HotCourseItemBean;
@@ -29,10 +30,8 @@ import android.widget.TextView;
  * @author Administrator
  *
  */
-public class LaunchCourseActivity extends Activity implements OnClickListener,OnItemClickListener{
+public class LaunchCourseActivity extends BaseActivity implements OnClickListener,OnItemClickListener{
 	
-	private ImageView back;
-	private TextView title;
 	private GridView mGridView;
 	/**adapter*/
 	private HotCourseGVAdapter courseAdapter;
@@ -51,23 +50,34 @@ public class LaunchCourseActivity extends Activity implements OnClickListener,On
 	};
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_launch);
-		
+		initHeaderView();
 		initData();
 		initView();
 	}
+	
+	/**
+	 * 初始化头部
+	 */
+	private void initHeaderView() {
+		setNavigationTitle("发布课程");
+		setNavigationLeftBtnText("");
+	}
+	@Override
+	public void leftButtonOnClick() {
+		super.leftButtonOnClick();
+		this.finish();
+	}
 
+	
 	/**
 	 * 初始化view
 	 */
 	private void initView() {
-		back=(ImageView) findViewById(R.id.iv_launch_back);
-		title=(TextView) findViewById(R.id.tv_launch_title);
 		mGridView=(GridView) findViewById(R.id.gv_launch);
 		
-		back.setOnClickListener(this);
 		mGridView.setOnItemClickListener(this);
 		
 	}

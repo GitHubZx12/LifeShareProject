@@ -1,6 +1,7 @@
 package com.mendale.app.ui.home.menu;
 
 import com.mendale.app.R;
+import com.mendale.app.ui.base.BaseActivity;
 import com.mendale.app.utils.ExitApplication;
 
 import android.app.Activity;
@@ -18,28 +19,48 @@ import android.widget.Toast;
  * @author Administrator
  *
  */
-public class HelpMakeCourseActivity extends Activity implements OnClickListener{
+public class HelpMakeCourseActivity extends BaseActivity implements OnClickListener{
 	
 	private EditText et_help_name;
 	private EditText et_help_descript;
-	private TextView tv_help_submit;
-	private ImageView iv_back;
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.menu_help_make_course);
 		ExitApplication.getInstance().addActivity(this);
+		initHeadView();
 		initView();
 		setListener();
+	}
+	/**
+	 * 初始化头部view
+	 */
+	private void initHeadView() {
+		setNavigationTitle("球教程");
+		setNavigationLeftBtnText("");
+		setNavigationRightBtnText("提问");
+	}
+	/**
+	 * 取消
+	 */
+	@Override
+	public void leftButtonOnClick() {
+		super.leftButtonOnClick();
+		this.finish();
+	}
+	/**
+	 * 完成
+	 */
+	@Override
+	public void rightButtonOnClick() {
+		super.rightButtonOnClick();
 	}
 
 	/**
 	 * 事件
 	 */
 	private void setListener() {
-		tv_help_submit.setOnClickListener(this);
-		iv_back.setOnClickListener(this);
 	}
 
 	/**
@@ -48,8 +69,6 @@ public class HelpMakeCourseActivity extends Activity implements OnClickListener{
 	private void initView() {
 		et_help_name=(EditText) findViewById(R.id.et_help_descript);
 		et_help_descript=(EditText) findViewById(R.id.et_help_name);
-		tv_help_submit=(TextView) findViewById(R.id.tv_help_submit);
-		iv_back=(ImageView)findViewById(R.id.iv_help_back);
 	}
 
 	@Override

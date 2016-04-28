@@ -3,7 +3,7 @@ package com.mendale.app.ui.mycenter.setting;
 import com.mendale.app.R;
 import com.mendale.app.application.MobileApplication;
 import com.mendale.app.constants.URLS;
-import com.mendale.app.pojo.LoginUser;
+import com.mendale.app.pojo.LSUser;
 import com.mendale.app.ui.base.BaseActivity;
 import com.mendale.app.ui.mycenter.MyCenterActivity;
 import com.mendale.app.utils.Utils;
@@ -36,7 +36,7 @@ public class MarkManActivity extends BaseActivity implements OnClickListener {
 	private EditText phone;
 	private EditText email;
 	private static String iconpath;
-	private LoginUser loginUser;
+	private LSUser loginUser;
 	private Handler mHandler = new Handler();
 
 	@Override
@@ -103,7 +103,7 @@ public class MarkManActivity extends BaseActivity implements OnClickListener {
 	 * 修改个人数据
 	 */
 	protected boolean updateInfo() {
-		loginUser=new LoginUser();
+		loginUser=new LSUser();
 		if (!Utils.isEmpty(name.getText().toString())) {
 			loginUser.setName(name.getText().toString());
 		}

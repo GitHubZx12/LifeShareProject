@@ -6,6 +6,7 @@ import java.util.List;
 import com.mendale.app.R;
 import com.mendale.app.adapters.SecondListAdapter;
 import com.mendale.app.pojo.MainMenu;
+import com.mendale.app.ui.base.BaseActivity;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -24,7 +25,7 @@ import android.widget.Toast;
  * @author zx
  *
  */
-public class SearchCourseActivity extends Activity implements TextWatcher,OnClickListener {
+public class SearchCourseActivity extends BaseActivity implements TextWatcher,OnClickListener {
 
 	private ListView mListView;
 	/**查询结果的adapter*/
@@ -44,11 +45,24 @@ public class SearchCourseActivity extends Activity implements TextWatcher,OnClic
 			R.drawable.ic_launcher,R.drawable.ic_launcher,R.drawable.ic_launcher,R.drawable.ic_launcher};
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search_course);
+		 initHeaderView();
 		initData();
 		initView();
+	}
+	/**
+	 * 初始化标题
+	 */
+	private void initHeaderView() {
+		setNavigationTitle("搜索");
+		setNavigationLeftBtnText("");
+	}
+	@Override
+	public void leftButtonOnClick() {
+		super.leftButtonOnClick();
+		this.finish();
 	}
 
 	/**

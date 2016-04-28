@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:background="@drawable/crafter_cguide_bg"
     android:orientation="vertical"
     android:paddingLeft="10dp"
     android:paddingTop="10dp" >

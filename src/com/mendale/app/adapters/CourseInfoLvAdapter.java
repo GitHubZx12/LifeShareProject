@@ -84,9 +84,9 @@ public class CourseInfoLvAdapter extends BaseAdapter {
 		
 		Intent intent = new Intent(context, ShowDetailsActivity.class);
 		// 进入详情页
-		String detail_url = DataURL.DETAILS_RMJC + recordList.get(position).getHand_id();
-		intent.putExtra("detail_url", detail_url);
-		intent.putExtra("step", courseData.get(position).getStep_count());
+//		String detail_url = DataURL.DETAILS_RMJC + recordList.get(position).getOpus_id();
+//		intent.putExtra("detail_url", detail_url);
+//		intent.putExtra("step", recordList.get(position).get);
 		context.startActivity(intent);
 		return convertView;
 	}

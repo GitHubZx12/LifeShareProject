@@ -263,7 +263,7 @@ public class MainPageActivity extends FragmentActivity implements OnClickListene
 	 * @param rb
 	 */
 	private void setPressedTextColor(RadioButton rb) {
-		rb.setTextColor(Color.parseColor("#81DBA6"));
+		rb.setTextColor(Color.parseColor("#35CDE5"));
 	}
 
 	/**

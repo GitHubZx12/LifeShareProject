@@ -6,7 +6,7 @@ import java.util.Set;
 
 import com.mendale.app.R;
 import com.mendale.app.application.MobileApplication;
-import com.mendale.app.pojo.LoginUser;
+import com.mendale.app.pojo.LSUser;
 import com.mendale.app.ui.base.BaseActivity;
 import com.mendale.app.ui.home.MainPageActivity;
 import com.mendale.app.utils.ClearEditText;
@@ -173,20 +173,20 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	 */
 	private void loginM() {
 		// 查找Person表里面id为6b6c11c537的数据
-		BmobQuery<LoginUser> bmobQuery = new BmobQuery<LoginUser>();
+		BmobQuery<LSUser> bmobQuery = new BmobQuery<LSUser>();
 		bmobQuery.addWhereEqualTo("userName", username.getText().toString());
 		bmobQuery.addWhereEqualTo("password", password.getText().toString());
-		bmobQuery.findObjects(this, new FindListener<LoginUser>() {
+		bmobQuery.findObjects(this, new FindListener<LSUser>() {
 
 			@Override
 			public void onError(int arg0, String arg1) {
 			}
 
 			@Override
-			public void onSuccess(List<LoginUser> arg0) {
+			public void onSuccess(List<LSUser> arg0) {
 				//
 				String result = "";
-				for (LoginUser loginUser : arg0) {
+				for (LSUser loginUser : arg0) {
 					result += loginUser.getUserName();
 				}
 				if (username.getText().toString().equals(result)) {
@@ -227,7 +227,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 					Application application = LoginActivity.this.getApplication();
 					MobileApplication mApplication = (MobileApplication) application;
 					// 得到平台账号密码
-					LoginUser loginUser = new LoginUser();
+					LSUser loginUser = new LSUser();
 					loginUser.setUserName(username.getText().toString());
 					loginUser.setPassword(password.getText().toString());
 					mApplication.setmUserInfo(loginUser);

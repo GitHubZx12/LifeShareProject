@@ -1,11 +1,17 @@
 package com.mendale.app.vo;
 
+import cn.bmob.v3.BmobObject;
+
 /**
  * 记录
  * @author Administrator
  *
  */
-public class RecordItemBean {
+public class RecordItemBean extends BmobObject{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String opus_id;
 	private String subject;
 	private String uid;

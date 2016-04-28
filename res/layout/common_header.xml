@@ -33,7 +33,7 @@
                     android:background="@null"
                     android:gravity="center"
                     android:src="@drawable/crafter_cguide_lastarrow_yes"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="18sp" />
 
                 <TextView
@@ -43,7 +43,7 @@
                     android:background="@null"
                     android:gravity="center"
                     android:text="返回"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/title_textsize18"
                     android:visibility="visible" />
             </LinearLayout>
@@ -60,7 +60,7 @@
                     android:layout_height="44dp"
                     android:background="@null"
                     android:gravity="center"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/title_textsize22" />
 
                 <ImageButton
@@ -70,7 +70,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:background="@null"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="18sp"
                     android:visibility="gone" />
             </LinearLayout>
@@ -89,7 +89,7 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:gravity="center"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/title_textsize18"
                     android:visibility="gone" />
 
@@ -98,7 +98,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:background="@null"
-                    android:textColor="@color/title_bg_black"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/title_textsize22" />
             </LinearLayout>
         </LinearLayout>

@@ -60,7 +60,7 @@
     <color name="fragment">#81DBA6</color>
     <color name="title_color">#20c0da</color>
     <!-- 登录/注册/忘记密码/修改密码a -->
-    <color name="background_color">#f2f2f2</color>
+    <color name="background_color">#F7F7F0</color>
     <color name="main_color">#4DC060</color>
     <color name="text_hint">#666666</color>
     <color name="pwd_text_hint">#000000</color>
@@ -89,11 +89,10 @@
     <color name="text_tishi">#b0b0b0</color>
     <color name="person_bg">#f2f2f2</color>
     <!-- 首页 -->
-    <color name="see_more">#86E8AD</color>
+    <color name="see_more">#35CDE5</color>
      <!-- 统一item背景色 -->
     <color name="gray_x">#A4C9A3</color>
     <color name="frame_color">#f0f0f0</color>
     <!-- 统一的title北京 -->
-    <color name="title_background">#7EB288</color>
-
+    <color name="title_background">#ffffff</color>
 </resources>
