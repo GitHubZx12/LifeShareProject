@@ -7,12 +7,12 @@ import java.util.List;
 import com.mendale.app.R;
 import com.mendale.app.adapters.RecordLvAdapter;
 import com.mendale.app.constants.DataURL;
+import com.mendale.app.pojo.RecordItemBean;
 import com.mendale.app.tasks.RecordTask;
 import com.mendale.app.ui.home.menu.ChooseClassify;
 import com.mendale.app.utils.pullToRefreshUtils.PullToRefreshConfig;
 import com.mendale.app.utils.pullToRefreshUtils.view.XListView;
 import com.mendale.app.utils.pullToRefreshUtils.view.XListView.IXListViewListener;
-import com.mendale.app.vo.RecordItemBean;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
@@ -30,26 +30,26 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 
 /**
  * 记录
  * @author zx
  *
  */
-public class RecordFragment extends Fragment implements IXListViewListener,OnClickListener,OnItemClickListener{
+public class RecordFragment extends Fragment implements IXListViewListener,OnClickListener{
 
 	private XListView mListView;
 	private RecordLvAdapter mAdapter;
 	private DisplayImageOptions options; // DisplayImageOptions是用于设置图片显示的类
-	/** 显示没有更多数据 */
+	/** 显示没有更多数据 */												
 	private TextView tv_no_data;
 	//动画相关
 	private ImageView iv_loading;
     private LinearLayout ll_loading;
     /**记录*/
 	private TextView recordAction;
+	//
+	private List<RecordItemBean> recordList;
 
 	private Handler mhandler = new Handler() {
 		@SuppressWarnings("unchecked")
@@ -60,7 +60,7 @@ public class RecordFragment extends Fragment implements IXListViewListener,OnCli
 					iv_loading.clearAnimation();
 					ll_loading.setVisibility(View.INVISIBLE);
 					mListView.setVisibility(View.VISIBLE);
-					List<RecordItemBean> recordList = (List<RecordItemBean>) msg.obj;
+					recordList = (List<RecordItemBean>) msg.obj;
 					mAdapter = new RecordLvAdapter(getActivity(), recordList,
 							options);
 					mListView.setAdapter(mAdapter);
@@ -138,7 +138,6 @@ public class RecordFragment extends Fragment implements IXListViewListener,OnCli
 		recordAction=(TextView) view.findViewById(R.id.iv_record_action);
 		//
 		mListView.setXListViewListener(this);// 设置监听
-		mListView.setOnItemClickListener(this);
 		recordAction.setOnClickListener(this);
 	}
 
@@ -196,23 +195,9 @@ public class RecordFragment extends Fragment implements IXListViewListener,OnCli
 			Intent intent=new Intent(getActivity(),ChooseClassify.class);
 			startActivity(intent);
 			break;
-
 		default:
 			break;
 		}
 		
-	}
-
-	/**
-	 * 
-	 * @param parent
-	 * @param view
-	 * @param position
-	 * @param id
-	 */
-	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		ImageView host_pic=(ImageView) view.findViewById(R.id.iv_record_head_image);
-		ImageView face_pic=(ImageView) view.findViewById(R.id.iv_record_image);
 	}
 }

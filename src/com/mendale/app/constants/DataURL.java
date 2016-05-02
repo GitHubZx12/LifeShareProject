@@ -22,4 +22,7 @@ public class DataURL {
 	public static String Z_NEW_JIAOCHENG = "http://www.shougongke.com/index.php?m=Mobq_data&a=tophot&id=a&page=1";
 	//首页--手工达人--更多
 	public static String HAND_UP="http://www.shougongke.com/index.php?m=Mobq_data&a=topren&id=w&page=1";
+	//记录详情
+	public static String RECORD_DETAILS="http://www.shougongke.com/index.php?m=Mobq_opus&a=opus&id=";
+	public static String RECORD_DETAILS2="&c_id=null&hand_id=null&type=new&cate_id=null&uid=null&uid_relation=null";
 }

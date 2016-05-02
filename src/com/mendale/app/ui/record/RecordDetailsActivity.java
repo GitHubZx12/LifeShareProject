@@ -1,28 +1,12 @@
 package com.mendale.app.ui.record;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.mendale.app.R;
-import com.mendale.app.constants.DataURL;
-import com.mendale.app.pojo.HotCoursePoJo;
+import com.mendale.app.pojo.RecordItemBean;
 import com.mendale.app.ui.base.BaseActivity;
-import com.mendale.app.utils.Utils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
-import com.squareup.okhttp.Call;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
+import com.umeng.socialize.utils.Log;
 
 import android.os.Bundle;
 import android.widget.Button;
@@ -49,18 +33,40 @@ public class RecordDetailsActivity extends BaseActivity{
 	/**评论*/
 	private Button comment;
 	/**数据*/
-	private List<HotCoursePoJo> mDatas = null;
+	private RecordItemBean item;
 	private DisplayImageOptions options; // DisplayImageOptions是用于设置图片显示的类
+	
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_record_details);
-		initData();
+		getIntentData();
 		initHeaderView();
 		initView();
 		initImageOptions();
+		BindData();
 	}
+	
+	/**
+	 * 初始化intent
+	 */
+	private void getIntentData() {
+		item=(RecordItemBean) getIntent().getSerializableExtra("recordItem");
+	}
+
+	/**
+	 * 設置数据
+	 */
+	private void BindData() {
+		//绑定数据，更改ui
+		ImageLoader imageLoader = ImageLoader.getInstance();
+		imageLoader.displayImage(item.getFace_pic(), face_pic, options);
+		imageLoader.displayImage(item.getHost_pic(), host_pic, options);
+		title.setText(item.getSubject());
+		user_name.setText(item.getUser_name());
+	}
+
 	/**
 	 * 初始化图片的相关参数
 	 */
@@ -76,75 +82,6 @@ public class RecordDetailsActivity extends BaseActivity{
 				.build(); // 创建配置过得DisplayImageOption对象
 	}
 	
-	/**
-	 * 初始化数据
-	 */
-	private void initData() {
-		doGet(DataURL.Z_NEW_JIAOCHENG);
-	}
-	/**
-	 * 获取数据
-	 * @param url
-	 */
-	private void doGet(final String url) {
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				OkHttpClient okHttpClient = new OkHttpClient();
-				// 创建一个request
-				Request request = new Request.Builder().url(url).build();
-				Call call = okHttpClient.newCall(request);
-				call.enqueue(new Callback() {
-
-					@Override
-					public void onResponse(Response arg0) throws IOException {
-						parserData(arg0.body().string());
-					}
-
-					@Override
-					public void onFailure(Request arg0, IOException arg1) {
-					}
-				});
-			}
-		}).start();
-		
-	}
-	/**
-	 * 解析json数据
-	 * 
-	 * @param string
-	 */
-	private void parserData(String string) {
-		Gson gson = new Gson();
-		if (!Utils.isEmpty(string)) {
-			try {
-				JSONObject jsonObject = new JSONObject(string);
-				JSONArray top100 = jsonObject.getJSONArray("list");
-				mDatas = new ArrayList<HotCoursePoJo>();
-				for (int i = 0; i < top100.length(); i++) {
-					HotCoursePoJo item = gson.fromJson(top100.get(i).toString(), new TypeToken<HotCoursePoJo>() {
-					}.getType());
-					mDatas.add(item);
-				}
-				runOnUiThread(new Runnable() {
-					
-					@Override
-					public void run() {
-						//绑定数据，更改ui
-						ImageLoader imageLoader = ImageLoader.getInstance();
-						imageLoader.displayImage(mDatas.get(0).getFace_pic(), face_pic, options);
-						imageLoader.displayImage(mDatas.get(0).getHost_pic(), host_pic, options);
-						
-						title.setText(mDatas.get(0).getSubject());
-						user_name.setText(mDatas.get(0).getUser_name());
-					}
-				});
-				
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-		}
-	}
 	/**
 	 * 初始化标题
 	 */

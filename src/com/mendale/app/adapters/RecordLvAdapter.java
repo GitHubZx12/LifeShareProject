@@ -3,15 +3,17 @@ package com.mendale.app.adapters;
 import java.util.List;
 
 import com.mendale.app.R;
+import com.mendale.app.pojo.RecordItemBean;
 import com.mendale.app.ui.mycenter.MyCenterActivity;
 import com.mendale.app.ui.record.RecordDetailsActivity;
 import com.mendale.app.utils.imageUtils.RoundImageView;
-import com.mendale.app.vo.RecordItemBean;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.umeng.socialize.utils.Log;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -54,7 +56,7 @@ public class RecordLvAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
 		if (convertView == null) {
 			holder = new ViewHolder();
@@ -109,6 +111,10 @@ public class RecordLvAdapter extends BaseAdapter {
 			public void onClick(View v) {
 				Intent intent=new Intent();
 				intent.setClass(context, RecordDetailsActivity.class);
+				Bundle bundle=new Bundle();
+				bundle.putSerializable("recordItem", recordList.get(position));
+				Log.e("tag666",recordList.get(position).toString());
+				intent.putExtras(bundle);
 				context.startActivity(intent);
 			}
 		});

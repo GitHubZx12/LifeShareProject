@@ -3,10 +3,9 @@ package com.mendale.app.adapters;
 import java.util.List;
 
 import com.mendale.app.R;
-import com.mendale.app.constants.DataURL;
+import com.mendale.app.pojo.RecordItemBean;
 import com.mendale.app.ui.home.ShowDetailsActivity;
 import com.mendale.app.utils.imageUtils.RoundImageView;
-import com.mendale.app.vo.RecordItemBean;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 

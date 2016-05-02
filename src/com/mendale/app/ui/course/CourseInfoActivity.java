@@ -7,12 +7,12 @@ import java.util.List;
 import com.mendale.app.R;
 import com.mendale.app.adapters.CourseInfoLvAdapter;
 import com.mendale.app.constants.DataURL;
+import com.mendale.app.pojo.RecordItemBean;
 import com.mendale.app.tasks.RecordTask;
 import com.mendale.app.ui.base.BaseActivity;
 import com.mendale.app.utils.pullToRefreshUtils.PullToRefreshConfig;
 import com.mendale.app.utils.pullToRefreshUtils.view.XListView;
 import com.mendale.app.utils.pullToRefreshUtils.view.XListView.IXListViewListener;
-import com.mendale.app.vo.RecordItemBean;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 

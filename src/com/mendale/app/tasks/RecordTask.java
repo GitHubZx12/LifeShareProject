@@ -8,30 +8,21 @@ import java.net.HttpURLConnection;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.content.Context;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
-import com.mendale.app.pojo.CourseChildPojo;
-import com.mendale.app.pojo.CoursePoJo;
+import com.mendale.app.pojo.RecordItemBean;
 import com.mendale.app.utils.Utils;
-import com.mendale.app.vo.DarenItemBean;
-import com.mendale.app.vo.HomeAllList;
-import com.mendale.app.vo.HotCourseItemBean;
-import com.mendale.app.vo.RecordItemBean;
-import com.mendale.app.vo.TypeItemBean;
+
+import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 
 /**
  * 教程列表

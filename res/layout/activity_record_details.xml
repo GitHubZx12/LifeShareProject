@@ -7,20 +7,25 @@
     <include 
         android:id="@+id/include"
         layout="@layout/common_header"/>
+    <!-- 图片 -->
     <ImageView 
         android:id="@+id/iv_record_details_pic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_launcher"/>
+    <!-- 标题 -->
     <TextView 
         android:id="@+id/tv_record_details_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/common_margin_10dp"
+        android:layout_marginBottom="@dimen/common_margin_10dp"
         android:text="hahahahaah"/>
      <TextView 
         android:id="@+id/tv_record_details_desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/common_margin_10dp"
         android:text="相当不错"/>
      <LinearLayout 
          android:layout_width="match_parent"
@@ -44,6 +49,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
+        android:layout_margin="@dimen/common_margin_10dp"
         android:hint="请发表评论"/>
      
     
