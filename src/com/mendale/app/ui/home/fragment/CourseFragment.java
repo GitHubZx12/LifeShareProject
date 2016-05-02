@@ -1,7 +1,6 @@
 package com.mendale.app.ui.home.fragment;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +24,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.FindListener;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -42,20 +43,19 @@ public class CourseFragment extends Fragment implements OnItemClickListener {
 	private GridView gv_Course;
 	private ImageView iv_loading;
 	private LinearLayout ll_loading;
+	//数据
+	private List<CoursePoJo> courseData;
 	private Handler mhandler = new Handler() {
 
 		@SuppressWarnings("unchecked")
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 				case 1:
-					if (msg.obj != null) {
 						iv_loading.clearAnimation();
 						ll_loading.setVisibility(View.INVISIBLE);
 						gv_Course.setVisibility(View.VISIBLE);
-						Datas.courseList = (List<CoursePoJo>) msg.obj;
 						mAdapter = new CourseGvAdapter(getActivity(), formatList(Datas.courseList));
 						gv_Course.setAdapter(mAdapter);
-					}
 					break;
 				default:
 					break;
@@ -79,14 +79,6 @@ public class CourseFragment extends Fragment implements OnItemClickListener {
 				Datas.cChildList.add(item);
 			}
 		}
-//		Map<String, String> map;
-//		for (int i = 0; i < courseList.size(); i++) {
-//			for (int j = 0; j < courseList.get(i).getChild().size(); j++) {
-//				map = new HashMap<String, String>();
-//				map.put("childName", courseList.get(i).getChild().get(j).getName());
-//				Datas.list.add(map);
-//			}
-//		}
 		return Datas.cChildList;
 	};
 
@@ -121,12 +113,27 @@ public class CourseFragment extends Fragment implements OnItemClickListener {
 	 * 初始化数据
 	 */
 	private void intData() {
-		new Thread() {
-
-			public void run() {
-				new CourseTask(getActivity(), mhandler).send(1, "utf-8", DataURL.COURSE_URL);
-			};
-		}.start();
+//		new Thread() {
+//
+//			public void run() {
+//				new CourseTask(getActivity(), mhandler).send(1, "utf-8", DataURL.COURSE_URL);
+//			};
+//		}.start();
+		BmobQuery<CoursePoJo>bmobQuery=new BmobQuery<CoursePoJo>();
+		bmobQuery.findObjects(getActivity(), new FindListener<CoursePoJo>() {
+			
+			@Override
+			public void onSuccess(List<CoursePoJo> arg0) {
+				courseData=arg0;
+				Datas.courseList=arg0;
+				mhandler.sendEmptyMessage(1);
+			}
+			
+			@Override
+			public void onError(int arg0, String arg1) {
+				// TODO Auto-generated method stub
+			}
+		});
 	}
 
 	@Override

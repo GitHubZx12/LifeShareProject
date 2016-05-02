@@ -3,14 +3,20 @@ package com.mendale.app.pojo;
 import java.io.Serializable;
 import java.util.List;
 
+import cn.bmob.v3.BmobObject;
+
 /**
  * 教程数据
  * @author Administrator
  *
  */
-public class CoursePoJo implements Serializable {
+public class CoursePoJo extends BmobObject implements Serializable {
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String id;
 	private String name;
 	private List<CourseChildPojo> child;

@@ -17,6 +17,7 @@ import org.json.JSONObject;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
+import com.mendale.app.pojo.CourseChildPojo;
 import com.mendale.app.pojo.CoursePoJo;
 import com.mendale.app.utils.Utils;
 
@@ -114,7 +115,6 @@ public class CourseTask {
 						for (int i = 0; i < course.length(); i++) {
 							CoursePoJo item = gson.fromJson(course.get(i).toString(), new TypeToken<CoursePoJo>() {
 							}.getType());
-							//
 							courseList.add(item);
 						}
 						msg.what = 1;

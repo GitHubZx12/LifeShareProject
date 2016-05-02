@@ -8,13 +8,11 @@ import com.mendale.app.adapters.HotCourseGVAdapter;
 import com.mendale.app.adapters.HotTypeGVAdapter;
 import com.mendale.app.constants.DataURL;
 import com.mendale.app.constants.Datas;
-import com.mendale.app.tasks.HomeTask;
 import com.mendale.app.ui.course.CourseInfoActivity;
 import com.mendale.app.ui.home.HandUpAcitivity;
 import com.mendale.app.ui.home.HotCourseActivity;
 import com.mendale.app.ui.home.ShowDetailsActivity;
 import com.mendale.app.ui.mycenter.MyCenterActivity;
-import com.mendale.app.vo.HomeAllList;
 import com.mendale.app.vo.HomeDarenPoJo;
 import com.mendale.app.vo.HomeHotCoursePoJo;
 import com.mendale.app.vo.HomeTypePoJo;
@@ -22,7 +20,6 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -35,14 +32,14 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.listener.FindListener;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.FindListener;
 
 public class HomeFragment extends Fragment implements OnClickListener, OnItemClickListener {
 
@@ -201,7 +198,7 @@ public class HomeFragment extends Fragment implements OnClickListener, OnItemCli
 			public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
 				Intent intent = new Intent(getActivity(), CourseInfoActivity.class);
 				Bundle bundle=new Bundle();
-				bundle.putSerializable("courseItem",Datas.cChildList.get(pos) );
+				bundle.putSerializable("courseItem",Datas.cChildList.get(pos));
 				intent.putExtras(bundle);
 				startActivity(intent);
 			}
