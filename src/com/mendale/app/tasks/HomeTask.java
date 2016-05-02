@@ -25,10 +25,10 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.mendale.app.constants.URLS;
 import com.mendale.app.utils.Utils;
-import com.mendale.app.vo.DarenItemBean;
+import com.mendale.app.vo.HomeDarenPoJo;
 import com.mendale.app.vo.HomeAllList;
-import com.mendale.app.vo.HotCourseItemBean;
-import com.mendale.app.vo.TypeItemBean;
+import com.mendale.app.vo.HomeHotCoursePoJo;
+import com.mendale.app.vo.HomeTypePoJo;
 
 /**
  * 获取贵宾列表
@@ -126,28 +126,29 @@ public class HomeTask {
 							if (json.get("hot") != null) {
 								//热门教程
 								JSONArray course = json.getJSONArray("hot");
-								List<HotCourseItemBean> courseList = new ArrayList<HotCourseItemBean>();
+								List<HomeHotCoursePoJo> courseList = new ArrayList<HomeHotCoursePoJo>();
 								for (int i = 0; i < course.length(); i++) {
-									HotCourseItemBean item = gson.fromJson(course.get(i).toString(),
-											new TypeToken<HotCourseItemBean>(){}.getType());
+									HomeHotCoursePoJo item = gson.fromJson(course.get(i).toString(),
+											new TypeToken<HomeHotCoursePoJo>(){}.getType());
 									courseList.add(item);
 								}
 								allList.setCourseData(courseList);
 								//手工达人
 								JSONArray daren=json.getJSONArray("daren");
-								List<DarenItemBean> darenList=new ArrayList<DarenItemBean>();
+								List<HomeDarenPoJo> darenList=new ArrayList<HomeDarenPoJo>();
 								for (int i = 0; i < daren.length(); i++) {
-									DarenItemBean item = gson.fromJson(daren.get(i).toString(),
-											new TypeToken<DarenItemBean>(){}.getType());
+									HomeDarenPoJo item = gson.fromJson(daren.get(i).toString(),
+											new TypeToken<HomeDarenPoJo>(){}.getType());
 									darenList.add(item);
 								}
 								allList.setDarenData(darenList);
 								//热门类别
 								JSONArray type=json.getJSONArray("gcate");
-								List<TypeItemBean> typeList=new ArrayList<TypeItemBean>();
+								List<HomeTypePoJo> typeList=new ArrayList<HomeTypePoJo>();
 								for (int i = 0; i < type.length(); i++) {
-									TypeItemBean item = gson.fromJson(type.get(i).toString(),
-											new TypeToken<TypeItemBean>(){}.getType());
+									HomeTypePoJo item = gson.fromJson(type.get(i).toString(),
+											new TypeToken<HomeTypePoJo>(){}.getType());
+									item.save(context);
 									typeList.add(item);
 								}
 								allList.setTypeData(typeList);

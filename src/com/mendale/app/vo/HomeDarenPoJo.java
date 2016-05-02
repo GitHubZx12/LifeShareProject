@@ -1,21 +1,27 @@
 package com.mendale.app.vo;
 
+import cn.bmob.v3.BmobObject;
+
 /**
  * 首页-手工达人的实体类
  * 
  * @author Administrator
  * 
  */
-public class DarenItemBean {
+public class HomeDarenPoJo extends BmobObject{
 	
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int user_id;// 详情页的id
 	private String face_pic;// 标题
 	private String user_name;// 用户昵称
 
-	public DarenItemBean() {
+	public HomeDarenPoJo() {
 	}
-	public DarenItemBean(int user_id, String face_pic, String user_name) {
+	public HomeDarenPoJo(int user_id, String face_pic, String user_name) {
 		super();
 		this.user_id = user_id;
 		this.face_pic = face_pic;

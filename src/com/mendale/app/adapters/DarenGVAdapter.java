@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mendale.app.R;
-import com.mendale.app.vo.DarenItemBean;
+import com.mendale.app.vo.HomeDarenPoJo;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -21,11 +21,11 @@ import com.nostra13.universalimageloader.core.ImageLoader;
  */
 public class DarenGVAdapter extends BaseAdapter {
 
-	private List<DarenItemBean> mDatas;
+	private List<HomeDarenPoJo> mDatas;
 	private Context context;
 	private DisplayImageOptions options;
 
-	public DarenGVAdapter(Context context, List<DarenItemBean> mDatas,DisplayImageOptions options) {
+	public DarenGVAdapter(Context context, List<HomeDarenPoJo> mDatas,DisplayImageOptions options) {
 		this.mDatas = mDatas;
 		this.context = context;
 		this.options=options;
@@ -49,7 +49,7 @@ public class DarenGVAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
-		DarenItemBean mItem = mDatas.get(position);
+		HomeDarenPoJo mItem = mDatas.get(position);
 		if (convertView == null) {
 			holder = new ViewHolder();
 			convertView = View.inflate(context, R.layout.gridview_home_daren,

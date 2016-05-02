@@ -28,10 +28,10 @@ import com.mendale.app.pojo.CourseChildPojo;
 import com.mendale.app.pojo.CoursePoJo;
 import com.mendale.app.utils.Utils;
 import com.mendale.app.vo.CourseDetailsItemBean;
-import com.mendale.app.vo.DarenItemBean;
+import com.mendale.app.vo.HomeDarenPoJo;
 import com.mendale.app.vo.HomeAllList;
-import com.mendale.app.vo.HotCourseItemBean;
-import com.mendale.app.vo.TypeItemBean;
+import com.mendale.app.vo.HomeHotCoursePoJo;
+import com.mendale.app.vo.HomeTypePoJo;
 
 /**
  * 热门教程列表

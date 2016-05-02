@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mendale.app.R;
-import com.mendale.app.vo.TypeItemBean;
+import com.mendale.app.vo.HomeTypePoJo;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -21,11 +21,11 @@ import com.nostra13.universalimageloader.core.ImageLoader;
  */
 public class HotTypeGVAdapter extends BaseAdapter {
 
-	private List<TypeItemBean> mDatas;
+	private List<HomeTypePoJo> mDatas;
 	private Context context;
 	private DisplayImageOptions options;
 
-	public HotTypeGVAdapter(Context context, List<TypeItemBean> mDatas,DisplayImageOptions options) {
+	public HotTypeGVAdapter(Context context, List<HomeTypePoJo> mDatas,DisplayImageOptions options) {
 		this.mDatas = mDatas;
 		this.context = context;
 		this.options=options;
@@ -49,7 +49,7 @@ public class HotTypeGVAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
-		TypeItemBean mItem = mDatas.get(position);
+		HomeTypePoJo mItem = mDatas.get(position);
 		if (convertView == null) {
 			holder = new ViewHolder();
 			convertView = View.inflate(context, R.layout.listview_home_type,

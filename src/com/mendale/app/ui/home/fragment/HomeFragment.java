@@ -15,11 +15,14 @@ import com.mendale.app.ui.home.HotCourseActivity;
 import com.mendale.app.ui.home.ShowDetailsActivity;
 import com.mendale.app.ui.mycenter.MyCenterActivity;
 import com.mendale.app.vo.HomeAllList;
-import com.mendale.app.vo.HotCourseItemBean;
+import com.mendale.app.vo.HomeDarenPoJo;
+import com.mendale.app.vo.HomeHotCoursePoJo;
+import com.mendale.app.vo.HomeTypePoJo;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,6 +35,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.FindListener;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -62,8 +67,10 @@ public class HomeFragment extends Fragment implements OnClickListener, OnItemCli
 	/** DisplayImageOptions */
 	private DisplayImageOptions options;
 	// 数据
-	private List<HotCourseItemBean> courseData;
-	private HomeAllList allList;
+	private List<HomeHotCoursePoJo> courseData;
+	private List<HomeDarenPoJo> darenData;
+	private List<HomeTypePoJo>typeData;
+	
 	@SuppressLint("HandlerLeak")
 	Handler mhandler = new Handler() {
 
@@ -71,20 +78,19 @@ public class HomeFragment extends Fragment implements OnClickListener, OnItemCli
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 				case 1:
-					if (msg.obj != null) {
-						iv_loading.clearAnimation();
-						ll_loading.setVisibility(View.INVISIBLE);
-						ll_main.setVisibility(View.VISIBLE);
-						allList = (HomeAllList) msg.obj;
-						courseData = allList.getCourseData();
-						courseAdapter = new HotCourseGVAdapter(getActivity(), courseData, options);
-						gv_Course.setAdapter(courseAdapter);
-						handUpAdapter = new DarenGVAdapter(getActivity(), allList.getDarenData(), options);
-						gv_HandUp.setAdapter(handUpAdapter);
-						typeAdapter = new HotTypeGVAdapter(getActivity(), allList.getTypeData(), options);
-						lv_Type.setAdapter(typeAdapter);
-					}
+					iv_loading.clearAnimation();
+					ll_loading.setVisibility(View.INVISIBLE);
+					ll_main.setVisibility(View.VISIBLE);
+					courseAdapter = new HotCourseGVAdapter(getActivity(), courseData, options);
+					gv_Course.setAdapter(courseAdapter);
 					break;
+				case 2:
+					handUpAdapter = new DarenGVAdapter(getActivity(),darenData, options);
+					gv_HandUp.setAdapter(handUpAdapter);
+					break;
+				case 3:
+					typeAdapter = new HotTypeGVAdapter(getActivity(), typeData, options);
+					lv_Type.setAdapter(typeAdapter);
 				default:
 					break;
 			}
@@ -97,8 +103,9 @@ public class HomeFragment extends Fragment implements OnClickListener, OnItemCli
 		initView(view);
 		initAnim();
 		addListener();
-		requestData();
+		initData();
 		initImageOptions();
+		
 		return view;
 	}
 
@@ -125,15 +132,49 @@ public class HomeFragment extends Fragment implements OnClickListener, OnItemCli
 	}
 
 	/**
-	 * 请求网络数据
+	 * 请求bmob数据
 	 */
-	private void requestData() {
-		new Thread() {
-
-			public void run() {
-				new HomeTask(getActivity(), mhandler).send(1, "utf-8", DataURL.HOME_URL);
-			};
-		}.start();
+	private void initData() {
+		BmobQuery<HomeHotCoursePoJo> bQuery=new BmobQuery<HomeHotCoursePoJo>();
+		bQuery.findObjects(getActivity(), new FindListener<HomeHotCoursePoJo>() {
+			
+			@Override
+			public void onSuccess(List<HomeHotCoursePoJo> courseList) {//查询成功
+				courseData=courseList;
+				mhandler.sendEmptyMessage(1);
+			}
+			
+			@Override
+			public void onError(int arg0, String arg1) {
+				// TODO Auto-generated method stub
+			}
+		});
+		BmobQuery<HomeDarenPoJo> bQuery2=new BmobQuery<HomeDarenPoJo>();
+		bQuery2.findObjects(getActivity(), new FindListener<HomeDarenPoJo>() {
+			
+			@Override
+			public void onSuccess(List<HomeDarenPoJo> darenList) {//查询成功
+				darenData=darenList;
+				mhandler.sendEmptyMessage(2);
+			}
+			
+			@Override
+			public void onError(int arg0, String arg1) {
+			}
+		});
+		BmobQuery<HomeTypePoJo> bQuery3=new BmobQuery<HomeTypePoJo>();
+		bQuery3.findObjects(getActivity(), new FindListener<HomeTypePoJo>() {
+			
+			@Override
+			public void onSuccess(List<HomeTypePoJo> typeList) {//查询成功
+				typeData=typeList;
+				mhandler.sendEmptyMessage(3);
+			}
+			@Override
+			public void onError(int arg0, String arg1) {
+				// TODO Auto-generated method stub
+			}
+		});
 	}
 
 	/**

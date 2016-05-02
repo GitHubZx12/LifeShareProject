@@ -1,12 +1,14 @@
 package com.mendale.app.vo;
 
+import cn.bmob.v3.BmobObject;
+
 /**
  * 首页-热门教程的实体类
  * 
  * @author Administrator
  * 
  */
-public class HotCourseItemBean {
+public class HomeHotCoursePoJo extends BmobObject{
 
 	private static final long serialVersionUID = 1L;
 	private int hand_id;// 详情页的id
@@ -15,10 +17,10 @@ public class HotCourseItemBean {
 	private String user_name;// 用户昵称
 	private int step_count;// 步骤
 
-	public HotCourseItemBean() {
+	public HomeHotCoursePoJo() {
 	}
 
-	public HotCourseItemBean(int hand_id, String host_pic, String subject,
+	public HomeHotCoursePoJo(int hand_id, String host_pic, String subject,
 			String user_name, int step_count) {
 		super();
 		this.hand_id = hand_id;

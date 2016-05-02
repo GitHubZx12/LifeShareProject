@@ -10,34 +10,34 @@ import java.util.List;
  */
 public class HomeAllList {
 	
-	private List<HotCourseItemBean>courseData;
-	private List<DarenItemBean>darenData;
-	private List<TypeItemBean>typeData;
+	private List<HomeHotCoursePoJo>courseData;
+	private List<HomeDarenPoJo>darenData;
+	private List<HomeTypePoJo>typeData;
 	
 	public HomeAllList() {}
-	public HomeAllList(List<HotCourseItemBean> courseData,
-			List<DarenItemBean> darenData, List<TypeItemBean> typeData) {
+	public HomeAllList(List<HomeHotCoursePoJo> courseData,
+			List<HomeDarenPoJo> darenData, List<HomeTypePoJo> typeData) {
 		super();
 		this.courseData = courseData;
 		this.darenData = darenData;
 		this.typeData = typeData;
 	}
-	public List<HotCourseItemBean> getCourseData() {
+	public List<HomeHotCoursePoJo> getCourseData() {
 		return courseData;
 	}
-	public void setCourseData(List<HotCourseItemBean> courseData) {
+	public void setCourseData(List<HomeHotCoursePoJo> courseData) {
 		this.courseData = courseData;
 	}
-	public List<DarenItemBean> getDarenData() {
+	public List<HomeDarenPoJo> getDarenData() {
 		return darenData;
 	}
-	public void setDarenData(List<DarenItemBean> darenData) {
+	public void setDarenData(List<HomeDarenPoJo> darenData) {
 		this.darenData = darenData;
 	}
-	public List<TypeItemBean> getTypeData() {
+	public List<HomeTypePoJo> getTypeData() {
 		return typeData;
 	}
-	public void setTypeData(List<TypeItemBean> typeData) {
+	public void setTypeData(List<HomeTypePoJo> typeData) {
 		this.typeData = typeData;
 	}
 	

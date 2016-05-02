@@ -2,15 +2,21 @@ package com.mendale.app.vo;
 
 import java.util.List;
 
+import cn.bmob.v3.BmobObject;
+
 /**
  * 首页-热门类别的实体类
  * 
  * @author Administrator
  * 
  */
-public class TypeItemBean {
+public class HomeTypePoJo extends BmobObject{
 
-	private int cate_id;// 详情页的id
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Integer cate_id;// 详情页的id
 	private List<String> pic;// 标题
 	private String cate_name;// 用户昵称
 	
@@ -38,11 +44,5 @@ public class TypeItemBean {
 		this.cate_name = cate_name;
 	}
 
-	public TypeItemBean(int cate_id, List<String> pic, String cate_name) {
-		super();
-		this.cate_id = cate_id;
-		this.pic = pic;
-		this.cate_name = cate_name;
-	}
 	
 }

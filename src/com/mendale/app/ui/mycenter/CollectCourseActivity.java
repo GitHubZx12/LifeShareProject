@@ -10,7 +10,7 @@ import com.mendale.app.ui.base.BaseActivity;
 import com.mendale.app.ui.home.ShowDetailsActivity;
 import com.mendale.app.utils.ExitApplication;
 import com.mendale.app.vo.HomeAllList;
-import com.mendale.app.vo.HotCourseItemBean;
+import com.mendale.app.vo.HomeHotCoursePoJo;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
@@ -39,7 +39,7 @@ public class CollectCourseActivity extends BaseActivity implements OnClickListen
 	/**DisplayImageOptions*/
 	private DisplayImageOptions options;
 	//数据
-	private List<HotCourseItemBean>courseData;
+	private List<HomeHotCoursePoJo>courseData;
 	
 	private Handler mhandler=new Handler(){
 		public void handleMessage(android.os.Message msg) {
