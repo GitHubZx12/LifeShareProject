@@ -12,6 +12,7 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import com.mendale.app.R;
+import com.mendale.app.pojo.CourseChildPojo;
 
 /**
  * 教程
@@ -22,9 +23,9 @@ import com.mendale.app.R;
 public class CourseGvAdapter extends BaseAdapter {
 
 	private Context context;
-	private List<Map<String,String>> courseList;
+	private List<CourseChildPojo> courseList;
 
-	public CourseGvAdapter(Context context,List<Map<String,String>> courseList) {
+	public CourseGvAdapter(Context context,List<CourseChildPojo> courseList) {
 		this.context = context;
 		this.courseList = courseList;
 	}
@@ -63,7 +64,7 @@ public class CourseGvAdapter extends BaseAdapter {
 					new GridView.LayoutParams((int) (parent.getWidth() / 4), LayoutParams.WRAP_CONTENT));
 		}
 		//
-		holder.name.setText(courseList.get(position).get("childName"));
+		holder.name.setText(courseList.get(position).getName());
 		return convertView;
 	}
 

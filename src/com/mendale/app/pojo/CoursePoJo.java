@@ -1,5 +1,6 @@
 package com.mendale.app.pojo;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -7,12 +8,22 @@ import java.util.List;
  * @author Administrator
  *
  */
-public class CoursePoJo {
+public class CoursePoJo implements Serializable {
+	
 	
 	private String id;
 	private String name;
 	private List<CourseChildPojo> child;
 	private String ico;
+
+	public String getId() {
+		return id;
+	}
+
+	
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public String getIco() {
 		return ico;

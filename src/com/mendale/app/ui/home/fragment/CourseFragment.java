@@ -5,6 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.mendale.app.R;
+import com.mendale.app.adapters.CourseGvAdapter;
+import com.mendale.app.constants.DataURL;
+import com.mendale.app.constants.Datas;
+import com.mendale.app.pojo.CourseChildPojo;
+import com.mendale.app.pojo.CoursePoJo;
+import com.mendale.app.tasks.CourseTask;
+import com.mendale.app.ui.course.CourseInfoActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,19 +23,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-
-import com.mendale.app.R;
-import com.mendale.app.adapters.CourseGvAdapter;
-import com.mendale.app.constants.DataURL;
-import com.mendale.app.constants.Datas;
-import com.mendale.app.pojo.CoursePoJo;
-import com.mendale.app.tasks.CourseTask;
-import com.mendale.app.ui.course.CourseInfoActivity;
 
 /**
  * 教程
@@ -68,17 +69,25 @@ public class CourseFragment extends Fragment implements OnItemClickListener {
 	 * @param courseList
 	 * @return
 	 */
-	private List<Map<String, String>> formatList(List<CoursePoJo> courseList) {
+	private List<CourseChildPojo> formatList(List<CoursePoJo> courseList) {
 		Datas.list = new ArrayList<Map<String, String>>();
-		Map<String, String> map;
-		for (int i = 0; i < courseList.size(); i++) {
+		Datas.cChildList=new ArrayList<CourseChildPojo>();
+		CourseChildPojo item;
+		for(int i=0;i<courseList.size();i++){
 			for (int j = 0; j < courseList.get(i).getChild().size(); j++) {
-				map = new HashMap<String, String>();
-				map.put("childName", courseList.get(i).getChild().get(j).getName());
-				Datas.list.add(map);
+				item=courseList.get(i).getChild().get(j);
+				Datas.cChildList.add(item);
 			}
 		}
-		return Datas.list;
+//		Map<String, String> map;
+//		for (int i = 0; i < courseList.size(); i++) {
+//			for (int j = 0; j < courseList.get(i).getChild().size(); j++) {
+//				map = new HashMap<String, String>();
+//				map.put("childName", courseList.get(i).getChild().get(j).getName());
+//				Datas.list.add(map);
+//			}
+//		}
+		return Datas.cChildList;
 	};
 
 	@Override
@@ -123,7 +132,9 @@ public class CourseFragment extends Fragment implements OnItemClickListener {
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
 		Intent intent = new Intent(getActivity(), CourseInfoActivity.class);
-		intent.putExtra("title", Datas.list.get(pos).get("childName"));
+		Bundle bundle=new Bundle();
+		bundle.putSerializable("courseItem",Datas.cChildList.get(pos) );
+		intent.putExtras(bundle);
 		startActivity(intent);
 	}
 }

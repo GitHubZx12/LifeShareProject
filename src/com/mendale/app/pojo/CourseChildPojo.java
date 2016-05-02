@@ -1,11 +1,13 @@
 package com.mendale.app.pojo;
 
+import java.io.Serializable;
+
 /**
  * 教程——child
  * @author Administrator
  *
  */
-public class CourseChildPojo {
+public class CourseChildPojo implements Serializable{
 	
 	private String id;
 	private String name;

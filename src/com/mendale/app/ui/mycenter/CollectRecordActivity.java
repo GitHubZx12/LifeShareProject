@@ -7,9 +7,11 @@ import java.util.List;
 import com.mendale.app.R;
 import com.mendale.app.adapters.CourseInfoLvAdapter;
 import com.mendale.app.constants.DataURL;
+import com.mendale.app.pojo.CourseListPojo;
 import com.mendale.app.pojo.RecordItemBean;
 import com.mendale.app.tasks.RecordTask;
 import com.mendale.app.ui.base.BaseActivity;
+import com.mendale.app.ui.course.CourseInfoActivity;
 import com.mendale.app.utils.pullToRefreshUtils.PullToRefreshConfig;
 import com.mendale.app.utils.pullToRefreshUtils.view.XListView;
 import com.mendale.app.utils.pullToRefreshUtils.view.XListView.IXListViewListener;
@@ -51,7 +53,7 @@ public class CollectRecordActivity extends BaseActivity implements IXListViewLis
 						iv_loading.clearAnimation();
 						ll_loading.setVisibility(View.INVISIBLE);
 						mListView.setVisibility(View.VISIBLE);
-						List<RecordItemBean> recordList = (List<RecordItemBean>) msg.obj;
+						List<CourseListPojo> recordList = (List<CourseListPojo>) msg.obj;
 						mAdapter = new CourseInfoLvAdapter(CollectRecordActivity.this, recordList, options);
 						mListView.setAdapter(mAdapter);
 					}

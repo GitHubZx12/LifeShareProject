@@ -3,11 +3,14 @@ package com.mendale.app.adapters;
 import java.util.List;
 
 import com.mendale.app.R;
+import com.mendale.app.constants.DataURL;
+import com.mendale.app.pojo.CourseListPojo;
 import com.mendale.app.pojo.RecordItemBean;
 import com.mendale.app.ui.home.ShowDetailsActivity;
 import com.mendale.app.utils.imageUtils.RoundImageView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.umeng.socialize.utils.Log;
 
 import android.content.Context;
 import android.content.Intent;
@@ -26,10 +29,10 @@ import android.widget.TextView;
 public class CourseInfoLvAdapter extends BaseAdapter {
 
 	private Context context;
-	private List<RecordItemBean> recordList;
+	private List<CourseListPojo> recordList;
 	private DisplayImageOptions options;
 
-	public CourseInfoLvAdapter(Context context, List<RecordItemBean> recordList, DisplayImageOptions options) {
+	public CourseInfoLvAdapter(Context context, List<CourseListPojo> recordList, DisplayImageOptions options) {
 		this.context = context;
 		this.recordList = recordList;
 		this.options = options;
@@ -51,7 +54,7 @@ public class CourseInfoLvAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
 		if (convertView == null) {
 			holder = new ViewHolder();
@@ -68,7 +71,7 @@ public class CourseInfoLvAdapter extends BaseAdapter {
 		}
 		//
 		holder.name.setText(recordList.get(position).getUser_name());
-		holder.content.setText(recordList.get(position).getContent());
+		holder.content.setText(recordList.get(position).getSubject());
 		holder.recordAll.setText(recordList.get(position).getView() + "人气/" + recordList.get(position).getLaud() + "赞/"
 				+ recordList.get(position).getCollect() + "收藏/" + recordList.get(position).getComment() + "评论");
 		ImageLoader imageLoader = ImageLoader.getInstance();
@@ -81,12 +84,19 @@ public class CourseInfoLvAdapter extends BaseAdapter {
 		// bitMapUtils.display(holder.contentImage,
 		// recordList.get(position).getHost_pic());
 		
-		Intent intent = new Intent(context, ShowDetailsActivity.class);
-		// 进入详情页
-//		String detail_url = DataURL.DETAILS_RMJC + recordList.get(position).getOpus_id();
-//		intent.putExtra("detail_url", detail_url);
-//		intent.putExtra("step", recordList.get(position).get);
-		context.startActivity(intent);
+		holder.contentImage.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {//进入详情页
+				Intent intent = new Intent(context, ShowDetailsActivity.class);
+				String detail_url = DataURL.COURSE_LIST_DETAILS + recordList.get(position).getHand_id();
+				intent.putExtra("detail_url", detail_url);
+				Log.e("tag66",detail_url);
+				intent.putExtra("step", recordList.get(position).getStep_count());
+				context.startActivity(intent);
+			}
+		});
+		
 		return convertView;
 	}
 

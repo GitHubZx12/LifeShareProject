@@ -25,4 +25,8 @@ public class DataURL {
 	//记录详情
 	public static String RECORD_DETAILS="http://www.shougongke.com/index.php?m=Mobq_opus&a=opus&id=";
 	public static String RECORD_DETAILS2="&c_id=null&hand_id=null&type=new&cate_id=null&uid=null&uid_relation=null";
+	//记录列表
+	public static String COURSE_LIST="http://www.shougongke.com/index.php?m=Mobq_data&a=course_list&pid=cate&id=";
+	//课程列表详情
+	public static String COURSE_LIST_DETAILS="http://www.shougongke.com/index.php?m=Mobq_course&id=";
 }

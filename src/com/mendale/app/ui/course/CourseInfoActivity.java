@@ -7,7 +7,10 @@ import java.util.List;
 import com.mendale.app.R;
 import com.mendale.app.adapters.CourseInfoLvAdapter;
 import com.mendale.app.constants.DataURL;
+import com.mendale.app.pojo.CourseChildPojo;
+import com.mendale.app.pojo.CourseListPojo;
 import com.mendale.app.pojo.RecordItemBean;
+import com.mendale.app.tasks.CourseListTask;
 import com.mendale.app.tasks.RecordTask;
 import com.mendale.app.ui.base.BaseActivity;
 import com.mendale.app.utils.pullToRefreshUtils.PullToRefreshConfig;
@@ -15,6 +18,7 @@ import com.mendale.app.utils.pullToRefreshUtils.view.XListView;
 import com.mendale.app.utils.pullToRefreshUtils.view.XListView.IXListViewListener;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.umeng.socialize.utils.Log;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -51,7 +55,7 @@ public class CourseInfoActivity extends BaseActivity implements IXListViewListen
 						iv_loading.clearAnimation();
 						ll_loading.setVisibility(View.INVISIBLE);
 						mListView.setVisibility(View.VISIBLE);
-						List<RecordItemBean> recordList = (List<RecordItemBean>) msg.obj;
+						List<CourseListPojo> recordList = (List<CourseListPojo>) msg.obj;
 						mAdapter = new CourseInfoLvAdapter(CourseInfoActivity.this, recordList, options);
 						mListView.setAdapter(mAdapter);
 					}
@@ -68,16 +72,21 @@ public class CourseInfoActivity extends BaseActivity implements IXListViewListen
 		initHeaderView();
 		initView();
 		initAnim();
-		initData();
 		initImageOptions();
 	};
+
 
 	/**
 	 * 初始化头部
 	 */
 	private void initHeaderView() {
-		setNavigationTitle(getIntent().getStringExtra("title"));
+		CourseChildPojo item=(CourseChildPojo) getIntent().getSerializableExtra("courseItem");
+		if(null==item){
+			return;
+		}
+		setNavigationTitle(item.getName());
 		setNavigationLeftBtnText("");
+		initData(item.getId());
 	}
 	@Override
 	public void leftButtonOnClick() {
@@ -110,11 +119,12 @@ public class CourseInfoActivity extends BaseActivity implements IXListViewListen
 	/**
 	 * 请求接口
 	 */
-	private void initData() {
+	private void initData(final String id) {
 		new Thread() {
 
 			public void run() {
-				new RecordTask(CourseInfoActivity.this, mhandler).send(1, "utf-8", DataURL.RECORD_URL);
+				String fullUrl=DataURL.COURSE_LIST+id+"&type=new";
+				new CourseListTask(CourseInfoActivity.this, mhandler).send(1, "utf-8", fullUrl);
 			};
 		}.start();
 	}

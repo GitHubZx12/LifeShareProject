@@ -224,7 +224,9 @@ public class CourseClassifyActivity extends BaseActivity implements OnScrollList
     @Override
     public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
     	Intent intent = new Intent(this, CourseInfoActivity.class);
-		intent.putExtra("title", Datas.list.get(childPosition).get("childName"));
+		Bundle bundle=new Bundle();
+		bundle.putSerializable("courseItem",Datas.cChildList.get(childPosition) );
+		intent.putExtras(bundle);
 		startActivity(intent);
         return false;
     }

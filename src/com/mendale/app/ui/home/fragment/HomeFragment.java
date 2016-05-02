@@ -7,6 +7,7 @@ import com.mendale.app.adapters.DarenGVAdapter;
 import com.mendale.app.adapters.HotCourseGVAdapter;
 import com.mendale.app.adapters.HotTypeGVAdapter;
 import com.mendale.app.constants.DataURL;
+import com.mendale.app.constants.Datas;
 import com.mendale.app.tasks.HomeTask;
 import com.mendale.app.ui.course.CourseInfoActivity;
 import com.mendale.app.ui.home.HandUpAcitivity;
@@ -156,9 +157,11 @@ public class HomeFragment extends Fragment implements OnClickListener, OnItemCli
 		lv_Type.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+			public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
 				Intent intent = new Intent(getActivity(), CourseInfoActivity.class);
-				intent.putExtra("title",allList.getTypeData().get(arg2).getCate_name());
+				Bundle bundle=new Bundle();
+				bundle.putSerializable("courseItem",Datas.cChildList.get(pos) );
+				intent.putExtras(bundle);
 				startActivity(intent);
 			}
 		});
