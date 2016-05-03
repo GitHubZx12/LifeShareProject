@@ -7,7 +7,7 @@ import com.mendale.app.R;
 import com.mendale.app.adapters.DetailsPagerAdapter;
 import com.mendale.app.constants.Constants;
 import com.mendale.app.tasks.HotCourseDetailsTask;
-import com.mendale.app.vo.CourseDetailsItemBean;
+import com.mendale.app.vo.CourseDetailsBean;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.umeng.socialize.bean.LIKESTATUS;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -53,7 +53,7 @@ public class ShowDetailsActivity extends Activity implements
 	TextView text;
 	// 步骤的图标、退、赞、收集、材料、分享
 	ImageView icon, back, laud, collect, material, share;
-	private CourseDetailsItemBean detailsItemData;
+	private CourseDetailsBean detailsItemData;
 	private String detail_url;
 	private int step;
 	private ImageLoader imageLoader;
@@ -70,7 +70,7 @@ public class ShowDetailsActivity extends Activity implements
 			switch (msg.what) {
 			case 1:
 				if(msg.obj!=null){
-					detailsItemData=(CourseDetailsItemBean) msg.obj;
+					detailsItemData=(CourseDetailsBean) msg.obj;
 					initView();// 初始化
 					
 				}
@@ -107,7 +107,6 @@ public class ShowDetailsActivity extends Activity implements
 	private void requestData() {
 		new Thread(){
 			public void run() {
-				
 				new HotCourseDetailsTask(ShowDetailsActivity.this, mhandler).send(1, "utf-8", detail_url);
 			};
 		}.start();

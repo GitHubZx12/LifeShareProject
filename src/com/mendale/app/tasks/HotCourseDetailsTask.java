@@ -7,31 +7,21 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.SocketTimeoutException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
+import com.mendale.app.utils.Utils;
+import com.mendale.app.vo.CourseDetailsBean;
 
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
-import com.google.gson.reflect.TypeToken;
-import com.mendale.app.pojo.CourseChildPojo;
-import com.mendale.app.pojo.CoursePoJo;
-import com.mendale.app.utils.Utils;
-import com.mendale.app.vo.CourseDetailsItemBean;
-import com.mendale.app.vo.HomeDarenPoJo;
-import com.mendale.app.vo.HomeAllList;
-import com.mendale.app.vo.HomeHotCoursePoJo;
-import com.mendale.app.vo.HomeTypePoJo;
+import cn.bmob.v3.listener.SaveListener;
 
 /**
  * 热门教程列表
@@ -126,11 +116,10 @@ public class HotCourseDetailsTask {
 				if (!Utils.isEmpty(responseData)) {
 					JSONObject json = new JSONObject(responseData);
 					if (json.get("msg") != null) {
-						CourseDetailsItemBean item = gson.fromJson(
+						CourseDetailsBean item = gson.fromJson(
 								json.toString(),
-								new TypeToken<CourseDetailsItemBean>() {
+								new TypeToken<CourseDetailsBean>() {
 								}.getType());
-						//
 						msg.what = 1;
 						msg.obj = item;
 						mhandler.sendMessage(msg);
@@ -139,6 +128,23 @@ public class HotCourseDetailsTask {
 						mhandler.sendMessage(msg);
 					}
 
+					/*final CourseDetailsBean item = gson.fromJson(
+							json.toString(),CourseDetailsBean.class);
+					item.save(context, new SaveListener() {
+						
+						
+						@Override
+						public void onSuccess() {
+							item.save(context);
+						}
+						
+						@Override
+						public void onFailure(int arg0, String arg1) {
+							Log.e("tag", arg0+"--"+arg1);
+						}
+					});
+					msg.what = 1;
+					mhandler.sendMessage(msg);*/
 				} else {
 					msg.obj = "远程服务器异常";
 					mhandler.sendMessage(msg);
