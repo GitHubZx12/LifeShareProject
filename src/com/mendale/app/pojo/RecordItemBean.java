@@ -23,6 +23,14 @@ public class RecordItemBean extends BmobObject{
 	private String collect;//收藏
 	private String comment;//评论
 	private String laud;//赞
+	private String user_id;
+	
+	public String getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
+	}
 	public String getOpus_id() {
 		return opus_id;
 	}

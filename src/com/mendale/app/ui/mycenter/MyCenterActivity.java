@@ -1,36 +1,36 @@
 package com.mendale.app.ui.mycenter;
 
-import java.io.File;
-import java.util.Date;
+import java.io.IOException;
+import java.util.ArrayList;
 
+import com.google.gson.Gson;
 import com.mendale.app.R;
 import com.mendale.app.application.MobileApplication;
-import com.mendale.app.constants.URLS;
+import com.mendale.app.constants.DataURL;
 import com.mendale.app.pojo.LSUser;
 import com.mendale.app.pojo.MemberPojo;
+import com.mendale.app.pojo.OtherUser;
 import com.mendale.app.ui.base.BaseActivity;
-import com.mendale.app.ui.home.MainPageActivity;
 import com.mendale.app.ui.mycenter.setting.MarkManActivity;
 import com.mendale.app.utils.ExitApplication;
 import com.mendale.app.utils.Utils;
 import com.mendale.app.utils.background.MyScrollView;
-import com.mendale.app.utils.imageUtils.ImageOpera;
 import com.mendale.app.utils.imageUtils.RoundImageView;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.squareup.okhttp.Call;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+import com.umeng.socialize.utils.Log;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -99,6 +99,14 @@ public class MyCenterActivity extends BaseActivity implements OnClickListener {
 	private MemberPojo memberbean;
 	private Context context;
 	private int current_id;
+	/**
+	 * 数据
+	 */
+	private ArrayList<OtherUser> mDatas;
+	OtherUser other = null;
+	
+	/**DisplayImageOptions*/
+	private DisplayImageOptions options;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -107,7 +115,23 @@ public class MyCenterActivity extends BaseActivity implements OnClickListener {
 		/** 加入全局退出队列------------规范：都要加 */
 		ExitApplication.getInstance().addAllActivity(this);
 		init();
+		initOptions();
 		setLinstener();
+	}
+	
+	/**
+	 * 初始化图片的相关参数
+	 */
+	private void initOptions() {
+		// 使用DisplayImageOptions.Builder()创建DisplayImageOptions
+		options = new DisplayImageOptions.Builder()
+				.showStubImage(R.drawable.image_guidestep_defult) // 设置图片下载期间显示的图片
+				.showImageForEmptyUri(R.drawable.image_guidestep_defult) // 设置图片Uri为空或是错误的时候显示的图片
+				.showImageOnFail(R.drawable.image_guidestep_defult) // 设置图片加载或解码过程中发生错误显示的图片
+				.cacheInMemory(true) // 设置下载的图片是否缓存在内存中
+				.cacheOnDisc(true) // 设置下载的图片是否缓存在SD卡中
+				.displayer(new RoundedBitmapDisplayer(0)) // 设置成圆角图片
+				.build(); // 创建配置过得DisplayImageOption对象
 	}
 
 	/**
@@ -137,14 +161,84 @@ public class MyCenterActivity extends BaseActivity implements OnClickListener {
 	 * 给控件赋值
 	 */
 	private void initData() {
-		MobileApplication application = (MobileApplication) getApplication();
-		mycenter_background_image.setImageResource(R.drawable.crafter_personal_bg);
-		mycenter_head_image.setImageResource(R.drawable.defult_avator);
-		mycenter_name.setText(application.getmUserInfo().getUserName());
-		mycenter_total.setText("江苏徐州");
-		mycenter_vip_image.setImageResource(R.drawable.lv1);
-		mycenter_sex_image.setImageResource(R.drawable.vip_icon_wowam);
+		int flag=getIntent().getIntExtra("flag", 0);
+		if(flag==1){
+			MobileApplication application = (MobileApplication) getApplication();
+			mycenter_background_image.setImageResource(R.drawable.crafter_personal_bg);
+			mycenter_head_image.setImageResource(R.drawable.defult_avator);
+			mycenter_name.setText(application.getmUserInfo().getUserName());
+			mycenter_total.setText("江苏徐州");
+			mycenter_vip_image.setImageResource(R.drawable.lv1);
+			mycenter_sex_image.setImageResource(R.drawable.vip_icon_wowam);
+		}else{
+			String id=getIntent().getStringExtra("id");
+			doGet(id);
+		}
+		
 	}
+
+		/**
+		 * 获取数据
+		 * @param url
+		 */
+		private void doGet(String id) {
+			final String fullUrl=DataURL.PEOPLE_DETAILS+id;
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					OkHttpClient okHttpClient = new OkHttpClient();
+					// 创建一个request
+					Request request = new Request.Builder().url(fullUrl).build();
+					Call call = okHttpClient.newCall(request);
+					call.enqueue(new Callback() {
+
+						@Override
+						public void onResponse(Response arg0) throws IOException {
+							parserData(arg0.body().string());
+						}
+
+						@Override
+						public void onFailure(Request arg0, IOException arg1) {
+						}
+					});
+				}
+			}).start();
+			
+		}
+		
+		/**
+		 * 解析數據
+		 * @param string
+		 */
+		private void parserData(String string) {
+			Gson gson = new Gson();
+			if (!Utils.isEmpty(string)) {
+					other=gson.fromJson(string, OtherUser.class);
+//					Log.e("tag",other.getUid());
+//					other.save(this);
+//					CourseData courseData=other.getCourseData();
+//					CollectData collectData=other.getCollectData();
+//					OpusData opusData=other.getOpusData();
+//					OcollectData ocollectData=other.getOcollectData();
+//					courseData.save(this);
+//					collectData.save(this);
+//					opusData.save(this);
+//					ocollectData.save(this);
+					runOnUiThread(new Runnable() {
+						
+						@Override
+						public void run() {
+							mycenter_background_image.setImageResource(R.drawable.crafter_personal_bg);
+							ImageLoader imageLoader=ImageLoader.getInstance();
+							imageLoader.displayImage(other.getFace_pic(), mycenter_head_image);
+							mycenter_name.setText(other.getUname());
+							mycenter_total.setText(other.getRegion_name());
+//							mycenter_vip_image.setImageResource(R.drawable.lv1);
+//							mycenter_sex_image.setImageResource(R.drawable.vip_icon_wowam);
+						}
+					});
+			}
+		}
 
 	/**
 	 * 设置控件监听
@@ -183,7 +277,11 @@ public class MyCenterActivity extends BaseActivity implements OnClickListener {
 				break;
 			case R.id.mycenter_mysteward:// 发布教程
 				mycenter_mysteward.setBackgroundColor(getResources().getColor(R.color.gray_x));
-				startActivity(LaunchCourseActivity.class);
+				Intent intent2=new Intent(this,LaunchCourseActivity.class);
+				Bundle bundle=new Bundle();
+				bundle.putSerializable("courseData", other.getCourseData());
+				intent2.putExtras(bundle);
+				startActivity(intent2);
 				break;
 			case R.id.mycenter_rightscent:// 收藏教程
 				mycenter_rightscent.setBackgroundColor(getResources().getColor(R.color.gray_x));

@@ -16,6 +16,15 @@ public class HomeHotCoursePoJo extends BmobObject{
 	private String subject;// 标题
 	private String user_name;// 用户昵称
 	private int step_count;// 步骤
+	private String user_id;
+
+	public String getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
+	}
 
 	public HomeHotCoursePoJo() {
 	}
