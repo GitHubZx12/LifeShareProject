@@ -2,7 +2,7 @@ package com.mendale.app.vo;
 
 import java.util.List;
 
-public class CourseDetailsItemBean {
+public class CourseDetailsBean {
 	
 	public String host_pic;//图片
 	public String subject;//标题

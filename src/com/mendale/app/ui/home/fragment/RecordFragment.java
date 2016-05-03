@@ -6,15 +6,14 @@ import java.util.List;
 
 import com.mendale.app.R;
 import com.mendale.app.adapters.RecordLvAdapter;
-import com.mendale.app.constants.DataURL;
 import com.mendale.app.pojo.RecordItemBean;
-import com.mendale.app.tasks.RecordTask;
 import com.mendale.app.ui.home.menu.ChooseClassify;
 import com.mendale.app.utils.pullToRefreshUtils.PullToRefreshConfig;
 import com.mendale.app.utils.pullToRefreshUtils.view.XListView;
 import com.mendale.app.utils.pullToRefreshUtils.view.XListView.IXListViewListener;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.umeng.socialize.utils.Log;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -30,6 +29,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.FindListener;
 
 /**
  * 记录
@@ -51,16 +52,15 @@ public class RecordFragment extends Fragment implements IXListViewListener,OnCli
 	//
 	private List<RecordItemBean> recordList;
 
+	@SuppressLint("HandlerLeak")
 	private Handler mhandler = new Handler() {
-		@SuppressWarnings("unchecked")
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case 1:
-				if (msg.obj != null) {
+				if (recordList != null) {
 					iv_loading.clearAnimation();
 					ll_loading.setVisibility(View.INVISIBLE);
 					mListView.setVisibility(View.VISIBLE);
-					recordList = (List<RecordItemBean>) msg.obj;
 					mAdapter = new RecordLvAdapter(getActivity(), recordList,
 							options);
 					mListView.setAdapter(mAdapter);
@@ -93,33 +93,23 @@ public class RecordFragment extends Fragment implements IXListViewListener,OnCli
 		Animation animation=AnimationUtils.loadAnimation(getActivity(),R.anim.loading);
 		iv_loading.startAnimation(animation);
 	}
-
-	/**
-	 * 初始化图片的相关参数
-	 */
-	private void initImageOptions() {
-		// 使用DisplayImageOptions.Builder()创建DisplayImageOptions
-		options = new DisplayImageOptions.Builder()
-				.showStubImage(R.drawable.image_guidestep_defult) // 设置图片下载期间显示的图片
-				.showImageForEmptyUri(R.drawable.image_guidestep_defult) // 设置图片Uri为空或是错误的时候显示的图片
-				.showImageOnFail(R.drawable.image_guidestep_defult) // 设置图片加载或解码过程中发生错误显示的图片
-				.cacheInMemory(true) // 设置下载的图片是否缓存在内存中
-				.cacheOnDisc(true) // 设置下载的图片是否缓存在SD卡中
-				.displayer(new RoundedBitmapDisplayer(0)) // 设置成圆角图片
-				.build(); // 创建配置过得DisplayImageOption对象
-	}
-
 	/**
 	 * 请求接口
 	 */
 	private void initData() {
-		new Thread() {
-			public void run() {
+		BmobQuery<RecordItemBean>bmobQuery=new BmobQuery<RecordItemBean>();
+		bmobQuery.findObjects(getActivity(), new FindListener<RecordItemBean>() {
+			@Override
+			public void onError(int arg0, String arg1) {
+				Log.e("tag",arg1);
+			}
 
-				new RecordTask(getActivity(), mhandler).send(1, "utf-8",
-						DataURL.RECORD_URL);
-			};
-		}.start();
+			@Override
+			public void onSuccess(List<RecordItemBean> arg0) {
+				recordList=arg0;
+				mhandler.sendEmptyMessage(1);
+			}
+		});
 	}
 
 	/**
@@ -157,12 +147,12 @@ public class RecordFragment extends Fragment implements IXListViewListener,OnCli
 		Date curDate = new Date(System.currentTimeMillis());// 获取当前时间
 		String str = formatter.format(curDate);// 格式化
 		mListView.setRefreshTime(str);// 给listview设置刷新时间
-		// if (list.size() == 15) {
-		// // 当数目大于15的时候
-		// mListView.setPullLoadEnable(false);// 禁止上拉加载
-		// mListView.setPullRefreshEnable(false);// 禁止下拉刷新
-		// tv_no_data.setVisibility(View.VISIBLE);// 显示没有更多数据
-		// }
+		 if (recordList.size() == 15) {
+		 // 当数目大于15的时候
+		 mListView.setPullLoadEnable(false);// 禁止上拉加载
+		 mListView.setPullRefreshEnable(false);// 禁止下拉刷新
+		 tv_no_data.setVisibility(View.VISIBLE);// 显示没有更多数据
+		 }
 	}
 	
 	@Override
@@ -198,6 +188,20 @@ public class RecordFragment extends Fragment implements IXListViewListener,OnCli
 		default:
 			break;
 		}
-		
+	}
+	/**
+	 * 初始化图片的相关参数
+	 */
+	@SuppressWarnings("deprecation")
+	private void initImageOptions() {
+		// 使用DisplayImageOptions.Builder()创建DisplayImageOptions
+		options = new DisplayImageOptions.Builder()
+				.showStubImage(R.drawable.image_guidestep_defult) // 设置图片下载期间显示的图片
+				.showImageForEmptyUri(R.drawable.image_guidestep_defult) // 设置图片Uri为空或是错误的时候显示的图片
+				.showImageOnFail(R.drawable.image_guidestep_defult) // 设置图片加载或解码过程中发生错误显示的图片
+				.cacheInMemory(true) // 设置下载的图片是否缓存在内存中
+				.cacheOnDisc(true) // 设置下载的图片是否缓存在SD卡中
+				.displayer(new RoundedBitmapDisplayer(0)) // 设置成圆角图片
+				.build(); // 创建配置过得DisplayImageOption对象
 	}
 }

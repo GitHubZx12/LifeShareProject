@@ -6,13 +6,13 @@ import java.util.Map;
 
 import com.mendale.app.R;
 import com.mendale.app.adapters.CourseGvAdapter;
-import com.mendale.app.constants.DataURL;
 import com.mendale.app.constants.Datas;
 import com.mendale.app.pojo.CourseChildPojo;
 import com.mendale.app.pojo.CoursePoJo;
-import com.mendale.app.tasks.CourseTask;
 import com.mendale.app.ui.course.CourseInfoActivity;
+import com.umeng.socialize.utils.Log;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,14 +24,14 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.listener.FindListener;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.FindListener;
 
 /**
- * 教程
+ * 教程模块
  * 
  * @author Administrator
  *
@@ -45,16 +45,16 @@ public class CourseFragment extends Fragment implements OnItemClickListener {
 	private LinearLayout ll_loading;
 	//数据
 	private List<CoursePoJo> courseData;
+	
+	@SuppressLint("HandlerLeak")
 	private Handler mhandler = new Handler() {
-
-		@SuppressWarnings("unchecked")
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 				case 1:
 						iv_loading.clearAnimation();
 						ll_loading.setVisibility(View.INVISIBLE);
 						gv_Course.setVisibility(View.VISIBLE);
-						mAdapter = new CourseGvAdapter(getActivity(), formatList(Datas.courseList));
+						mAdapter = new CourseGvAdapter(getActivity(), formatList(courseData));
 						gv_Course.setAdapter(mAdapter);
 					break;
 				default:
@@ -113,12 +113,6 @@ public class CourseFragment extends Fragment implements OnItemClickListener {
 	 * 初始化数据
 	 */
 	private void intData() {
-//		new Thread() {
-//
-//			public void run() {
-//				new CourseTask(getActivity(), mhandler).send(1, "utf-8", DataURL.COURSE_URL);
-//			};
-//		}.start();
 		BmobQuery<CoursePoJo>bmobQuery=new BmobQuery<CoursePoJo>();
 		bmobQuery.findObjects(getActivity(), new FindListener<CoursePoJo>() {
 			
@@ -131,7 +125,7 @@ public class CourseFragment extends Fragment implements OnItemClickListener {
 			
 			@Override
 			public void onError(int arg0, String arg1) {
-				// TODO Auto-generated method stub
+				Log.e("tag",arg1);
 			}
 		});
 	}

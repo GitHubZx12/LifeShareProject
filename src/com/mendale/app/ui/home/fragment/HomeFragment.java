@@ -18,7 +18,6 @@ import com.mendale.app.vo.HomeHotCoursePoJo;
 import com.mendale.app.vo.HomeTypePoJo;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
-import com.umeng.socialize.utils.Log;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;

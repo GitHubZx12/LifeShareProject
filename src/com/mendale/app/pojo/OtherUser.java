@@ -169,18 +169,5 @@ public class OtherUser extends BmobObject{
 	public void setOcollectData(OcollectData ocollectData) {
 		this.ocollectData = ocollectData;
 	}
-	@Override
-	public String toString() {
-		return "OtherUser [ocollect=" + ocollect + ", opus=" + opus + ", course=" + course + ", collect=" + collect
-				+ ", follow=" + follow + ", fans=" + fans + ", uid=" + uid + ", relation=" + relation + ", region_name="
-				+ region_name + ", uname=" + uname + ", gender=" + gender + ", email=" + email + ", des=" + des
-				+ ", face_pic=" + face_pic + ", bg_pic=" + bg_pic + ", hand_daren=" + hand_daren + ", level=" + level
-				+ ", scores=" + scores + ", _id=" + _id + ", courseData=" + courseData + ", collectData=" + collectData
-				+ ", opusData=" + opusData + ", ocollectData=" + ocollectData + "]";
-	}
-	
-	
-	
-	
 
 }

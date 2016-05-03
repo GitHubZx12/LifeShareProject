@@ -7,8 +7,12 @@ import com.google.gson.Gson;
 import com.mendale.app.R;
 import com.mendale.app.application.MobileApplication;
 import com.mendale.app.constants.DataURL;
+import com.mendale.app.pojo.CollectData;
+import com.mendale.app.pojo.CourseData;
 import com.mendale.app.pojo.LSUser;
 import com.mendale.app.pojo.MemberPojo;
+import com.mendale.app.pojo.OcollectData;
+import com.mendale.app.pojo.OpusData;
 import com.mendale.app.pojo.OtherUser;
 import com.mendale.app.ui.base.BaseActivity;
 import com.mendale.app.ui.mycenter.setting.MarkManActivity;
@@ -201,7 +205,6 @@ public class MyCenterActivity extends BaseActivity implements OnClickListener {
 			Gson gson = new Gson();
 			if (!Utils.isEmpty(string)) {
 					other=gson.fromJson(string, OtherUser.class);
-//					Log.e("tag",other.getUid());
 //					other.save(this);
 //					CourseData courseData=other.getCourseData();
 //					CollectData collectData=other.getCollectData();
@@ -267,28 +270,28 @@ public class MyCenterActivity extends BaseActivity implements OnClickListener {
 			case R.id.mycenter_mysteward:// 发布教程
 				mycenter_mysteward.setBackgroundColor(getResources().getColor(R.color.gray_x));
 				intent=new Intent(this,LaunchCourseActivity.class);
-				bundle.putSerializable("courseData", other.getCourseData());
+//				bundle.putSerializable("courseData", other.getCourseData());
 				intent.putExtras(bundle);
 				startActivity(intent);
 				break;
 			case R.id.mycenter_rightscent:// 收藏教程
 				mycenter_rightscent.setBackgroundColor(getResources().getColor(R.color.gray_x));
 				intent=new Intent(this,CollectCourseActivity.class);
-				bundle.putSerializable("collectData", other.getCollectData());
+//				bundle.putSerializable("collectData", other.getCollectData());
 				intent.putExtras(bundle);
 				startActivity(intent);
 				break;
 			case R.id.mycenter_setting:// 发布记录
 				mycenter_setting.setBackgroundColor(getResources().getColor(R.color.gray_x));
 				intent=new Intent(this,LaunchRecordActivity.class);
-				bundle.putSerializable("opusData", other.getOpusData());
+//				bundle.putSerializable("opusData", other.getOpusData());
 				intent.putExtras(bundle);
 				startActivity(intent);
 				break;
 			case R.id.mycenter_serve:// 收藏记录
 				mycenter_serve.setBackgroundColor(getResources().getColor(R.color.gray_x));
 				intent=new Intent(this,CollectRecordActivity.class);
-				bundle.putSerializable("opusData", other.getOcollectData());
+//				bundle.putSerializable("opusData", other.getOcollectData());
 				intent.putExtras(bundle);
 				startActivity(intent);
 				break;
