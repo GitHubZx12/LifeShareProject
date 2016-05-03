@@ -18,6 +18,7 @@ import com.mendale.app.vo.HomeHotCoursePoJo;
 import com.mendale.app.vo.HomeTypePoJo;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.umeng.socialize.utils.Log;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -189,6 +190,8 @@ public class HomeFragment extends Fragment implements OnClickListener, OnItemCli
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				Intent intent = new Intent(getActivity(), MyCenterActivity.class);
+				intent.putExtra("id",darenData.get(arg2).getUser_id()+"");
+				intent.putExtra("flag",2);
 				startActivity(intent);
 			}
 		});

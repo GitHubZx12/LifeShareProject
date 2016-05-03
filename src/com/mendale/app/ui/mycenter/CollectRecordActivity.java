@@ -2,16 +2,12 @@ package com.mendale.app.ui.mycenter;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import com.mendale.app.R;
 import com.mendale.app.adapters.CourseInfoLvAdapter;
-import com.mendale.app.constants.DataURL;
-import com.mendale.app.pojo.CourseListPojo;
-import com.mendale.app.pojo.RecordItemBean;
-import com.mendale.app.tasks.RecordTask;
+import com.mendale.app.pojo.OcollectData;
+import com.mendale.app.pojo.OpusData;
 import com.mendale.app.ui.base.BaseActivity;
-import com.mendale.app.ui.course.CourseInfoActivity;
 import com.mendale.app.utils.pullToRefreshUtils.PullToRefreshConfig;
 import com.mendale.app.utils.pullToRefreshUtils.view.XListView;
 import com.mendale.app.utils.pullToRefreshUtils.view.XListView.IXListViewListener;
@@ -20,7 +16,6 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -39,30 +34,12 @@ public class CollectRecordActivity extends BaseActivity implements IXListViewLis
 	private CourseInfoLvAdapter mAdapter;
 	private DisplayImageOptions options; // DisplayImageOptions是用于设置图片显示的类
 	/** 显示没有更多数据 */
-	private TextView tv_no_data;
-	//
+	private TextView tvTip;
 	private ImageView iv_loading;
 	private LinearLayout ll_loading;
-	private Handler mhandler = new Handler() {
-
-		@SuppressWarnings("unchecked")
-		public void handleMessage(android.os.Message msg) {
-			switch (msg.what) {
-				case 1:
-					if (msg.obj != null) {
-						iv_loading.clearAnimation();
-						ll_loading.setVisibility(View.INVISIBLE);
-						mListView.setVisibility(View.VISIBLE);
-						List<CourseListPojo> recordList = (List<CourseListPojo>) msg.obj;
-						mAdapter = new CourseInfoLvAdapter(CollectRecordActivity.this, recordList, options);
-						mListView.setAdapter(mAdapter);
-					}
-					break;
-				default:
-					break;
-			}
-		};
-	};
+	/**数据*/
+	private OcollectData collectData=null;
+	
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -70,8 +47,23 @@ public class CollectRecordActivity extends BaseActivity implements IXListViewLis
 		initHeaderView();
 		initView();
 		initAnim();
-		initData();
 		initImageOptions();
+		getIntentData();
+	}
+	
+	/**
+	 * 得到传递过来的参数
+	 */
+	private void getIntentData() {
+		collectData=(OcollectData) getIntent().getSerializableExtra("opusData");
+		iv_loading.clearAnimation();
+		if(null==collectData){
+			tvTip.setText("没有收藏任何记录");
+			return;
+		}
+		mListView.setVisibility(View.VISIBLE);
+		mAdapter = new CourseInfoLvAdapter(CollectRecordActivity.this,collectData.getList(), options);
+		mListView.setAdapter(mAdapter);
 	}
 	/**
 	 * 初始化头部
@@ -109,18 +101,6 @@ public class CollectRecordActivity extends BaseActivity implements IXListViewLis
 	}
 
 	/**
-	 * 请求接口
-	 */
-	private void initData() {
-		new Thread() {
-
-			public void run() {
-				new RecordTask(CollectRecordActivity.this, mhandler).send(1, "utf-8", DataURL.RECORD_URL);
-			};
-		}.start();
-	}
-
-	/**
 	 * 初始化界面
 	 * 
 	 * @param view
@@ -133,6 +113,7 @@ public class CollectRecordActivity extends BaseActivity implements IXListViewLis
 		//
 		iv_loading = (ImageView) findViewById(R.id.iv_course_info_loading);
 		ll_loading = (LinearLayout) findViewById(R.id.ll_course_info_loading);
+		tvTip=(TextView) findViewById(R.id.tv_course_info_tips);
 	}
 
 	/**
@@ -160,23 +141,11 @@ public class CollectRecordActivity extends BaseActivity implements IXListViewLis
 
 	@Override
 	public void onRefresh() {
-		mhandler.postDelayed(new Runnable() {
-
-			@Override
-			public void run() {
-				onLoad();
-			}
-		}, 2000);
+	
 	}
 
 	@Override
 	public void onLoadMore() {
-		mhandler.postDelayed(new Runnable() {
-
-			@Override
-			public void run() {
-				onLoad();
-			}
-		}, 2000);
+		
 	}
 }

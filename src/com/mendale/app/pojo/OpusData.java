@@ -15,12 +15,12 @@ public class OpusData extends BmobObject{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private List<RecordItemBean> list;
+	private List<CourseListPojo> list;
      private String lastid;
-	public List<RecordItemBean> getList() {
+	public List<CourseListPojo> getList() {
 		return list;
 	}
-	public void setList(List<RecordItemBean> list) {
+	public void setList(List<CourseListPojo> list) {
 		this.list = list;
 	}
 	public String getLastid() {

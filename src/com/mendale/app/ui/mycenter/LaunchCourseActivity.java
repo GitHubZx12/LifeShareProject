@@ -35,7 +35,7 @@ public class LaunchCourseActivity extends BaseActivity implements OnClickListene
 	private HotCourseGVAdapter courseAdapter;
 	/**DisplayImageOptions*/
 	private DisplayImageOptions options;
-	private CourseData courseData;
+	private CourseData courseData=null;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -75,6 +75,9 @@ public class LaunchCourseActivity extends BaseActivity implements OnClickListene
 	 */
 	private void getIntentData() {
 		courseData=(CourseData) getIntent().getSerializableExtra("courseData");
+		if(null==courseData){
+			return;
+		}
 		courseAdapter=new HotCourseGVAdapter(LaunchCourseActivity.this,courseData.getList(),options);
 		mGridView.setAdapter(courseAdapter);
 	}

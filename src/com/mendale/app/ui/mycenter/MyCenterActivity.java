@@ -119,20 +119,6 @@ public class MyCenterActivity extends BaseActivity implements OnClickListener {
 		setLinstener();
 	}
 	
-	/**
-	 * 初始化图片的相关参数
-	 */
-	private void initOptions() {
-		// 使用DisplayImageOptions.Builder()创建DisplayImageOptions
-		options = new DisplayImageOptions.Builder()
-				.showStubImage(R.drawable.image_guidestep_defult) // 设置图片下载期间显示的图片
-				.showImageForEmptyUri(R.drawable.image_guidestep_defult) // 设置图片Uri为空或是错误的时候显示的图片
-				.showImageOnFail(R.drawable.image_guidestep_defult) // 设置图片加载或解码过程中发生错误显示的图片
-				.cacheInMemory(true) // 设置下载的图片是否缓存在内存中
-				.cacheOnDisc(true) // 设置下载的图片是否缓存在SD卡中
-				.displayer(new RoundedBitmapDisplayer(0)) // 设置成圆角图片
-				.build(); // 创建配置过得DisplayImageOption对象
-	}
 
 	/**
 	 * 绑定控件ID
@@ -183,6 +169,7 @@ public class MyCenterActivity extends BaseActivity implements OnClickListener {
 		 */
 		private void doGet(String id) {
 			final String fullUrl=DataURL.PEOPLE_DETAILS+id;
+			Log.e("tag2",fullUrl);
 			new Thread(new Runnable() {
 				@Override
 				public void run() {
@@ -265,6 +252,8 @@ public class MyCenterActivity extends BaseActivity implements OnClickListener {
 	 */
 	@Override
 	public void onClick(View v) {
+		Intent intent;
+		Bundle bundle=new Bundle();
 		switch (v.getId()) {
 			case R.id.mycenter_background_image:// 背景
 				// showPhoneDialog(1);
@@ -272,28 +261,36 @@ public class MyCenterActivity extends BaseActivity implements OnClickListener {
 			case R.id.mycenter_AllData:// 为了不触发背景点击事件
 				break;
 			case R.id.mycenter_data:// 资料
-				Intent intent = new Intent(this, MarkManActivity.class);
+				intent = new Intent(this, MarkManActivity.class);
 				startActivityForResult(intent, 2);
 				break;
 			case R.id.mycenter_mysteward:// 发布教程
 				mycenter_mysteward.setBackgroundColor(getResources().getColor(R.color.gray_x));
-				Intent intent2=new Intent(this,LaunchCourseActivity.class);
-				Bundle bundle=new Bundle();
+				intent=new Intent(this,LaunchCourseActivity.class);
 				bundle.putSerializable("courseData", other.getCourseData());
-				intent2.putExtras(bundle);
-				startActivity(intent2);
+				intent.putExtras(bundle);
+				startActivity(intent);
 				break;
 			case R.id.mycenter_rightscent:// 收藏教程
 				mycenter_rightscent.setBackgroundColor(getResources().getColor(R.color.gray_x));
-				startActivity(CollectCourseActivity.class);
+				intent=new Intent(this,CollectCourseActivity.class);
+				bundle.putSerializable("collectData", other.getCollectData());
+				intent.putExtras(bundle);
+				startActivity(intent);
 				break;
 			case R.id.mycenter_setting:// 发布记录
 				mycenter_setting.setBackgroundColor(getResources().getColor(R.color.gray_x));
-				startActivity(LaunchRecordActivity.class);
+				intent=new Intent(this,LaunchRecordActivity.class);
+				bundle.putSerializable("opusData", other.getOpusData());
+				intent.putExtras(bundle);
+				startActivity(intent);
 				break;
 			case R.id.mycenter_serve:// 收藏记录
 				mycenter_serve.setBackgroundColor(getResources().getColor(R.color.gray_x));
-				startActivity(CollectRecordActivity.class);
+				intent=new Intent(this,CollectRecordActivity.class);
+				bundle.putSerializable("opusData", other.getOcollectData());
+				intent.putExtras(bundle);
+				startActivity(intent);
 				break;
 			case R.id.mycenter_background_view:// 背景
 				// showPhoneDialog(1);
@@ -317,7 +314,19 @@ public class MyCenterActivity extends BaseActivity implements OnClickListener {
 			default:
 				break;
 		}
-		
-		
+	}
+	/**
+	 * 初始化图片的相关参数
+	 */
+	private void initOptions() {
+		// 使用DisplayImageOptions.Builder()创建DisplayImageOptions
+		options = new DisplayImageOptions.Builder()
+				.showStubImage(R.drawable.image_guidestep_defult) // 设置图片下载期间显示的图片
+				.showImageForEmptyUri(R.drawable.image_guidestep_defult) // 设置图片Uri为空或是错误的时候显示的图片
+				.showImageOnFail(R.drawable.image_guidestep_defult) // 设置图片加载或解码过程中发生错误显示的图片
+				.cacheInMemory(true) // 设置下载的图片是否缓存在内存中
+				.cacheOnDisc(true) // 设置下载的图片是否缓存在SD卡中
+				.displayer(new RoundedBitmapDisplayer(0)) // 设置成圆角图片
+				.build(); // 创建配置过得DisplayImageOption对象
 	}
 }

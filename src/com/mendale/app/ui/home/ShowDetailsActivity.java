@@ -302,13 +302,14 @@ public class ShowDetailsActivity extends Activity implements
 		    public void onComplete(int status, SocializeEntity entity) {
 		    	if (entity != null) {
 					 LIKESTATUS likestatus =entity.getLikeStatus();
-					 if(likestatus.ordinal()==1){//
-						 collect.setImageResource(R.drawable.crafter_laud_no);
-						 Toast.makeText(ShowDetailsActivity.this, "收藏成功", Toast.LENGTH_SHORT).show();
-					 }else{
-						 collect.setImageResource(R.drawable.course_collect);
-						 Toast.makeText(ShowDetailsActivity.this, "取消收藏", Toast.LENGTH_SHORT).show();
-					 }
+					 Toast.makeText(ShowDetailsActivity.this, likestatus.ordinal()+"=--", Toast.LENGTH_SHORT).show();
+//					 if(likestatus.ordinal()==1){//
+//						 collect.setImageResource(R.drawable.crafter_laud_no);
+//						 Toast.makeText(ShowDetailsActivity.this, "收藏成功", Toast.LENGTH_SHORT).show();
+//					 }else{
+//						 collect.setImageResource(R.drawable.course_collect);
+//						 Toast.makeText(ShowDetailsActivity.this, "取消收藏", Toast.LENGTH_SHORT).show();
+//					 }
 				}
 		    }
 		});
