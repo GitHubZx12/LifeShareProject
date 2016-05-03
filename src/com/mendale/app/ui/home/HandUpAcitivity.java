@@ -34,20 +34,23 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.FindListener;
 
 /**
  * 首页--手工达人--更多
- * @author zhangxue 
-   @date 2016年4月27日
+ * 
+ * @author zhangxue
+ * @date 2016年4月27日
  */
-public class HandUpAcitivity extends BaseActivity implements OnItemClickListener{
-	
+public class HandUpAcitivity extends BaseActivity implements OnItemClickListener {
+
 	private ListView mListView;
 	private HandUpLvAdapter mAdapter;
-	/**数据*/
+	/** 数据 */
 	private List<HandUpMorePoJo> mDatas = null;
 	private DisplayImageOptions options;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -57,7 +60,7 @@ public class HandUpAcitivity extends BaseActivity implements OnItemClickListener
 		initView();
 		initImageOptions();
 	}
-	
+
 	/**
 	 * 初始化图片的相关参数
 	 */
@@ -78,33 +81,55 @@ public class HandUpAcitivity extends BaseActivity implements OnItemClickListener
 	private void initData() {
 		doGet(DataURL.HAND_UP);
 	}
+
 	/**
 	 * 获取数据
+	 * 
 	 * @param url
 	 */
 	private void doGet(final String url) {
-		new Thread(new Runnable() {
+		// new Thread(new Runnable() {
+		// @Override
+		// public void run() {
+		// OkHttpClient okHttpClient = new OkHttpClient();
+		// // 创建一个request
+		// Request request = new Request.Builder().url(url).build();
+		// Call call = okHttpClient.newCall(request);
+		// call.enqueue(new Callback() {
+		//
+		// @Override
+		// public void onResponse(Response arg0) throws IOException {
+		// parserData(arg0.body().string());
+		// }
+		//
+		// @Override
+		// public void onFailure(Request arg0, IOException arg1) {
+		// }
+		// });
+		// }
+		// }).start();
+		BmobQuery<HandUpMorePoJo> bQuery = new BmobQuery<HandUpMorePoJo>();
+		bQuery.findObjects(this, new FindListener<HandUpMorePoJo>() {
+
 			@Override
-			public void run() {
-				OkHttpClient okHttpClient = new OkHttpClient();
-				// 创建一个request
-				Request request = new Request.Builder().url(url).build();
-				Call call = okHttpClient.newCall(request);
-				call.enqueue(new Callback() {
+			public void onSuccess(List<HandUpMorePoJo> arg0) {
+				mDatas = arg0;
+				runOnUiThread(new Runnable() {
 
 					@Override
-					public void onResponse(Response arg0) throws IOException {
-						parserData(arg0.body().string());
-					}
-
-					@Override
-					public void onFailure(Request arg0, IOException arg1) {
+					public void run() {
+						setListViewAdapter(mDatas);
 					}
 				});
 			}
-		}).start();
-		
+
+			@Override
+			public void onError(int arg0, String arg1) {
+				Log.e("tag", "errorCode" + arg0 + "errorString" + arg1);
+			}
+		});
 	}
+
 	/**
 	 * 解析json数据
 	 * 
@@ -124,26 +149,28 @@ public class HandUpAcitivity extends BaseActivity implements OnItemClickListener
 					mDatas.add(item);
 				}
 				runOnUiThread(new Runnable() {
-					
+
 					@Override
 					public void run() {
 						setListViewAdapter(mDatas);
 					}
 				});
-				
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 		}
 	}
+
 	/**
 	 * Adapter
+	 * 
 	 * @param newsDatas
 	 */
 	private void setListViewAdapter(List<HandUpMorePoJo> newsDatas) {
-		mAdapter=new HandUpLvAdapter(this, mDatas,options);
+		mAdapter = new HandUpLvAdapter(this, mDatas, options);
 		mListView.setAdapter(mAdapter);
 	}
+
 	/**
 	 * 初始化标题
 	 */
@@ -151,6 +178,7 @@ public class HandUpAcitivity extends BaseActivity implements OnItemClickListener
 		setNavigationTitle("手工达人");
 		setNavigationLeftBtnText("");
 	}
+
 	@Override
 	public void leftButtonOnClick() {
 		super.leftButtonOnClick();
@@ -158,7 +186,7 @@ public class HandUpAcitivity extends BaseActivity implements OnItemClickListener
 	}
 
 	/**
-	 *初始化view
+	 * 初始化view
 	 */
 	private void initView() {
 		mListView = (ListView) findViewById(R.id.listview_hot_course);
@@ -167,9 +195,9 @@ public class HandUpAcitivity extends BaseActivity implements OnItemClickListener
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		Intent intent=new Intent(this,MyCenterActivity.class);
+		Intent intent = new Intent(this, MyCenterActivity.class);
 		intent.putExtra("id", mDatas.get(position).getUser_id());
-		intent.putExtra("flag",2);
+		intent.putExtra("flag", 2);
 		startActivity(intent);
 	}
 }

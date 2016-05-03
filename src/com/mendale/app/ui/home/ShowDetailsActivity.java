@@ -6,7 +6,6 @@ import java.util.List;
 import com.mendale.app.R;
 import com.mendale.app.adapters.DetailsPagerAdapter;
 import com.mendale.app.constants.Constants;
-import com.mendale.app.tasks.HotCourseDetailsTask;
 import com.mendale.app.vo.CourseDetailsBean;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.umeng.socialize.bean.LIKESTATUS;
@@ -17,6 +16,7 @@ import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.controller.listener.SocializeListeners.SocializeClientListener;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.sso.UMSsoHandler;
+import com.umeng.socialize.utils.Log;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -33,6 +33,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.FindListener;
 
 /**
  * 热门教程 详情界面
@@ -53,7 +55,7 @@ public class ShowDetailsActivity extends Activity implements
 	TextView text;
 	// 步骤的图标、退、赞、收集、材料、分享
 	ImageView icon, back, laud, collect, material, share;
-	private CourseDetailsBean detailsItemData;
+	private List<CourseDetailsBean> detailsItemData;
 	private String detail_url;
 	private int step;
 	private ImageLoader imageLoader;
@@ -70,11 +72,8 @@ public class ShowDetailsActivity extends Activity implements
 			switch (msg.what) {
 			case 1:
 				if(msg.obj!=null){
-					detailsItemData=(CourseDetailsBean) msg.obj;
 					initView();// 初始化
-					
 				}
-				
 				break;
 
 			default:
@@ -105,11 +104,25 @@ public class ShowDetailsActivity extends Activity implements
 	 * 请求服务获取详细信息
 	 */
 	private void requestData() {
-		new Thread(){
-			public void run() {
-				new HotCourseDetailsTask(ShowDetailsActivity.this, mhandler).send(1, "utf-8", detail_url);
-			};
-		}.start();
+//		new Thread(){
+//			public void run() {
+//				new HotCourseDetailsTask(ShowDetailsActivity.this, mhandler).send(1, "utf-8", detail_url);
+//			};
+//		}.start();
+		BmobQuery<CourseDetailsBean>bmobQuery=new BmobQuery<CourseDetailsBean>();
+		bmobQuery.findObjects(this, new FindListener<CourseDetailsBean>() {
+			
+			@Override
+			public void onSuccess(List<CourseDetailsBean> arg0) {
+				detailsItemData=arg0;
+				mhandler.sendEmptyMessage(1);
+			}
+			
+			@Override
+			public void onError(int arg0, String arg1) {
+				Log.e("tag",arg1);
+			}
+		});
 		
 	}
 
@@ -190,22 +203,22 @@ public class ShowDetailsActivity extends Activity implements
 		// 标题
 		TextView title = (TextView) itemView
 				.findViewById(R.id.viewpage_1_tv_title);
-		title.setText(detailsItemData.getSubject());
+		title.setText(detailsItemData.get(0).getSubject());
 		// 作者头像
 		ImageView imageView = (ImageView) itemView
 				.findViewById(R.id.viewpage_1_iv_pic);
 		
-		imageLoader.displayImage(detailsItemData.getHost_pic(), imageView);
+		imageLoader.displayImage(detailsItemData.get(1).getHost_pic(), imageView);
 		// 评论、赞等的数量
 		TextView count = (TextView) itemView
 				.findViewById(R.id.viewpage_1_tv_content);
-		count.setText(detailsItemData.getSummary());
+		count.setText(detailsItemData.get(0).getSummary());
 
 		TextView all = (TextView) itemView.findViewById(R.id.viewpage_1_tv_all);
-		all.setText(detailsItemData.getView() + "/"
-				+ detailsItemData.getLaud() + "/"
-				+ detailsItemData.getCollect() + "/"
-				+ detailsItemData.getComment_count());
+		all.setText(detailsItemData.get(0).getView() + "/"
+				+ detailsItemData.get(0).getLaud() + "/"
+				+ detailsItemData.get(0).getCollect() + "/"
+				+ detailsItemData.get(0).getComment_count());
 	}
 
 	/**
@@ -220,14 +233,14 @@ public class ShowDetailsActivity extends Activity implements
 		ViewHolder viewHolder = new ViewHolder();
 		// 图片
 		viewHolder.imageView = (ImageView) itemView.findViewById(R.id.iv_pic);
-		imageLoader.displayImage(detailsItemData.getStep().get(position).pic,viewHolder.imageView);
+		imageLoader.displayImage(detailsItemData.get(0).getStep().get(position).pic,viewHolder.imageView);
 		// 内容
 		viewHolder.content = (TextView) itemView.findViewById(R.id.tv_content);
-		viewHolder.content.setText(detailsItemData.getStep().get(position).content);
+		viewHolder.content.setText(detailsItemData.get(0).getStep().get(position).content);
 		// 总共的步骤
 		viewHolder.count = (TextView) itemView
 				.findViewById(R.id.tv_comment_count);
-		viewHolder.count.setText(detailsItemData.getComment_count());
+		viewHolder.count.setText(detailsItemData.get(0).getComment_count());
 		viewHolder.comment_fl = (ViewGroup) itemView
 				.findViewById(R.id.details_2_fl);
 
@@ -348,7 +361,7 @@ public class ShowDetailsActivity extends Activity implements
 			icon.setVisibility(View.VISIBLE);
 			text.setVisibility(View.VISIBLE);
 			text.setText(position + "/"
-					+ detailsItemData.step.size());
+					+ detailsItemData.get(0).step.size());
 		}
 	}
 
