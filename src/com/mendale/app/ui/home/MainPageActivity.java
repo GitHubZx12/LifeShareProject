@@ -7,6 +7,7 @@ import com.mendale.app.ui.home.fragment.HomeFragment;
 import com.mendale.app.ui.home.fragment.QAFragment;
 import com.mendale.app.ui.home.fragment.RecordFragment;
 import com.mendale.app.ui.home.fragment.HomeFragment.ChangeFragment;
+import com.mendale.app.ui.home.menu.CommentActivity;
 import com.mendale.app.ui.home.menu.CourseClassifyActivity;
 import com.mendale.app.ui.home.menu.HelpMakeCourseActivity;
 import com.mendale.app.ui.home.menu.NewsActivity;
@@ -295,14 +296,14 @@ public class MainPageActivity extends FragmentActivity implements OnClickListene
 				startActivity(intent3);
 				break;
 			case R.id.tv_menu_news:// 消息
-				Intent intent4 = new Intent(this, NewsActivity.class);
+				Intent intent4 = new Intent(this, CommentActivity.class);
 				startActivity(intent4);
 				break;
 			case R.id.tv_menu_classify:// 分类
 				Intent intent5 = new Intent(this, CourseClassifyActivity.class);
 				startActivity(intent5);
 				break;
-			case R.id.tv_menu_search:// 分类
+			case R.id.tv_menu_search:// 搜索
 				Intent intent6 = new Intent(this, SearchCourseActivity.class);
 				startActivity(intent6);
 				break;

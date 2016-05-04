@@ -3,7 +3,7 @@ package com.mendale.app.adapters;
 import java.util.List;
 
 import com.mendale.app.R;
-import com.mendale.app.adapters.CommentLvAdapter.ViewHolder;
+import com.mendale.app.adapters.ChartsLvAdapter.ViewHolder;
 import com.mendale.app.pojo.ChartsPoJo;
 import com.mendale.app.vo.CommentList;
 
@@ -15,17 +15,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
- * 排行榜listview
+ *评论listview
  * 
  * @author zhangxue
  * @date 2016年4月17日
  */
-public class ChartsLvAdapter extends BaseAdapter {
+public class CommentLvAdapter extends BaseAdapter {
 
 	private Context context;
-	private List<ChartsPoJo> mDatas;
+	private List<CommentList> mDatas;
 
-	public ChartsLvAdapter(Context context, List<ChartsPoJo> mDatas) {
+	public CommentLvAdapter(Context context, List<CommentList> mDatas) {
 		this.mDatas = mDatas;
 		this.context = context;
 	}
@@ -50,29 +50,30 @@ public class ChartsLvAdapter extends BaseAdapter {
 		ViewHolder holder;
 		if (null == convertView) {
 			holder = new ViewHolder();
-			convertView = View.inflate(context, R.layout.listview_charts, null);
-			holder.pos = (TextView) convertView.findViewById(R.id.tv_listview_charts_pos);
-			holder.title = (TextView) convertView.findViewById(R.id.tv_listview_charts_title);
-			holder.name = (TextView) convertView.findViewById(R.id.tv_listview_charts_name);
-			holder.view = (TextView) convertView.findViewById(R.id.tv_listview_charts_view);
-			holder.pic = (ImageView) convertView.findViewById(R.id.iv_listview_charts_pic);
+			convertView = View.inflate(context, R.layout.listview_item_comment, null);
+			holder.userName = (TextView) convertView.findViewById(R.id.tv_comments_name);
+			holder.content = (TextView) convertView.findViewById(R.id.tv_comments_cotent);
+			holder.time = (TextView) convertView.findViewById(R.id.tv_comments_time);
+			holder.facePic = (ImageView) convertView.findViewById(R.id.iv_comments_pic);
 			convertView.setTag(holder);
 		}
 		else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		//
-		holder.pos.setText("" + (position + 1));
-//		holder.name.setText();
+		//设置
+	
+		holder.userName.setText(mDatas.get(position).getUser_name());
+		holder.content.setText(mDatas.get(position).getComment());
+		holder.content.setText(mDatas.get(position).getAdd_time());
 		return convertView;
 	}
 
 	class ViewHolder {
+		
+		ImageView facePic;
+		TextView userName;
+		TextView content;
+		TextView time;
 
-		TextView pos;
-		TextView title;
-		TextView name;
-		TextView view;
-		ImageView pic;
 	}
 }

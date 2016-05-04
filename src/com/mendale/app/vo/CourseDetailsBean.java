@@ -1,10 +1,16 @@
 package com.mendale.app.vo;
 
+import java.io.Serializable;
 import java.util.List;
 
 import cn.bmob.v3.BmobObject;
 
-public class CourseDetailsBean extends BmobObject{
+/**
+ * 课程详情页
+ * @author zx
+ *
+ */
+public class CourseDetailsBean extends BmobObject implements Serializable{
 	
 	/**
 	 * 
@@ -15,12 +21,35 @@ public class CourseDetailsBean extends BmobObject{
 	public String hand_id;//详情页的id
 	
 	public String face_pic;//做着的图像
-	public List<Step>step;
 	public String summary;//简介
 	public Integer view;//人气
 	public Integer laud;//赞
 	public Integer collect;//收藏
 	public Integer comment_count;//评论
+	public List<Step>step;
+	private List<Tool>tools;
+    private List<Material>material;
+    private List<CommentList>comment_list;
+	
+	
+	public List<Tool> getTools() {
+		return tools;
+	}
+	public void setTools(List<Tool> tools) {
+		this.tools = tools;
+	}
+	public List<Material> getMaterial() {
+		return material;
+	}
+	public void setMaterial(List<Material> material) {
+		this.material = material;
+	}
+	public List<CommentList> getCommentList() {
+		return comment_list;
+	}
+	public void setCommentList(List<CommentList> commentList) {
+		this.comment_list = commentList;
+	}
 	
 	
 	public String getHost_pic() {
@@ -83,4 +112,13 @@ public class CourseDetailsBean extends BmobObject{
 	public void setComment_count(Integer comment_count) {
 		this.comment_count = comment_count;
 	}
+	@Override
+	public String toString() {
+		return "CourseDetailsBean [host_pic=" + host_pic + ", subject=" + subject + ", hand_id=" + hand_id
+				+ ", face_pic=" + face_pic + ", summary=" + summary + ", view=" + view + ", laud=" + laud + ", collect="
+				+ collect + ", comment_count=" + comment_count + ", step=" + step + ", tools=" + tools + ", material="
+				+ material + ", commentList=" + comment_list + "]";
+	}
+	
+	
 }

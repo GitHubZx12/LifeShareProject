@@ -1,41 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:background="@drawable/crafter_cguide_bg"
     android:orientation="vertical" >
 
-    <!-- 评论 -->
-    
-    <ListView
-        android:id="@+id/listview_charts"
+    <include 
+        android:id="@+id/comment_header"
+        layout="@layout/common_header"/>
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:horizontalSpacing="15dp"
-        android:numColumns="4"
-        android:verticalSpacing="15dp" >
-    </ListView>
+        android:layout_height="match_parent" >
 
-    <LinearLayout
-        android:id="@+id/ll_charts_loading"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:paddingTop="20dp" >
+        <!-- 评论 -->
 
-        <ImageView
-            android:id="@+id/iv_charts_loading"
-            android:layout_width="wrap_content"
+        <ListView
+            android:id="@+id/listview_comments"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/pulltorefresh_icon_loading" />
+            android:horizontalSpacing="15dp"
+            android:numColumns="4"
+            android:verticalSpacing="15dp" >
+        </ListView>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:text="正在加载" />
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_comments_loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:paddingTop="20dp" >
 
-</RelativeLayout>
+            <ImageView
+                android:id="@+id/iv_comments_loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/pulltorefresh_icon_loading" />
+
+            <TextView
+                android:id="@+id/tv_comments_tips"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:text="正在加载" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

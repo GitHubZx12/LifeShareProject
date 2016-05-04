@@ -21,7 +21,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import cn.bmob.v3.listener.SaveListener;
 
 /**
  * 热门教程列表
@@ -120,10 +119,28 @@ public class HotCourseDetailsTask {
 								json.toString(),
 								new TypeToken<CourseDetailsBean>() {
 								}.getType());
-						//
 						msg.what = 1;
 						msg.obj = item;
 						mhandler.sendMessage(msg);
+//						for(int j=0;j<item.getTools().size();j++){
+//							Tool c=item.getTools().get(j);
+//							c.save(context);
+//						}
+//						for(int j=0;j<item.getMaterial().size();j++){
+//							Material c=item.getMaterial().get(j);
+//							c.save(context);
+//						}
+//						for(int j=0;j<item.getStep().size();j++){
+//							Step c=item.getStep().get(j);
+//							c.save(context);
+//						}
+//						for(int j=0;j<item.getCommentList().size();j++){
+//							CommentList c=item.getCommentList().get(j);
+//							c.save(context);
+//						}
+//						
+//						item.save(context);
+//						return;
 					} else {
 						msg.what = 1;
 						mhandler.sendMessage(msg);
