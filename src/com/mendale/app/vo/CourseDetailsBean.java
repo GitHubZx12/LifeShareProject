@@ -2,8 +2,14 @@ package com.mendale.app.vo;
 
 import java.util.List;
 
-public class CourseDetailsBean {
+import cn.bmob.v3.BmobObject;
+
+public class CourseDetailsBean extends BmobObject{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public String host_pic;//图片
 	public String subject;//标题
 	public String hand_id;//详情页的id
@@ -11,10 +17,12 @@ public class CourseDetailsBean {
 	public String face_pic;//做着的图像
 	public List<Step>step;
 	public String summary;//简介
-	public String view;//人气
-	public String laud;//赞
-	public String collect;//收藏
-	public String comment_count;//评论
+	public Integer view;//人气
+	public Integer laud;//赞
+	public Integer collect;//收藏
+	public Integer comment_count;//评论
+	
+	
 	public String getHost_pic() {
 		return host_pic;
 	}
@@ -51,28 +59,28 @@ public class CourseDetailsBean {
 	public void setSummary(String summary) {
 		this.summary = summary;
 	}
-	public String getView() {
+	public Integer getView() {
 		return view;
 	}
-	public void setView(String view) {
+	public void setView(Integer view) {
 		this.view = view;
 	}
-	public String getLaud() {
+	public Integer getLaud() {
 		return laud;
 	}
-	public void setLaud(String laud) {
+	public void setLaud(Integer laud) {
 		this.laud = laud;
 	}
-	public String getCollect() {
+	public Integer getCollect() {
 		return collect;
 	}
-	public void setCollect(String collect) {
+	public void setCollect(Integer collect) {
 		this.collect = collect;
 	}
-	public String getComment_count() {
+	public Integer getComment_count() {
 		return comment_count;
 	}
-	public void setComment_count(String comment_count) {
+	public void setComment_count(Integer comment_count) {
 		this.comment_count = comment_count;
 	}
 }

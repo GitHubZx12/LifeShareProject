@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.mendale.app.R;
+import com.mendale.app.adapters.ChooseClassifyLvAdapter;
 import com.mendale.app.adapters.SecondListAdapter;
 import com.mendale.app.pojo.MainMenu;
 import com.mendale.app.ui.base.BaseActivity;
@@ -46,7 +47,7 @@ public class ChooseClassify extends BaseActivity implements OnItemClickListener{
 		for (int i = 0; i <name.length; i++) {
 			mlist.add(new MainMenu(name[i], pic[i]));
 		}
-		SecondListAdapter mAdapter = new SecondListAdapter(this, mlist);
+		ChooseClassifyLvAdapter mAdapter = new ChooseClassifyLvAdapter(this, mlist);
 		mListView.setAdapter(mAdapter);
 	}
 

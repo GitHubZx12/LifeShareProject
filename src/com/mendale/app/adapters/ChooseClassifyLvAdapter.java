@@ -15,15 +15,15 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class SecondListAdapter extends BaseAdapter {
+public class ChooseClassifyLvAdapter extends BaseAdapter {
 
 	@SuppressWarnings("unused")
 	private Context context;
 	/** 数据 */
-	private List<CourseChildPojo> list;
+	private List<MainMenu> list;
 	private LayoutInflater inflater;
 
-	public SecondListAdapter(Context context, List<CourseChildPojo> list) {
+	public ChooseClassifyLvAdapter(Context context, List<MainMenu> list) {
 		this.context = context;
 		this.list = list;
 		inflater = LayoutInflater.from(context);

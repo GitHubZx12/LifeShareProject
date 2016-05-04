@@ -120,6 +120,7 @@ public class HotCourseDetailsTask {
 								json.toString(),
 								new TypeToken<CourseDetailsBean>() {
 								}.getType());
+						//
 						msg.what = 1;
 						msg.obj = item;
 						mhandler.sendMessage(msg);

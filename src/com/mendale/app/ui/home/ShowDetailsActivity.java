@@ -8,12 +8,9 @@ import com.mendale.app.adapters.DetailsPagerAdapter;
 import com.mendale.app.constants.Constants;
 import com.mendale.app.vo.CourseDetailsBean;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.umeng.socialize.bean.LIKESTATUS;
 import com.umeng.socialize.bean.SHARE_MEDIA;
-import com.umeng.socialize.bean.SocializeEntity;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
-import com.umeng.socialize.controller.listener.SocializeListeners.SocializeClientListener;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.sso.UMSsoHandler;
 import com.umeng.socialize.utils.Log;
@@ -32,9 +29,9 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * 热门教程 详情界面
@@ -55,14 +52,16 @@ public class ShowDetailsActivity extends Activity implements
 	TextView text;
 	// 步骤的图标、退、赞、收集、材料、分享
 	ImageView icon, back, laud, collect, material, share;
-	private List<CourseDetailsBean> detailsItemData;
+	private CourseDetailsBean detailsItemData;
 	private String detail_url;
 	private int step;
 	private ImageLoader imageLoader;
+	private String hand_id;
+	private String objectId;
 	//友盟分享相关
 	UMSocialService mController = UMServiceFactory
 			.getUMSocialService(Constants.DESCRIPTOR);
-	UMSocialService controller = UMServiceFactory.getUMSocialService("com.umeng.like");
+	UMSocialService controller = UMServiceFactory.getUMSocialService("com.umeng.share");
 	private Context mContext;
 	private int flag;
 
@@ -71,9 +70,7 @@ public class ShowDetailsActivity extends Activity implements
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case 1:
-				if(msg.obj!=null){
 					initView();// 初始化
-				}
 				break;
 
 			default:
@@ -100,7 +97,7 @@ public class ShowDetailsActivity extends Activity implements
 		                                      "http://www.umeng.com/images/pic/banner_module_social.png"));
 	}
 
-	/**
+	/**根据传递过来的id，查询详细信息
 	 * 请求服务获取详细信息
 	 */
 	private void requestData() {
@@ -110,11 +107,12 @@ public class ShowDetailsActivity extends Activity implements
 //			};
 //		}.start();
 		BmobQuery<CourseDetailsBean>bmobQuery=new BmobQuery<CourseDetailsBean>();
+		bmobQuery.addWhereEqualTo("hand_id", hand_id);
 		bmobQuery.findObjects(this, new FindListener<CourseDetailsBean>() {
 			
 			@Override
 			public void onSuccess(List<CourseDetailsBean> arg0) {
-				detailsItemData=arg0;
+				detailsItemData=arg0.get(0);
 				mhandler.sendEmptyMessage(1);
 			}
 			
@@ -133,6 +131,7 @@ public class ShowDetailsActivity extends Activity implements
 		Intent intent=getIntent();
 		detail_url=intent.getStringExtra("detail_url");
 		step=intent.getIntExtra("step", 0);
+		hand_id=intent.getIntExtra("hand_id",0)+"";
 	}
 
 	/**
@@ -203,22 +202,22 @@ public class ShowDetailsActivity extends Activity implements
 		// 标题
 		TextView title = (TextView) itemView
 				.findViewById(R.id.viewpage_1_tv_title);
-		title.setText(detailsItemData.get(0).getSubject());
+		title.setText(detailsItemData.getSubject());
 		// 作者头像
 		ImageView imageView = (ImageView) itemView
 				.findViewById(R.id.viewpage_1_iv_pic);
 		
-		imageLoader.displayImage(detailsItemData.get(1).getHost_pic(), imageView);
+		imageLoader.displayImage(detailsItemData.getHost_pic(), imageView);
 		// 评论、赞等的数量
 		TextView count = (TextView) itemView
 				.findViewById(R.id.viewpage_1_tv_content);
-		count.setText(detailsItemData.get(0).getSummary());
+		count.setText(detailsItemData.getSummary());
 
 		TextView all = (TextView) itemView.findViewById(R.id.viewpage_1_tv_all);
-		all.setText(detailsItemData.get(0).getView() + "/"
-				+ detailsItemData.get(0).getLaud() + "/"
-				+ detailsItemData.get(0).getCollect() + "/"
-				+ detailsItemData.get(0).getComment_count());
+		all.setText(detailsItemData.getView() + "/"
+				+ detailsItemData.getLaud() + "/"
+				+ detailsItemData.getCollect() + "/"
+				+ detailsItemData.getComment_count());
 	}
 
 	/**
@@ -233,14 +232,14 @@ public class ShowDetailsActivity extends Activity implements
 		ViewHolder viewHolder = new ViewHolder();
 		// 图片
 		viewHolder.imageView = (ImageView) itemView.findViewById(R.id.iv_pic);
-		imageLoader.displayImage(detailsItemData.get(0).getStep().get(position).pic,viewHolder.imageView);
+		imageLoader.displayImage(detailsItemData.getStep().get(position).pic,viewHolder.imageView);
 		// 内容
 		viewHolder.content = (TextView) itemView.findViewById(R.id.tv_content);
-		viewHolder.content.setText(detailsItemData.get(0).getStep().get(position).content);
+		viewHolder.content.setText(detailsItemData.getStep().get(position).content);
 		// 总共的步骤
 		viewHolder.count = (TextView) itemView
 				.findViewById(R.id.tv_comment_count);
-		viewHolder.count.setText(detailsItemData.get(0).getComment_count());
+		viewHolder.count.setText(detailsItemData.getComment_count()+"");
 		viewHolder.comment_fl = (ViewGroup) itemView
 				.findViewById(R.id.details_2_fl);
 
@@ -286,11 +285,11 @@ public class ShowDetailsActivity extends Activity implements
 			break;
 		case R.id.details_iv_laud:// 点赞
 			// 动画、、服务器、插入到数据库中
-			Toast.makeText(this, "点赞", Toast.LENGTH_SHORT).show();
+			getObjectId(2);
 			break;
 		case R.id.details_iv_collect:// 收藏
 			// 动画、、服务器、插入到数据库中
-		    Collection();
+		   getObjectId(1);
 			break;
 		case R.id.details_iv_share:// 分享
 			mController.getConfig().removePlatform(SHARE_MEDIA.RENREN, SHARE_MEDIA.DOUBAN);
@@ -302,28 +301,69 @@ public class ShowDetailsActivity extends Activity implements
 	}
 	
 	/**
+	 * 修改点赞
+	 * @param objectId
+	 */
+	private void updateLaud(String objectId) {
+		final CourseDetailsBean item=new CourseDetailsBean();
+		item.update(this,objectId, new UpdateListener() {
+			
+			@Override
+			public void onSuccess() {
+				laud.setImageResource(R.drawable.laud_yes);
+				item.increment("laud", 1);
+			}
+			@Override
+			public void onFailure(int arg0, String arg1) {
+				Log.e("tag",arg0+"/"+arg1);
+			}
+		});
+	}
+
+
+	/**
 	 * 收藏
 	 */
-	
-	private void Collection() {
-		controller.likeChange(mContext, new SocializeClientListener() {
-		    @Override
-		    public void onStart() {
-		    }
-		    @Override
-		    public void onComplete(int status, SocializeEntity entity) {
-		    	if (entity != null) {
-					 LIKESTATUS likestatus =entity.getLikeStatus();
-					 Toast.makeText(ShowDetailsActivity.this, likestatus.ordinal()+"=--", Toast.LENGTH_SHORT).show();
-//					 if(likestatus.ordinal()==1){//
-//						 collect.setImageResource(R.drawable.crafter_laud_no);
-//						 Toast.makeText(ShowDetailsActivity.this, "收藏成功", Toast.LENGTH_SHORT).show();
-//					 }else{
-//						 collect.setImageResource(R.drawable.course_collect);
-//						 Toast.makeText(ShowDetailsActivity.this, "取消收藏", Toast.LENGTH_SHORT).show();
-//					 }
+	private void getObjectId(final int flag) {
+		BmobQuery<CourseDetailsBean>bQuery=new BmobQuery<CourseDetailsBean>();
+		bQuery.addWhereEqualTo("hand_id", hand_id);
+		bQuery.findObjects(this, new FindListener<CourseDetailsBean>() {
+
+			@Override
+			public void onError(int arg0, String arg1) {
+				Log.e("tag",arg0+"/"+arg1);
+			}
+
+			@Override
+			public void onSuccess(List<CourseDetailsBean> arg0) {
+				objectId = arg0.get(0).getObjectId();
+				if(flag==1){
+					updateCollect(objectId);
+				}else {
+					updateLaud(objectId);
 				}
-		    }
+			}
+		});
+		
+	}
+	/**
+	 * 修改CourseDetailsBean中的collection的数据
+	 * @param objectId
+	 */
+	private void updateCollect(String objectId) {
+		
+		final CourseDetailsBean item=new CourseDetailsBean();
+		item.update(this,objectId, new UpdateListener() {
+			
+			@Override
+			public void onSuccess() {
+				collect.setImageResource(R.drawable.collect_yes);
+				item.increment("collect", 1);
+			}
+			@Override
+			public void onFailure(int arg0, String arg1) {
+				Log.e("tag",arg0+"/"+arg1);
+			}
 		});
 	}
 
@@ -360,8 +400,7 @@ public class ShowDetailsActivity extends Activity implements
 		} else {
 			icon.setVisibility(View.VISIBLE);
 			text.setVisibility(View.VISIBLE);
-			text.setText(position + "/"
-					+ detailsItemData.get(0).step.size());
+			text.setText(position + "/"				+ detailsItemData.step.size());
 		}
 	}
 

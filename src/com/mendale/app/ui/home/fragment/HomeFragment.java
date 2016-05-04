@@ -274,6 +274,7 @@ public class HomeFragment extends Fragment implements OnClickListener, OnItemCli
 		String detail_url = DataURL.DETAILS_RMJC + courseData.get(position).getHand_id();
 		intent.putExtra("detail_url", detail_url);
 		intent.putExtra("step", courseData.get(position).getStep_count());
+		intent.putExtra("hand_id", courseData.get(position).getHand_id());
 		startActivity(intent);
 	}
 }

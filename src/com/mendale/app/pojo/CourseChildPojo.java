@@ -30,5 +30,10 @@ public class CourseChildPojo extends BmobObject implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
+	@Override
+	public String toString() {
+		return "CourseChildPojo [id=" + id + ", name=" + name + "]";
+	}
+	
 
 }

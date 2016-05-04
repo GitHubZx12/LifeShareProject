@@ -5,19 +5,26 @@ import java.util.List;
 
 import com.mendale.app.R;
 import com.mendale.app.adapters.SecondListAdapter;
-import com.mendale.app.pojo.MainMenu;
+import com.mendale.app.constants.Datas;
+import com.mendale.app.pojo.CourseChildPojo;
 import com.mendale.app.ui.base.BaseActivity;
+import com.mendale.app.ui.course.CourseInfoActivity;
+import com.umeng.socialize.utils.Log;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.FindListener;
 
 /**
  * 侧滑菜单--搜索教程
@@ -25,7 +32,7 @@ import android.widget.Toast;
  * @author zx
  *
  */
-public class SearchCourseActivity extends BaseActivity implements TextWatcher,OnClickListener {
+public class SearchCourseActivity extends BaseActivity implements TextWatcher,OnClickListener,OnItemClickListener {
 
 	private ListView mListView;
 	/**查询结果的adapter*/
@@ -36,9 +43,9 @@ public class SearchCourseActivity extends BaseActivity implements TextWatcher,On
 	private ImageView iv_search;
 	private EditText et_search;
 	/** 搜索之后符合要求的数据 */
-	private List<MainMenu> searchData;
+	private List<CourseChildPojo> searchData;
 	/** 所有的数据 */
-	private List<MainMenu> allData;
+	private List<CourseChildPojo> allData=null;
 	private String[] name={"心情","问答","生活","美食","橡皮泥","运动","表演艺术","旧物改造","绘画","心里课堂"};
 	private int[] pic={R.drawable.ic_launcher,R.drawable.ic_launcher,R.drawable.ic_launcher,
 			R.drawable.ic_launcher,R.drawable.ic_launcher,R.drawable.ic_launcher,
@@ -69,11 +76,21 @@ public class SearchCourseActivity extends BaseActivity implements TextWatcher,On
 	 * 初始化数据
 	 */
 	private void initData() {
-		allData=new ArrayList<MainMenu>();
-		for (int i = 0; i <name.length; i++) {
-			allData.add(new MainMenu(name[i], pic[i]));
-		}
-		searchData=new ArrayList<MainMenu>();
+		allData=new ArrayList<CourseChildPojo>();
+		BmobQuery<CourseChildPojo>bQuery=new BmobQuery<CourseChildPojo>();
+		bQuery.findObjects(this, new FindListener<CourseChildPojo>() {
+			
+			@Override
+			public void onSuccess(List<CourseChildPojo> arg0) {
+				allData=arg0;
+			}
+			
+			@Override
+			public void onError(int arg0, String arg1) {
+				Log.e("tag",arg1);
+			}
+		});
+		searchData=new ArrayList<CourseChildPojo>();
 	}
 
 	/**
@@ -86,6 +103,7 @@ public class SearchCourseActivity extends BaseActivity implements TextWatcher,On
 		mListView=(ListView) findViewById(R.id.lv_search_result);
 		
 		et_search.addTextChangedListener(this);
+		mListView.setOnItemClickListener(this);
 		iv_close.setOnClickListener(this);
 	}
 
@@ -141,5 +159,13 @@ public class SearchCourseActivity extends BaseActivity implements TextWatcher,On
 		iv_close.setVisibility(View.GONE);
 		searchData.clear();
 		customerAdapter.notifyDataSetChanged();
+	}
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		Intent intent = new Intent(this, CourseInfoActivity.class);
+		Bundle bundle=new Bundle();
+		bundle.putSerializable("courseItem",allData.get(position) );
+		intent.putExtras(bundle);
+		startActivity(intent);
 	}
 }

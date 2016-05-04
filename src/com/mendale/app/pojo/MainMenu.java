@@ -10,6 +10,8 @@ public class MainMenu {
 	public String name;
 	/**件图 */
 	public int bg;
+	/**objectId*/
+	public String objectId;
 
 	public MainMenu(String name, int bg) {
 		super();

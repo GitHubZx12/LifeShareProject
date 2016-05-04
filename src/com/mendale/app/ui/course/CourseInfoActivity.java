@@ -121,7 +121,6 @@ public class CourseInfoActivity extends BaseActivity implements IXListViewListen
 	 */
 	private void initData(final String id) {
 		new Thread() {
-
 			public void run() {
 				String fullUrl=DataURL.COURSE_LIST+id+"&type=new";
 				new CourseListTask(CourseInfoActivity.this, mhandler).send(1, "utf-8", fullUrl);

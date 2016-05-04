@@ -60,6 +60,16 @@ public class HandUpAcitivity extends BaseActivity implements OnItemClickListener
 		initView();
 		initImageOptions();
 	}
+	
+	/**
+	 * 表与表之间的关联
+	 * 一个记录可以被多个用户收藏
+	 * 一个用户也可以收藏多个记录
+	 * 记录   和    用户之间是多对多的
+	 *
+	 *添加多对多关联
+	 */
+	
 
 	/**
 	 * 初始化图片的相关参数
