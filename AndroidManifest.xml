@@ -224,7 +224,7 @@
         <!-- 上传教程 -->
         <!-- 标题 -->
         <activity
-            android:name="com.mendale.app.ui.home.menu.TitleActivity"
+            android:name="com.mendale.app.ui.home.upload.TitleActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
@@ -236,13 +236,13 @@
             android:windowSoftInputMode="stateHidden" />
         <!-- 工具 -->
         <activity
-            android:name="com.mendale.app.ui.home.menu.ToolActivity"
+            android:name="com.mendale.app.ui.home.upload.ToolActivityty"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <!-- 步骤 -->
         <activity
-            android:name="com.mendale.app.ui.home.menu.StepActivity"
+            android:name="com.mendale.app.ui.home.upload.StepActivityty"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />

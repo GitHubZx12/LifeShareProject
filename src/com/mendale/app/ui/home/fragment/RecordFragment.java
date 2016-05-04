@@ -7,7 +7,7 @@ import java.util.List;
 import com.mendale.app.R;
 import com.mendale.app.adapters.RecordLvAdapter;
 import com.mendale.app.pojo.RecordItemBean;
-import com.mendale.app.ui.home.menu.ChooseClassify;
+import com.mendale.app.ui.home.menu.upload.ChooseClassify;
 import com.mendale.app.utils.pullToRefreshUtils.PullToRefreshConfig;
 import com.mendale.app.utils.pullToRefreshUtils.view.XListView;
 import com.mendale.app.utils.pullToRefreshUtils.view.XListView.IXListViewListener;

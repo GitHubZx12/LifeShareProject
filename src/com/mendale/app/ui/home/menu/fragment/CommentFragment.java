@@ -1,30 +1,25 @@
 package com.mendale.app.ui.home.menu.fragment;
 
 import com.mendale.app.R;
-import com.mendale.app.constants.Constants;
 import com.umeng.socialize.bean.MultiStatus;
-import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.bean.SocializeEntity;
 import com.umeng.socialize.bean.UMComment;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
-import com.umeng.socialize.controller.listener.SocializeListeners.LoginListener;
 import com.umeng.socialize.controller.listener.SocializeListeners.MulStatusListener;
-import com.umeng.socialize.utils.LoginInfoHelp;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Toast;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 public class CommentFragment extends Fragment {
 
 	final UMSocialService controller = UMServiceFactory
-			.getUMSocialService(Constants.DESCRIPTOR);
+			.getUMSocialService("com.umeng.share");
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,

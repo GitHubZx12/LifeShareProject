@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.mendale.app.R;
 import com.mendale.app.adapters.DetailsPagerAdapter;
-import com.mendale.app.constants.Constants;
 import com.mendale.app.vo.CourseDetailsBean;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -60,7 +59,7 @@ public class ShowDetailsActivity extends Activity implements
 	private String objectId;
 	//友盟分享相关
 	UMSocialService mController = UMServiceFactory
-			.getUMSocialService(Constants.DESCRIPTOR);
+			.getUMSocialService("com.umeng.share");
 	UMSocialService controller = UMServiceFactory.getUMSocialService("com.umeng.share");
 	private Context mContext;
 	private int flag;
