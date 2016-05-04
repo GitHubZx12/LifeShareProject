@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 /**
+ * 1
  * 上传教程的标题
  * @author zx
  *
@@ -63,9 +64,9 @@ public class TitleActivity extends BaseActivity {
 	@Override
 	public void rightImageButtonOnClick() {
 		super.rightImageButtonOnClick();
-		startActivity(MaterialActivity.class);
+//		startActivity(MaterialActivity.class);
 //		Toast.makeText(this, "下一步", Toast.LENGTH_SHORT).show();
-//		isEmpty();
+		isEmpty();
 	}
 	
 	/**
