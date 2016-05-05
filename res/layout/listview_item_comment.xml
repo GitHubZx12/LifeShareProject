@@ -2,6 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="@dimen/common_margin_10dp"
+    android:paddingBottom="@dimen/common_margin_10dp"
     android:orientation="horizontal" >
 
     <!-- 评论 -->
@@ -34,8 +36,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:singleLine="true"
             android:layout_weight="1"
-            android:text="英英   dlksdjoie" />
+            android:layout_marginTop="@dimen/common_margin_10dp"
+            android:maxLines="2"
+            android:text="英英   dlksdjoidsf e eewee" />
     </LinearLayout>
 
     <TextView

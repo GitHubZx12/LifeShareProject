@@ -251,9 +251,11 @@ public class ShowDetailsActivity extends Activity implements OnPageChangeListene
 			case R.id.details_2_fl:// 评论
 				// mController.openComment(mContext, false);
 				Intent intent = new Intent(ShowDetailsActivity.this, CommentActivity.class);
-				Bundle bundle = new Bundle();
-				bundle.putSerializable("detailsData", detailsItemData);
-				intent.putExtras(bundle);
+				intent.putExtra("hand_id", hand_id);
+				intent.putExtra("comment_count", detailsItemData.getComment_count());
+//				Bundle bundle = new Bundle();
+//				bundle.putSerializable("hand_id", hand_id);
+//				intent.putExtras(bundle);
 				startActivity(intent);
 				break;
 

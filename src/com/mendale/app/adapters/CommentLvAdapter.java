@@ -3,8 +3,6 @@ package com.mendale.app.adapters;
 import java.util.List;
 
 import com.mendale.app.R;
-import com.mendale.app.adapters.ChartsLvAdapter.ViewHolder;
-import com.mendale.app.pojo.ChartsPoJo;
 import com.mendale.app.vo.CommentList;
 
 import android.content.Context;
@@ -64,7 +62,7 @@ public class CommentLvAdapter extends BaseAdapter {
 	
 		holder.userName.setText(mDatas.get(position).getUser_name());
 		holder.content.setText(mDatas.get(position).getComment());
-		holder.content.setText(mDatas.get(position).getAdd_time());
+		holder.time.setText(mDatas.get(position).getAdd_time());
 		return convertView;
 	}
 

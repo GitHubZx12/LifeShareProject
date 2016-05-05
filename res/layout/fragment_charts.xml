@@ -1,28 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_gravity="center"
-    android:background="@drawable/crafter_cguide_bg"
+    android:layout_height="wrap_content"
+    android:background="@color/background_color"
     android:orientation="vertical" >
 
-    <include 
+    <include
         android:id="@+id/comment_header"
-        layout="@layout/common_header"/>
+        layout="@layout/common_header" 
+        />
+
     <RelativeLayout
+         android:layout_gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="0dp"
+        android:layout_weight="2" >
 
         <!-- 评论 -->
 
-        <ListView
+        <com.mendale.app.utils.pullToRefreshUtils.view.XListView
             android:id="@+id/listview_comments"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:horizontalSpacing="15dp"
             android:numColumns="4"
-            android:verticalSpacing="15dp" >
-        </ListView>
+            android:verticalSpacing="15dp" />
 
         <LinearLayout
             android:id="@+id/ll_comments_loading"
@@ -30,6 +32,7 @@
             android:layout_height="match_parent"
             android:gravity="center_horizontal"
             android:orientation="horizontal"
+            android:visibility="gone"
             android:paddingTop="20dp" >
 
             <ImageView
@@ -46,5 +49,23 @@
                 android:text="正在加载" />
         </LinearLayout>
     </RelativeLayout>
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#00333333"
+        android:orientation="horizontal">
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/common_margin_10dp"
+            android:layout_weight="2"
+            android:background="@color/white"
+            android:hint="发表评论"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="发送"/>
+    </LinearLayout>
 
 </LinearLayout>

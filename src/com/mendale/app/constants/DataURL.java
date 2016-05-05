@@ -15,7 +15,7 @@ public class DataURL {
 	// 记录
 	public static String RECORD_URL = "http://www.shougongke.com/index.php?m=Mobq_opus&type=new&versions=1.2.1";
 	// 首页---热门教程--详情页
-	public static String DETAILS_RMJC = "http://www.shougongke.com/index.php?m=Mobq_course&id=";
+	public static String DETAILS_RMJC = "http://www.shougongke.com/index.php?m=Mobq_course&id=";//根据HOmeHoutCourse表中的hand_id
 	// 排行榜
 	public static String CHARTS_URL = "http://www.shougongke.com/index.php?m=Mobq_data&a=tophot&id=a&page=1";
 	// 首页-热门教程--更多
@@ -31,4 +31,6 @@ public class DataURL {
 	public static String COURSE_LIST_DETAILS="http://www.shougongke.com/index.php?m=Mobq_course&id=";
 	//个人信息详情
 	public static String PEOPLE_DETAILS="http://www.shougongke.com/index.php?m=Mobq_User&versions=1.2.1&id=";
+	//评论
+	public static String COURSE_DETAILS_COMMENT_LIST="http://www.shougongke.com/index.php?m=Mobq_course&a=comment_list&id=";//hand_id
 }

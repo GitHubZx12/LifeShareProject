@@ -27,6 +27,15 @@ public class CommentList extends BmobObject {
 	private String user_id;//用户id
 	private String user_name;//用户名
 	private String face_pic;//用户图片
+	private String hand_id;
+
+	public String getHand_id() {
+		return hand_id;
+	}
+
+	public void setHand_id(String hand_id) {
+		this.hand_id = hand_id;
+	}
 
 	public String getAdd_time() {
 		return add_time;
