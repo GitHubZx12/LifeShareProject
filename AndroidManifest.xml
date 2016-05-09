@@ -235,19 +235,20 @@
             android:windowSoftInputMode="stateHidden" />
         <!-- 工具 -->
         <activity
-            android:name="com.mendale.app.ui.home.menu.upload.ToolActivityty"
+            android:name="com.mendale.app.ui.home.menu.upload.ToolActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <!-- 步骤 -->
         <activity
-            android:name="com.mendale.app.ui.home.menu.upload.StepActivityty"
+            android:name="com.mendale.app.ui.home.menu.upload.StepActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <!-- 分类 -->
         <activity
             android:name="com.mendale.app.ui.home.menu.upload.ClassifyActivity"
+            android:launchMode="singleTask"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
