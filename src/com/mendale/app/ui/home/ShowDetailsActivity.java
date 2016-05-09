@@ -6,11 +6,9 @@ import java.util.List;
 import com.mendale.app.R;
 import com.mendale.app.adapters.DetailsPagerAdapter;
 import com.mendale.app.ui.home.menu.CommentActivity;
-import com.mendale.app.ui.home.menu.SearchCourseActivity;
-import com.mendale.app.vo.CommentList;
+import com.mendale.app.ui.thirdparty.AndroidShare;
 import com.mendale.app.vo.CourseDetailsBean;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.media.UMImage;
@@ -290,9 +288,14 @@ public class ShowDetailsActivity extends Activity implements OnPageChangeListene
 			getObjectId(1);
 			break;
 		case R.id.details_iv_share:// 分享
-			mController.getConfig().removePlatform(SHARE_MEDIA.RENREN, SHARE_MEDIA.DOUBAN);
-			// 是否只有已登录用户才能打开分享选择页
-			mController.openShare(this, false);
+//			mController.getConfig().removePlatform(SHARE_MEDIA.RENREN, SHARE_MEDIA.DOUBAN);
+//			// 是否只有已登录用户才能打开分享选择页
+//			mController.openShare(this, false);
+			AndroidShare as = new AndroidShare(
+					ShowDetailsActivity.this,
+					"哈哈--",
+					"http://img6.cache.netease.com/cnews/news2012/img/logo_news.png");
+			as.show();
 			break;
 		}
 
