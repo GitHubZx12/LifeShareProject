@@ -10,14 +10,21 @@ import java.util.List;
 import com.mendale.app.R;
 import com.mendale.app.adapters.BaseAdapterHelper;
 import com.mendale.app.adapters.QuickAdapter;
+import com.mendale.app.constants.Constants;
 import com.mendale.app.pojo.HelpCoursePoJo;
+import com.mendale.app.ui.home.menu.HelpMakeCourseActivity;
 import com.mendale.app.utils.popwindow.EditPopupWindow;
 import com.mendale.app.utils.popwindow.IPopupItemClick;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
+import android.content.Context;
+import android.content.Intent;
+import android.database.CursorJoiner.Result;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -26,12 +33,13 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.listener.FindListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.DeleteListener;
+import cn.bmob.v3.listener.FindListener;
 
 /**
  * 问答Fragment
@@ -96,7 +104,7 @@ IPopupItemClick, OnItemLongClickListener {
 		}
 		mListView.setAdapter(mAdapter);
 		// 默认加载失物界面
-		queryLosts();
+		queryQA();
 	}
 	
 
@@ -106,7 +114,7 @@ IPopupItemClick, OnItemLongClickListener {
 	 * @return void
 	 * @throws
 	 */
-	private void queryLosts() {
+	private void queryQA() {
 		showView();
 		BmobQuery<HelpCoursePoJo> query = new BmobQuery<HelpCoursePoJo>();
 		query.order("-createdAt");// 按照时间降序
@@ -114,7 +122,6 @@ IPopupItemClick, OnItemLongClickListener {
 
 			@Override
 			public void onSuccess(List<HelpCoursePoJo> items) {
-				// TODO Auto-generated method stub
 				mAdapter.clear();
 				if (items == null || items.size() == 0) {
 					showErrorView(0);
@@ -128,7 +135,6 @@ IPopupItemClick, OnItemLongClickListener {
 
 			@Override
 			public void onError(int code, String arg0) {
-				// TODO Auto-generated method stub
 				showErrorView(0);
 			}
 		});
@@ -179,23 +185,95 @@ IPopupItemClick, OnItemLongClickListener {
 	}
 	@Override
 	public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-		// TODO Auto-generated method stub
+		position = position;
+		int[] location = new int[2];
+		view.getLocationOnScreen(location);
+		mPopupWindow.showAtLocation(view, Gravity.RIGHT | Gravity.TOP,
+				location[0], getStateBar() + location[1]);
 		return false;
 	}
+	/** 获取当前状态栏的高度
+	  * getStateBar
+	  * @Title: getStateBar
+	  * @throws
+	  */
+	public  int getStateBar(){
+		Rect frame = new Rect();
+		getActivity().getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
+		int statusBarHeight = frame.top;
+		return statusBarHeight;
+	}
+	
+	/**
+	 * dp转px
+	 * @param context
+	 * @param dipValue
+	 * @return
+	 */
+	public static int dip2px(Context context,float dipValue){
+		float scale=context.getResources().getDisplayMetrics().density;		
+		return (int) (scale*dipValue+0.5f);		
+	}
+	/**
+	 * 编辑
+	 */
 	@Override
 	public void onEdit(View v) {
-		// TODO Auto-generated method stub
+		Intent intent = new Intent(getActivity(), HelpMakeCourseActivity.class);
+		String title = "";
+		String describe = "";
+		String phone = "";
+		//
+		title = mAdapter.getItem(position).getTitle();
+		describe = mAdapter.getItem(position).getContent();
+		phone = mAdapter.getItem(position).getPhone();
+		//
+		intent.putExtra("describe", describe);
+		intent.putExtra("phone", phone);
+		intent.putExtra("title", title);
+		startActivityForResult(intent, 1);
 		
 	}
 	@Override
 	public void onDelete(View v) {
-		// TODO Auto-generated method stub
-		
+		delete();
+	}
+	/**
+	 * 删除选中的listview的item
+	 */
+	private void delete() {
+		HelpCoursePoJo item = new HelpCoursePoJo();
+		item.setObjectId(mAdapter.getItem(position).getObjectId());
+		item.delete(getActivity(), new DeleteListener() {
+
+			@Override
+			public void onSuccess() {
+				mAdapter.remove(position);
+			}
+
+			@Override
+			public void onFailure(int code, String arg0) {
+
+			}
+		});
 	}
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+//		if (resultCode !=RESULT_OK) {
+//			return;
+//		}
+		switch (requestCode) {
+		case 1:// 添加成功之后的回调
+			queryQA();
+			break;
+		}
 	}
 
 

@@ -16,6 +16,14 @@
         android:paddingLeft="@dimen/common_margin_10dp"
         android:background="@android:color/white"
         android:hint="名称" />
+      <EditText
+        android:id="@+id/et_help_phone"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="@dimen/common_margin_10dp"
+        android:paddingLeft="@dimen/common_margin_10dp"
+        android:background="@android:color/white"
+        android:hint="名称" />
 
     <EditText
         android:id="@+id/et_help_descript"
