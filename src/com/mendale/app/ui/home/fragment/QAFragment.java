@@ -1,32 +1,36 @@
 package com.mendale.app.ui.home.fragment;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
+import static com.mendale.app.R.id.tv_describe;
+import static com.mendale.app.R.id.tv_photo;
+import static com.mendale.app.R.id.tv_time;
+import static com.mendale.app.R.id.tv_title;
+
 import java.util.List;
 
 import com.mendale.app.R;
-import com.mendale.app.adapters.QALvAdapter;
-import com.mendale.app.constants.DataURL;
-import com.mendale.app.pojo.RecordPojo;
-import com.mendale.app.tasks.RecordTask;
-import com.mendale.app.utils.pullToRefreshUtils.PullToRefreshConfig;
-import com.mendale.app.utils.pullToRefreshUtils.view.XListView;
-import com.mendale.app.utils.pullToRefreshUtils.view.XListView.IXListViewListener;
+import com.mendale.app.adapters.BaseAdapterHelper;
+import com.mendale.app.adapters.QuickAdapter;
+import com.mendale.app.pojo.HelpCoursePoJo;
+import com.mendale.app.utils.popwindow.EditPopupWindow;
+import com.mendale.app.utils.popwindow.IPopupItemClick;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.FindListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 /**
@@ -36,39 +40,18 @@ import android.widget.TextView;
  * @author zhangxue
  * @date 2016年4月17日
  */
-public class QAFragment extends Fragment implements IXListViewListener {
+public class QAFragment extends Fragment implements OnClickListener,
+IPopupItemClick, OnItemLongClickListener {
 
-	private XListView mListView;
-	private QALvAdapter mAdapter;
+	private ListView mListView;
+	protected QuickAdapter<HelpCoursePoJo> mAdapter;// 失物
 	private DisplayImageOptions options; // DisplayImageOptions是用于设置图片显示的类
 	/** 显示没有更多数据 */
 	private TextView tv_no_data;
-	//
 	private ImageView iv_loading;
 	private LinearLayout ll_loading;
-	//
-	private List<RecordPojo> recordList;
-	private Handler mhandler = new Handler() {
-
-		@SuppressWarnings("unchecked")
-		public void handleMessage(android.os.Message msg) {
-			switch (msg.what) {
-				case 1:
-					if (msg.obj != null) {
-						iv_loading.clearAnimation();
-						ll_loading.setVisibility(View.INVISIBLE);
-						mListView.setVisibility(View.VISIBLE);
-//						List<RecordPojo> recordList = (List<RecordPojo>) msg.obj;
-						mAdapter = new QALvAdapter(getActivity(), recordList);
-						mListView.setAdapter(mAdapter);
-					}
-					break;
-				default:
-					break;
-			}
-		};
-	};
-
+	private EditPopupWindow mPopupWindow;
+	private int position;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_qa, container, false);
@@ -78,7 +61,101 @@ public class QAFragment extends Fragment implements IXListViewListener {
 		initImageOptions();
 		return view;
 	}
+	/**
+	 * 初始化界面
+	 * 
+	 * @param view
+	 */
+	private void initView(View view) {
+		mListView = (ListView) view.findViewById(R.id.listview_record);
+		iv_loading = (ImageView) view.findViewById(R.id.iv_loading);
+		ll_loading = (LinearLayout) view.findViewById(R.id.ll_record_loading);
+		mListView.setOnItemLongClickListener(this);
+		// 初始化长按弹窗
+		initEditPop();
+	}
+	private void initEditPop() {
+		mPopupWindow = new EditPopupWindow(getActivity(), 200, 48);
+		mPopupWindow.setOnPopupItemClickListner(this);
+	}
 
+	/**
+	 * 请求接口
+	 */
+	private void initData() {
+		if (mAdapter == null) {
+			mAdapter = new QuickAdapter<HelpCoursePoJo>(getActivity(), R.layout.listview_item2_qa) {
+				@Override
+				protected void convert(BaseAdapterHelper helper, HelpCoursePoJo items) {
+					helper.setText(tv_title, items.getTitle())
+							.setText(tv_describe, items.getContent())
+							.setText(tv_time, items.getCreatedAt())
+							.setText(tv_photo, items.getPhone());
+				}
+			};
+		}
+		mListView.setAdapter(mAdapter);
+		// 默认加载失物界面
+		queryLosts();
+	}
+	
+
+	/**
+	 * 查询全部失物信息 queryLosts
+	 * 
+	 * @return void
+	 * @throws
+	 */
+	private void queryLosts() {
+		showView();
+		BmobQuery<HelpCoursePoJo> query = new BmobQuery<HelpCoursePoJo>();
+		query.order("-createdAt");// 按照时间降序
+		query.findObjects(getActivity(), new FindListener<HelpCoursePoJo>() {
+
+			@Override
+			public void onSuccess(List<HelpCoursePoJo> items) {
+				// TODO Auto-generated method stub
+				mAdapter.clear();
+				if (items == null || items.size() == 0) {
+					showErrorView(0);
+					mAdapter.notifyDataSetChanged();
+					return;
+				}
+				iv_loading.setVisibility(View.GONE);
+				mAdapter.addAll(items);
+				mListView.setAdapter(mAdapter);
+			}
+
+			@Override
+			public void onError(int code, String arg0) {
+				// TODO Auto-generated method stub
+				showErrorView(0);
+			}
+		});
+	}
+	/**
+	 * 请求出错或者无数据时候显示的界面 showErrorView
+	 * 
+	 * @return void
+	 * @throws
+	 */
+	private void showErrorView(int tag) {
+		mListView.setVisibility(View.GONE);
+		ll_loading.setVisibility(View.VISIBLE);
+		if (tag == 0) {
+			tv_no_data.setText(getResources().getText(R.string.list_no_data_lost));
+		} else {
+			tv_no_data.setText(getResources().getText(R.string.list_no_data_found));
+		}
+	}
+	/**
+	 * 显示listview，隐藏提示
+	 */
+	private void showView() {
+		mListView.setVisibility(View.VISIBLE);
+		ll_loading.setVisibility(View.GONE);
+	}
+	
 	/**
 	 * 初始化动画
 	 */
@@ -100,83 +177,29 @@ public class QAFragment extends Fragment implements IXListViewListener {
 				.displayer(new RoundedBitmapDisplayer(0)) // 设置成圆角图片
 				.build(); // 创建配置过得DisplayImageOption对象
 	}
-
-	/**
-	 * 请求接口
-	 */
-	private void initData() {
-		recordList=new ArrayList<RecordPojo>();
-		RecordPojo recordPojo=new RecordPojo();
-		recordPojo.setDesc("求教程：xxx想请教一下怎么用电饭煲做面包");
-		recordPojo.setUsername("zx");
-		RecordPojo recordPojo2=new RecordPojo();
-		recordPojo2.setDesc("求教程：xxx哈哈哈");
-		recordPojo2.setUsername("yc");
-		recordList.add(recordPojo);
-		recordList.add(recordPojo2);
-		new Thread() {
-
-			public void run() {
-				new RecordTask(getActivity(), mhandler).send(1, "utf-8", DataURL.RECORD_URL);
-			};
-		}.start();
-	}
-
-	/**
-	 * 初始化界面
-	 * 
-	 * @param view
-	 */
-	private void initView(View view) {
-		mListView = (XListView) view.findViewById(R.id.listview_record);
-		mListView.setPullRefreshEnable(PullToRefreshConfig.pullRefreshEnable);// 设置是否可以下拉刷新
-		mListView.setPullLoadEnable(PullToRefreshConfig.pullLoadEnable);// 设置是否可以上拉加载
-		mListView.setXListViewListener(this);// 设置监听
-		//
-		iv_loading = (ImageView) view.findViewById(R.id.iv_loading);
-		ll_loading = (LinearLayout) view.findViewById(R.id.ll_record_loading);
-	}
-
-	/**
-	 * 等待状态，顶部显示上次刷新时间
-	 * 
-	 */
-	@SuppressLint("SimpleDateFormat")
-	private void onLoad() {
-		mListView.stopRefresh();// 停止刷新
-		mListView.stopLoadMore();// 停止"加载更多"
-		// 获得系统当前时间
-		SimpleDateFormat formatter = new SimpleDateFormat(PullToRefreshConfig.strDateFormat);
-		Date curDate = new Date(System.currentTimeMillis());// 获取当前时间
-		String str = formatter.format(curDate);// 格式化
-		mListView.setRefreshTime(str);// 给listview设置刷新时间
-		// if (list.size() == 15) {
-		// // 当数目大于15的时候
-		// mListView.setPullLoadEnable(false);// 禁止上拉加载
-		// mListView.setPullRefreshEnable(false);// 禁止下拉刷新
-		// tv_no_data.setVisibility(View.VISIBLE);// 显示没有更多数据
-		// }
-	}
-
 	@Override
-	public void onRefresh() {
-		mhandler.postDelayed(new Runnable() {
-
-			@Override
-			public void run() {
-				onLoad();
-			}
-		}, 2000);
+	public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+		// TODO Auto-generated method stub
+		return false;
 	}
-
 	@Override
-	public void onLoadMore() {
-		mhandler.postDelayed(new Runnable() {
-
-			@Override
-			public void run() {
-				onLoad();
-			}
-		}, 2000);
+	public void onEdit(View v) {
+		// TODO Auto-generated method stub
+		
 	}
+	@Override
+	public void onDelete(View v) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	
+
+	
 }

@@ -222,4 +222,8 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
     </style>
+    <style name="PopupAnimation" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/zoomout_right</item>
+        <item name="android:windowExitAnimation">@anim/zoomin_right</item>
+    </style>
 </resources>

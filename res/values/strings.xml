@@ -176,6 +176,8 @@
     
     <string name="see_more">查看更多</string>
     <dimen name="textsize_m">15sp</dimen>
+     <string name="list_no_data_lost">暂时还未有人提问呢</string>
+    <string name="list_no_data_found">暂时还未有好心人出现</string>
      
     
 </resources>
