@@ -85,6 +85,12 @@ public class StepActivity extends BaseActivity {
 		super.rightImageButtonOnClick();
 		startActivity(ClassifyActivity.class);
 		// TODO 保存到数据库中
+		saveData();
+	}
+
+	private void saveData() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	/**

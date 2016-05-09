@@ -1,7 +1,11 @@
 package com.mendale.app.ui.home.menu.upload;
 
+import java.io.File;
+
 import com.mendale.app.R;
+import com.mendale.app.pojo.Classifications;
 import com.mendale.app.ui.base.BaseActivity;
+import com.mendale.app.ui.home.MainPageActivity;
 import com.mendale.app.utils.Utils;
 import com.mendale.app.utils.imageUtils.ImageOpera;
 
@@ -17,6 +21,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UploadFileListener;
 
 /**
  * 上传教程-分类
@@ -35,9 +42,13 @@ public class ClassifyActivity extends BaseActivity implements OnClickListener {
 	/** 注意的地方 */
 	private EditText etTips;
 	
+	private String path;
+	
 	//相册选中图片路径
 	private static String iconpath;
 
+	Classifications classification;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -73,8 +84,51 @@ public class ClassifyActivity extends BaseActivity implements OnClickListener {
 	@Override
 	public void rightButtonOnClick() {
 		super.rightButtonOnClick();
+		submit();
 	}
 
+	/**
+	 * 创建数据
+	 */
+	
+	private void submit() {
+        //上传图片
+        final BmobFile file=new BmobFile(new File(path)); //创建BmobFile对象，转换为Bmob对象
+        file.upload(ClassifyActivity.this, new UploadFileListener() {
+			
+			@Override
+			public void onSuccess() {
+				// TODO Auto-generated method stub
+				classification=new Classifications();
+				classification.setClassify(btnClassify.getText().toString());
+				classification.setCoverage(file);  //设置图片
+				classification.setTips(etTips.getText().toString());
+				classification.save(ClassifyActivity.this, new SaveListener() {
+					@Override
+					public void onSuccess() {
+						// TODO Auto-generated method stub
+						showToast("上传成功");
+						startActivity(MainPageActivity.class);
+					}
+					
+					@Override
+					public void onFailure(int arg0, String arg1) {
+						// TODO Auto-generated method stub
+						showToast("上传失败");
+					}
+				});
+			}
+			
+			@Override
+			public void onFailure(int arg0, String arg1) {
+				// TODO Auto-generated method stub
+				showToast("上传失败"+arg1);
+			}
+		});
+     }
+	
+	
+	
 	/**
 	 * 初始化view
 	 */
@@ -82,10 +136,25 @@ public class ClassifyActivity extends BaseActivity implements OnClickListener {
 		tvLauchPic=(TextView) findViewById(R.id.tv_classify_pic);
 		ivPic=(ImageView) findViewById(R.id.iv_classify_pic);
 		btnClassify=(Button) findViewById(R.id.btn_classify_choose_classify);
+		
+		
 		etTips=(EditText) findViewById(R.id.et_classify_tip);
 
 	}
-
+	String classify;
+	@Override
+	protected void onNewIntent(Intent intent) {
+		// TODO Auto-generated method stub
+		super.onNewIntent(intent);
+		setIntent(intent);
+		classify=intent.getStringExtra("classify");
+//		showToast("执行了onNewIntent"+classify);
+		getIntent().putExtras(intent);
+		if(classify!=null){			
+			btnClassify.setText(classify);
+		}
+	}
+	
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -151,7 +220,7 @@ public class ClassifyActivity extends BaseActivity implements OnClickListener {
 				showToast("图片不存在");
 				return;
 			}
-			String path = getrealPath(originalUri);
+			path = getrealPath(originalUri);
 			if (Utils.isEmpty(path)) {
 				showToast("图片不存在，请重新选择");
 				return;
@@ -159,7 +228,7 @@ public class ClassifyActivity extends BaseActivity implements OnClickListener {
 			switch (requestCode) {
 			case 5:
 				ImageOpera.getInstance(this).loadImage("file://" + path, ivPic);
-				iconpath = "file://" + path;
+				iconpath ="file://" +  path;
 				setViewData();
 				break;
 			default:
@@ -175,7 +244,7 @@ public class ClassifyActivity extends BaseActivity implements OnClickListener {
 	 */
 	@SuppressWarnings("finally")
 	private String getrealPath(Uri mImageCaptureUri) {
-		String path = null;
+		path = null;
 		Cursor cursor = null;
 		try {
 			cursor = this.getContentResolver().query(mImageCaptureUri, null, null, null, null);

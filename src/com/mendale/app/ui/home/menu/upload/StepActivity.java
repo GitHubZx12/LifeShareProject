@@ -1,5 +1,6 @@
 package com.mendale.app.ui.home.menu.upload;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +9,9 @@ import com.mendale.app.adapters.UpLoadAddMaterialAdaper;
 import com.mendale.app.adapters.UpLoadAddReplayLVAdapter;
 import com.mendale.app.constants.URLS;
 import com.mendale.app.pojo.MaterialPoJo;
+import com.mendale.app.pojo.Materials;
 import com.mendale.app.pojo.ReplayPoJo;
+import com.mendale.app.pojo.Steps;
 import com.mendale.app.ui.base.BaseActivity;
 import com.mendale.app.ui.mycenter.setting.MarkManActivity;
 import com.mendale.app.utils.Utils;
@@ -32,6 +35,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UploadFileListener;
 
 /**
  * 上传教程--步骤
@@ -50,6 +56,8 @@ public class StepActivity extends BaseActivity {
 	private ImageView ivPic = null;
 	private TextView tvPic;
 	private EditText desc;
+	private String path ;
+	Steps steps;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -83,10 +91,50 @@ public class StepActivity extends BaseActivity {
 	@Override
 	public void rightImageButtonOnClick() {
 		super.rightImageButtonOnClick();
+		submit();
 		startActivity(ClassifyActivity.class);
 		// TODO 保存到数据库中
 	}
 
+	/**
+	 * 创建数据
+	 */
+	
+	private void submit() {
+        //上传图片
+        final BmobFile file=new BmobFile(new File(path)); //创建BmobFile对象，转换为Bmob对象
+        file.upload(StepActivity.this, new UploadFileListener() {
+			
+			@Override
+			public void onSuccess() {
+				// TODO Auto-generated method stub
+				steps=new Steps();
+                steps.setContent(desc.getText().toString());
+                steps.setPicture(file);  //设置图片
+                steps.save(StepActivity.this, new SaveListener() {
+					@Override
+					public void onSuccess() {
+						// TODO Auto-generated method stub
+						showToast("上传成功");
+					}
+					
+					@Override
+					public void onFailure(int arg0, String arg1) {
+						// TODO Auto-generated method stub
+						showToast("上传失败");
+					}
+				});
+			}
+			
+			@Override
+			public void onFailure(int arg0, String arg1) {
+				// TODO Auto-generated method stub
+				showToast("上传失败"+arg1);
+			}
+		});
+     }
+	
+	
 	/**
 	 * 点击事件
 	 */
@@ -243,7 +291,7 @@ public class StepActivity extends BaseActivity {
 	 */
 	@SuppressWarnings("finally")
 	private String getrealPath(Uri mImageCaptureUri) {
-		String path = null;
+		path = null;
 		Cursor cursor = null;
 		try {
 			cursor = this.getContentResolver().query(mImageCaptureUri, null, null, null, null);

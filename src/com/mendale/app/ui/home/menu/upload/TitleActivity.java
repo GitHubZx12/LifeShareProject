@@ -1,6 +1,7 @@
 package com.mendale.app.ui.home.menu.upload;
 
 import com.mendale.app.R;
+import com.mendale.app.pojo.Titles;
 import com.mendale.app.ui.base.BaseActivity;
 import com.mendale.app.utils.ExitApplication;
 
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+import cn.bmob.v3.listener.SaveListener;
 
 /**
  * 1
@@ -30,7 +32,8 @@ public class TitleActivity extends BaseActivity {
 	private EditText et_title_descript;
 
 	View view;
-
+	Titles titles;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -64,10 +67,39 @@ public class TitleActivity extends BaseActivity {
 	@Override
 	public void rightImageButtonOnClick() {
 		super.rightImageButtonOnClick();
-//		startActivity(MaterialActivity.class);
+		createData();
+		startActivity(MaterialActivity.class);
 //		Toast.makeText(this, "下一步", Toast.LENGTH_SHORT).show();
 		isEmpty();
 	}
+	
+	
+	/**
+	 * 创建数据
+	 */
+	public void createData(){
+		titles = new Titles();
+		titles.setTitles_name(et_title.getText().toString());
+		titles.setTitle_description(et_title_descript.getText().toString());
+		titles.save(this, new SaveListener() {
+		
+			
+			@Override
+			public void onSuccess() {
+				// TODO Auto-generated method stub
+				showToast("创建成功");
+			}
+			
+			@Override
+			public void onFailure(int arg0, String arg1) {
+				// TODO Auto-generated method stub
+				showToast("创建失败："+arg1);
+			}
+		});
+			
+			
+	}
+	
 	
 	/**
 	 * 判断输入的是否为空

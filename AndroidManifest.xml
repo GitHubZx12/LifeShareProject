@@ -248,6 +248,7 @@
         <!-- 分类 -->
         <activity
             android:name="com.mendale.app.ui.home.menu.upload.ClassifyActivity"
+            android:launchMode="singleTask"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
