@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-        <com.mendale.app.utils.pullToRefreshUtils.view.XListView
+        <ListView
             android:id="@+id/listview_course_info"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

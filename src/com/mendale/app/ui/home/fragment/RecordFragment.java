@@ -5,7 +5,9 @@ import java.util.Date;
 import java.util.List;
 
 import com.mendale.app.R;
+import com.mendale.app.adapters.CourseInfoLvAdapter2;
 import com.mendale.app.adapters.RecordLvAdapter;
+import com.mendale.app.pojo.Record;
 import com.mendale.app.pojo.RecordItemBean;
 import com.mendale.app.ui.record.UpLoadRecordActivity;
 import com.mendale.app.utils.pullToRefreshUtils.PullToRefreshConfig;
@@ -19,6 +21,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +44,7 @@ public class RecordFragment extends Fragment implements IXListViewListener,OnCli
 
 	private XListView mListView;
 	private RecordLvAdapter mAdapter;
+	private CourseInfoLvAdapter2 courseAdapter;
 	private DisplayImageOptions options; // DisplayImageOptions是用于设置图片显示的类
 	/** 显示没有更多数据 */												
 	private TextView tv_no_data;
@@ -65,6 +69,14 @@ public class RecordFragment extends Fragment implements IXListViewListener,OnCli
 							options);
 					mListView.setAdapter(mAdapter);
 				}
+				break;
+			case 2:
+				List<Record> recordList=(List<Record>) msg.obj;
+				ll_loading.setVisibility(View.GONE);
+				iv_loading.setVisibility(View.GONE);
+				mListView.setVisibility(View.VISIBLE);
+				courseAdapter = new CourseInfoLvAdapter2(getActivity(),recordList, options);
+				mListView.setAdapter(mAdapter);			
 				break;
 
 			default:
@@ -107,7 +119,10 @@ public class RecordFragment extends Fragment implements IXListViewListener,OnCli
 			@Override
 			public void onSuccess(List<RecordItemBean> arg0) {
 				recordList=arg0;
-				mhandler.sendEmptyMessage(1);
+				Message msg=new Message();
+				msg.what=2;
+				msg.obj=arg0;
+				mhandler.sendMessage(msg);
 			}
 		});
 	}
@@ -134,8 +149,6 @@ public class RecordFragment extends Fragment implements IXListViewListener,OnCli
 	/**
 	 * 等待状态，顶部显示上次刷新时间
 	 * 
-	 * @author 张静
-	 * @Time 2015年12月3日下午6:05:12
 	 */
 	@SuppressLint("SimpleDateFormat")
 	private void onLoad() {
@@ -160,7 +173,25 @@ public class RecordFragment extends Fragment implements IXListViewListener,OnCli
 		mhandler.postDelayed(new Runnable() {
 			@Override
 			public void run() {
-				onLoad();
+//				MyUser user=BmobUser.getCurrentUser(getActivity(),MyUser.class);
+//				BmobQuery<Record> query=new BmobQuery<Record>();
+//				query.addWhereEqualTo("author", user);//查询当前用户发布的所有记录
+//				query.order("-updateAd");
+//				query.include("author");//希望在查询记录信息同时也把发布人的信息查询出来
+//				query.findObjects(getActivity(), new FindListener<Record>() {
+//					
+//					@Override
+//					public void onSuccess(final List<Record> arg0) {
+//						mhandler.sendEmptyMessage(2);
+//					}
+//					
+//					@Override
+//					public void onError(int arg0, String arg1) {
+//						Log.e("tag",arg0+arg1);
+//					}
+//				});
+//				
+//				onLoad();
 			}
 		}, 2000);
 	}

@@ -1,36 +1,39 @@
 package com.mendale.app.ui.mycenter;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.List;
 
 import com.mendale.app.R;
 import com.mendale.app.adapters.CourseInfoLvAdapter;
+import com.mendale.app.adapters.CourseInfoLvAdapter2;
+import com.mendale.app.pojo.MyUser;
 import com.mendale.app.pojo.OpusData;
+import com.mendale.app.pojo.Record;
 import com.mendale.app.ui.base.BaseActivity;
-import com.mendale.app.utils.pullToRefreshUtils.PullToRefreshConfig;
-import com.mendale.app.utils.pullToRefreshUtils.view.XListView;
-import com.mendale.app.utils.pullToRefreshUtils.view.XListView.IXListViewListener;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.umeng.socialize.utils.Log;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.listener.FindListener;
 
 /**
  * 收藏记录
  * @author zx
  *
  */
-public class LaunchRecordActivity extends BaseActivity implements IXListViewListener {
+public class LaunchRecordActivity extends BaseActivity {
 
-	private XListView mListView;
-	private CourseInfoLvAdapter mAdapter;
+	private ListView mListView;
+	private CourseInfoLvAdapter2 mAdapter;
 	private DisplayImageOptions options; // DisplayImageOptions是用于设置图片显示的类
 	/** 显示没有更多数据 */
 	private TextView tvTip;
@@ -47,23 +50,43 @@ public class LaunchRecordActivity extends BaseActivity implements IXListViewList
 		initView();
 		initAnim();
 		initImageOptions();
-		getIntentData();
+		initData();
 	}
 	
 	/**
-	 * 得到传递过来的参数
+	 * 查询一对一关联
 	 */
-	private void getIntentData() {
-		opusData=(OpusData) getIntent().getSerializableExtra("opusData");
-		iv_loading.clearAnimation();
-		if(null==opusData){
-			tvTip.setText("没有收藏任何记录");
-			return;
-		}
-		mListView.setVisibility(View.VISIBLE);
-		mAdapter = new CourseInfoLvAdapter(LaunchRecordActivity.this, opusData.getList(), options);
-		mListView.setAdapter(mAdapter);
+	private void initData() {
+		MyUser user=BmobUser.getCurrentUser(this,MyUser.class);
+		BmobQuery<Record> query=new BmobQuery<Record>();
+		query.addWhereEqualTo("author", user);//查询当前用户发布的所有记录
+		query.order("-updateAd");
+		query.include("author");//希望在查询记录信息同时也把发布人的信息查询出来
+		query.findObjects(this, new FindListener<Record>() {
+			
+			@Override
+			public void onSuccess(final List<Record> arg0) {
+				runOnUiThread(new Runnable() {
+					
+					@Override
+					public void run() {
+						ll_loading.setVisibility(View.GONE);
+						iv_loading.setVisibility(View.GONE);
+						mListView.setVisibility(View.VISIBLE);
+						mAdapter = new CourseInfoLvAdapter2(LaunchRecordActivity.this,arg0, options);
+						mListView.setAdapter(mAdapter);						
+					}
+				});
+			}
+			
+			@Override
+			public void onError(int arg0, String arg1) {
+				Log.e("tag",arg0+arg1);
+			}
+		});
+		
 	}
+
 	/**
 	 * 初始化头部
 	 */
@@ -86,6 +109,17 @@ public class LaunchRecordActivity extends BaseActivity implements IXListViewList
 	}
 
 	/**
+	 * 初始化界面
+	 * 
+	 * @param view
+	 */
+	private void initView() {
+		mListView = (ListView) findViewById(R.id.listview_course_info);
+		iv_loading = (ImageView) findViewById(R.id.iv_course_info_loading);
+		ll_loading = (LinearLayout) findViewById(R.id.ll_course_info_loading);
+		tvTip=(TextView) findViewById(R.id.tv_course_info_tips);
+	}
+	/**
 	 * 初始化图片的相关参数
 	 */
 	private void initImageOptions() {
@@ -99,52 +133,4 @@ public class LaunchRecordActivity extends BaseActivity implements IXListViewList
 				.build(); // 创建配置过得DisplayImageOption对象
 	}
 
-	/**
-	 * 初始化界面
-	 * 
-	 * @param view
-	 */
-	private void initView() {
-		mListView = (XListView) findViewById(R.id.listview_course_info);
-		mListView.setPullRefreshEnable(PullToRefreshConfig.pullRefreshEnable);// 设置是否可以下拉刷新
-		mListView.setPullLoadEnable(PullToRefreshConfig.pullLoadEnable);// 设置是否可以上拉加载
-		mListView.setXListViewListener(this);// 设置监听
-		//
-		iv_loading = (ImageView) findViewById(R.id.iv_course_info_loading);
-		ll_loading = (LinearLayout) findViewById(R.id.ll_course_info_loading);
-		tvTip=(TextView) findViewById(R.id.tv_course_info_tips);
-	}
-
-	/**
-	 * 等待状态，顶部显示上次刷新时间
-	 * 
-	 * @author 张静
-	 * @Time 2015年12月3日下午6:05:12
-	 */
-	@SuppressLint("SimpleDateFormat")
-	private void onLoad() {
-		mListView.stopRefresh();// 停止刷新
-		mListView.stopLoadMore();// 停止"加载更多"
-		// 获得系统当前时间
-		SimpleDateFormat formatter = new SimpleDateFormat(PullToRefreshConfig.strDateFormat);
-		Date curDate = new Date(System.currentTimeMillis());// 获取当前时间
-		String str = formatter.format(curDate);// 格式化
-		mListView.setRefreshTime(str);// 给listview设置刷新时间
-		// if (list.size() == 15) {
-		// // 当数目大于15的时候
-		// mListView.setPullLoadEnable(false);// 禁止上拉加载
-		// mListView.setPullRefreshEnable(false);// 禁止下拉刷新
-		// tv_no_data.setVisibility(View.VISIBLE);// 显示没有更多数据
-		// }
-	}
-
-	@Override
-	public void onRefresh() {
-	
-	}
-
-	@Override
-	public void onLoadMore() {
-		
-	}
 }

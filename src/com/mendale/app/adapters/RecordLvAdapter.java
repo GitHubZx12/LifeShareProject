@@ -9,7 +9,6 @@ import com.mendale.app.ui.record.RecordDetailsActivity;
 import com.mendale.app.utils.imageUtils.RoundImageView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.umeng.socialize.utils.Log;
 
 import android.content.Context;
 import android.content.Intent;
@@ -89,12 +88,6 @@ public class RecordLvAdapter extends BaseAdapter {
 				holder.headImage, options);
 		imageLoader.displayImage(recordList.get(position).getHost_pic(),
 				holder.contentImage, options);
-		// BitmapUtils bitMapUtils=new BitmapUtils(context);
-		//
-		// bitMapUtils.display(holder.headImage,
-		// recordList.get(position).getFace_pic());
-		// bitMapUtils.display(holder.contentImage,
-		// recordList.get(position).getHost_pic());
 		//点击事件
 		holder.headImage.setOnClickListener(new OnClickListener() {
 			
@@ -113,7 +106,6 @@ public class RecordLvAdapter extends BaseAdapter {
 				intent.setClass(context, RecordDetailsActivity.class);
 				Bundle bundle=new Bundle();
 				bundle.putSerializable("recordItem", recordList.get(position));
-				Log.e("tag666",recordList.get(position).toString());
 				intent.putExtras(bundle);
 				context.startActivity(intent);
 			}
