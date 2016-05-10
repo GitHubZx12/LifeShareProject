@@ -6,6 +6,7 @@ import com.mendale.app.R;
 import com.mendale.app.pojo.Classifications;
 import com.mendale.app.ui.base.BaseActivity;
 import com.mendale.app.ui.home.MainPageActivity;
+import com.mendale.app.ui.home.menu.ChooseClassify;
 import com.mendale.app.utils.Utils;
 import com.mendale.app.utils.imageUtils.ImageOpera;
 

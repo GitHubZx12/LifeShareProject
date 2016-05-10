@@ -93,7 +93,6 @@ public class StepActivity extends BaseActivity {
 		super.rightImageButtonOnClick();
 		submit();
 		startActivity(ClassifyActivity.class);
-		// TODO 保存到数据库中
 	}
 
 	/**
@@ -114,13 +113,11 @@ public class StepActivity extends BaseActivity {
                 steps.save(StepActivity.this, new SaveListener() {
 					@Override
 					public void onSuccess() {
-						// TODO Auto-generated method stub
 						showToast("上传成功");
 					}
 					
 					@Override
 					public void onFailure(int arg0, String arg1) {
-						// TODO Auto-generated method stub
 						showToast("上传失败");
 					}
 				});
@@ -128,7 +125,6 @@ public class StepActivity extends BaseActivity {
 			
 			@Override
 			public void onFailure(int arg0, String arg1) {
-				// TODO Auto-generated method stub
 				showToast("上传失败"+arg1);
 			}
 		});

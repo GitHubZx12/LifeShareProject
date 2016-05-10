@@ -7,7 +7,7 @@ import java.util.List;
 import com.mendale.app.R;
 import com.mendale.app.adapters.RecordLvAdapter;
 import com.mendale.app.pojo.RecordItemBean;
-import com.mendale.app.ui.home.menu.upload.ChooseClassify;
+import com.mendale.app.ui.record.UpLoadRecordActivity;
 import com.mendale.app.utils.pullToRefreshUtils.PullToRefreshConfig;
 import com.mendale.app.utils.pullToRefreshUtils.view.XListView;
 import com.mendale.app.utils.pullToRefreshUtils.view.XListView.IXListViewListener;
@@ -182,7 +182,7 @@ public class RecordFragment extends Fragment implements IXListViewListener,OnCli
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.iv_record_action://记录
-			Intent intent=new Intent(getActivity(),ChooseClassify.class);
+			Intent intent=new Intent(getActivity(),UpLoadRecordActivity.class);
 			startActivity(intent);
 			break;
 		default:

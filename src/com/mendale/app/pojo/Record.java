@@ -1,5 +1,6 @@
 package com.mendale.app.pojo;
 
+import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.datatype.BmobRelation;
 
@@ -8,8 +9,12 @@ import cn.bmob.v3.datatype.BmobRelation;
  * @author zx
  *
  */
-public class Record {
+public class Record extends BmobObject{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String title;//记录标题
 	private String content;//记录内容
 	private MyUser author;//记录的发布者，一对一关系
