@@ -1,14 +1,14 @@
 package com.mendale.app.ui.login;
 
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import com.mendale.app.R;
-import com.mendale.app.pojo.LSUser;
+import com.mendale.app.pojo.MyUser;
 import com.mendale.app.ui.base.BaseActivity;
 import com.mendale.app.utils.CheckUtils;
 import com.mendale.app.utils.DialogUtil;
+import com.umeng.socialize.utils.Log;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -23,8 +23,6 @@ import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 
 /**
@@ -36,16 +34,24 @@ import cn.bmob.v3.listener.SaveListener;
 public class RegisterActivity extends BaseActivity implements OnClickListener, OnTouchListener, TextWatcher {
 
 	/** 用户名 */
-	private EditText userName;
+	private EditText etUserName;
+	private EditText etPhone;
+	private EditText etComfirmPsd;
+	
 	/** 密码 */
-	private EditText password;
+	private EditText etPassword;
 	/** 注册 */
-	private Button register;
+	private Button btnRegister;
 	/** 提示正在注册的对话框 */
 	private Dialog loading;
 	private int time = 60;
 	private Timer timer = new Timer();
 	private TimerTask task;
+	
+	private String username;
+	private String password;
+	private String comfirmPsd;
+	private String phone;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -79,72 +85,63 @@ public class RegisterActivity extends BaseActivity implements OnClickListener, O
 	 */
 	private void initView() {
 		loading = DialogUtil.createLoadingDialog(this, "正在注册请稍后...");
-		userName = (EditText) findViewById(R.id.register_et_username);
-		password = (EditText) findViewById(R.id.register_et_pwd);
-		register = (Button) findViewById(R.id.register_btn_confirm);
+		etUserName = (EditText) findViewById(R.id.register_et_username);
+		etPassword = (EditText) findViewById(R.id.register_et_pwd);
+		btnRegister = (Button) findViewById(R.id.register_btn_confirm);
+		etComfirmPsd=(EditText)findViewById(R.id.register_et_comfirm_psd);
+		etPhone=(EditText)findViewById(R.id.register_et_phone_number);
 	}
 
 	/**
 	 * 绑定事件
 	 */
 	private void bindEvent() {
-		register.setOnClickListener(this);
-		userName.setOnTouchListener(this);
-		password.setOnTouchListener(this);
-		userName.addTextChangedListener(this);
-		password.addTextChangedListener(this);
+		btnRegister.setOnClickListener(this);
+		etUserName.setOnTouchListener(this);
+		etPassword.setOnTouchListener(this);
+		etUserName.addTextChangedListener(this);
+		etPassword.addTextChangedListener(this);
 	}
 
 	@Override
 	public void onClick(View arg0) {
 		switch (arg0.getId()) {
 			case R.id.register_btn_confirm:// 注册
-				final String name = userName.getText().toString();// 获得用户输入的用户名
-				String p1 = password.getText().toString();// 获得用户输入的密码
-				if (CheckUtils.checkPwd(this, p1, password)) {
-					// 与已经存在的用户进行判断（不可重复）
-					BmobQuery<LSUser> bmobQuery = new BmobQuery<LSUser>();
-					bmobQuery.addWhereEqualTo("userName", name);
-					bmobQuery.findObjects(this, new FindListener<LSUser>() {
-						
+				username = etUserName.getText().toString();
+				password = etPassword.getText().toString();
+				comfirmPsd = etComfirmPsd.getText().toString();
+				phone=etPhone.getText().toString();
+				if (username.equals("") || password.equals("")
+						|| comfirmPsd.equals("") || phone.equals("")) {
+					Toast.makeText(this,"亲, 不填完整, 不能拿到身份证, ~~~~(>_<)~~~~ ",Toast.LENGTH_SHORT).show();
+				} else if (!comfirmPsd.equals(password)) {
+					Toast.makeText(this,"亲, 说你手抖了下, 两次密码输入不一致",Toast.LENGTH_SHORT).show();
+				} else if(!CheckUtils.checkPhone(this, phone, etPhone)) {
+					Toast.makeText(this,"亲, 请输入正确的手机号码",Toast.LENGTH_SHORT).show();
+				}else {
+					// 开始提交注册信息
+					MyUser bu = new MyUser();
+					bu.setUsername(username);
+					bu.setPassword(password);
+					bu.setMobilePhoneNumber(phone);
+					bu.signUp(this, new SaveListener() {
 						@Override
-						public void onSuccess(List<LSUser> arg0) {
-							for(int i=0;i<arg0.size();i++){
-								if(name.equals(arg0.get(i).getUserName())){
-									Toast.makeText(RegisterActivity.this,"用户名已经存在", Toast.LENGTH_SHORT).show();
-									userName.setText(null);
-									password.setText(null);
-									return;
-								}
+						public void onSuccess() {
+							Toast.makeText(RegisterActivity.this,"亲, 拿到身份证了, 一起GoGoGo",Toast.LENGTH_SHORT).show();
+							Intent backLogin = new Intent(RegisterActivity.this,
+									LoginActivity.class);
+							startActivity(backLogin);
+							RegisterActivity.this.finish();
+						}
+
+						@Override
+						public void onFailure(int arg0, String msg) {
+							if(msg.equals("mobilePhoneNumber Must be valid mobile number")){
+								Toast.makeText(RegisterActivity.this,"手机号不符合规范.",Toast.LENGTH_SHORT).show();
 							}
-							//跳转
-							Intent intent=new Intent(RegisterActivity.this,LoginActivity.class);
-							intent.putExtra("username", userName.getText().toString());
-							intent.putExtra("password", password.getText().toString());
-							startActivity(intent);
-							//保存到bmob云端
-							LSUser user=new LSUser();
-							user.setUserName(userName.getText().toString());
-							user.setPassword(password.getText().toString());
-							user.save(RegisterActivity.this, new SaveListener() {
-								
-								@Override
-								public void onSuccess() {
-									showToast("注册成功");
-								}
-								
-								@Override
-								public void onFailure(int arg0, String arg1) {
-									showToast("注册失败");
-								}
-							});
-							
+							Toast.makeText(RegisterActivity.this,"亲, 被人捷足先登了, 换个名字吧.",Toast.LENGTH_SHORT).show();
 						}
-						
-						@Override
-						public void onError(int arg0, String arg1) {
-							
-						}
+
 					});
 				}
 				break;
@@ -158,8 +155,8 @@ public class RegisterActivity extends BaseActivity implements OnClickListener, O
 		switch (v.getId()) {
 			case R.id.login_et_password:
 				if (event.getAction() == MotionEvent.ACTION_DOWN) {
-					String name = userName.getText().toString().trim();
-					CheckUtils.checkPhone(this, name, userName);
+					String name = etUserName.getText().toString().trim();
+					CheckUtils.checkPhone(this, name, etUserName);
 				}
 				break;
 		}
@@ -175,8 +172,8 @@ public class RegisterActivity extends BaseActivity implements OnClickListener, O
 		loading.dismiss();
 		Toast.makeText(this, "注册成功", Toast.LENGTH_SHORT).show();
 		Intent intent = new Intent(this, LoginActivity.class);
-		intent.putExtra("username", userName.getText().toString().trim());
-		intent.putExtra("password", password.getText().toString().trim());
+		intent.putExtra("username", etUserName.getText().toString().trim());
+		intent.putExtra("password", etPassword.getText().toString().trim());
 		startActivity(intent);
 		finish();
 	}
@@ -193,11 +190,11 @@ public class RegisterActivity extends BaseActivity implements OnClickListener, O
 
 	@Override
 	public void afterTextChanged(Editable s) {
-		if (!"".equals(userName.getText().toString().trim()) && !"".equals(password.getText().toString().trim())) {
-			register.setBackgroundResource(R.drawable.bg_next_off);
+		if (!"".equals(etUserName.getText().toString().trim()) && !"".equals(etPassword.getText().toString().trim())) {
+			btnRegister.setBackgroundResource(R.drawable.bg_next_off);
 		}
 		else {
-			register.setBackgroundResource(R.drawable.bg_next_off_50);
+			btnRegister.setBackgroundResource(R.drawable.bg_next_off_50);
 		}
 	}
 }

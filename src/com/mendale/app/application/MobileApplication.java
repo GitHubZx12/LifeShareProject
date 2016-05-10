@@ -2,7 +2,7 @@ package com.mendale.app.application;
 
 import java.io.File;
 
-import com.mendale.app.pojo.LSUser;
+import com.mendale.app.pojo.MyUser;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -22,16 +22,16 @@ import android.content.Context;
  */
 public class MobileApplication extends Application {
 
-	private LSUser mUserInfo;// 用户登录信息
+	private MyUser mUserInfo;// 用户登录信息
 	private String certUserName;// 账号
 	private String certPassword;// 密码
 
-	public LSUser getmUserInfo() {
+	public MyUser getmUserInfo() {
 		return mUserInfo;
 	}
 	
 
-	public void setmUserInfo(LSUser mUserInfo) {
+	public void setmUserInfo(MyUser mUserInfo) {
 		this.mUserInfo = mUserInfo;
 	}
 	

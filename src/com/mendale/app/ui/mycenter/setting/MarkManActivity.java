@@ -3,7 +3,7 @@ package com.mendale.app.ui.mycenter.setting;
 import com.mendale.app.R;
 import com.mendale.app.application.MobileApplication;
 import com.mendale.app.constants.URLS;
-import com.mendale.app.pojo.LSUser;
+import com.mendale.app.pojo.MyUser;
 import com.mendale.app.ui.base.BaseActivity;
 import com.mendale.app.ui.mycenter.MyCenterActivity;
 import com.mendale.app.utils.Utils;
@@ -36,7 +36,7 @@ public class MarkManActivity extends BaseActivity implements OnClickListener {
 	private EditText phone;
 	private EditText email;
 	private static String iconpath;
-	private LSUser loginUser;
+	private MyUser loginUser;
 	private Handler mHandler = new Handler();
 
 	@Override
@@ -103,9 +103,9 @@ public class MarkManActivity extends BaseActivity implements OnClickListener {
 	 * 修改个人数据
 	 */
 	protected boolean updateInfo() {
-		loginUser=new LSUser();
+		loginUser=new MyUser();
 		if (!Utils.isEmpty(name.getText().toString())) {
-			loginUser.setName(name.getText().toString());
+			loginUser.setUsername(name.getText().toString());
 		}
 		if (!Utils.isEmpty(birthy.getText().toString())) {
 			loginUser.setBirthy(birthy.getText().toString());
@@ -119,7 +119,7 @@ public class MarkManActivity extends BaseActivity implements OnClickListener {
 				closeLoadDialog();
 				return false;
 			}
-			loginUser.setPhone(phone.getText().toString());
+			loginUser.setMobilePhoneNumber(phone.getText().toString());
 		}
 		MobileApplication application=(MobileApplication) getApplication();
 		loginUser.update(this,application.getmUserInfo().getObjectId(), new UpdateListener() {

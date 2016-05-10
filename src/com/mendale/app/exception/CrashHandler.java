@@ -211,7 +211,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
 			logs.setSapAccount("");// 调用者账号
 		}
 		else {
-			logs.setSapAccount(mobileApplication.getmUserInfo().getUserName());// 调用者账号
+			logs.setSapAccount(mobileApplication.getmUserInfo().getUsername());// 调用者账号
 		}
 		logs.setSendsys("PDA");// 发送系统
 		logs.setReceivesys("MID"); // 接收系统

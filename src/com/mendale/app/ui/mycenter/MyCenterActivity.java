@@ -7,12 +7,8 @@ import com.google.gson.Gson;
 import com.mendale.app.R;
 import com.mendale.app.application.MobileApplication;
 import com.mendale.app.constants.DataURL;
-import com.mendale.app.pojo.CollectData;
-import com.mendale.app.pojo.CourseData;
-import com.mendale.app.pojo.LSUser;
 import com.mendale.app.pojo.MemberPojo;
-import com.mendale.app.pojo.OcollectData;
-import com.mendale.app.pojo.OpusData;
+import com.mendale.app.pojo.MyUser;
 import com.mendale.app.pojo.OtherUser;
 import com.mendale.app.ui.base.BaseActivity;
 import com.mendale.app.ui.mycenter.setting.MarkManActivity;
@@ -156,7 +152,7 @@ public class MyCenterActivity extends BaseActivity implements OnClickListener {
 			MobileApplication application = (MobileApplication) getApplication();
 			mycenter_background_image.setImageResource(R.drawable.crafter_personal_bg);
 			mycenter_head_image.setImageResource(R.drawable.defult_avator);
-			mycenter_name.setText(application.getmUserInfo().getUserName());
+			mycenter_name.setText(application.getmUserInfo().getUsername());
 			mycenter_total.setText("江苏徐州");
 			mycenter_vip_image.setImageResource(R.drawable.lv1);
 			mycenter_sex_image.setImageResource(R.drawable.vip_icon_wowam);
@@ -310,7 +306,7 @@ public class MyCenterActivity extends BaseActivity implements OnClickListener {
 		switch (requestCode) {
 			case 2:
 				if(null!= data.getSerializableExtra("userinfo")){
-					LSUser loginUser=(LSUser) data.getSerializableExtra("userinfo");
+					MyUser loginUser=(MyUser) data.getSerializableExtra("userinfo");
 					showToast(loginUser.toString());
 				}
 				break;

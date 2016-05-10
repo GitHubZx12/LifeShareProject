@@ -1,5 +1,12 @@
 package com.mendale.app.ui;
 
+import com.mendale.app.R;
+import com.mendale.app.application.MobileApplication;
+import com.mendale.app.constants.URLS;
+import com.mendale.app.ui.base.BaseActivity;
+import com.mendale.app.ui.login.LoginActivity;
+import com.mendale.app.utils.ExitApplication;
+
 import android.app.Application;
 import android.app.NotificationManager;
 import android.content.Intent;
@@ -11,16 +18,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import cn.bmob.v3.Bmob;
-
-import com.mendale.app.R;
-import com.mendale.app.application.MobileApplication;
-import com.mendale.app.constants.URLS;
-import com.mendale.app.pojo.LSUser;
-import com.mendale.app.ui.base.BaseActivity;
-import com.mendale.app.ui.home.MainPageActivity;
-import com.mendale.app.ui.login.LoginActivity;
-import com.mendale.app.utils.ExitApplication;
-import com.umeng.socialize.utils.Log;
 
 /**
  * 初始启动页（渐变的动画效果）
@@ -72,27 +69,24 @@ public class MJAPPActivity extends BaseActivity {
 		// 保存用户信息
 		SharedPreferences sp = this.getSharedPreferences("user", MODE_PRIVATE);
 		isFirstLogin=sp.getBoolean("isFirstLogin", true);
-		Log.e("tag66",isFirstLogin+"aaa");
 		String name = sp.getString("userName", null);
 		String pwd = sp.getString("password", null);
-		if (isFirstLogin) {
-			// 跳转到登陆页面
+		if (isFirstLogin) {//首次登陆，跳转到登陆页面
 			Intent intent=new Intent(this,LoginActivity.class);
 			intent.putExtra("userName", name);
 			intent.putExtra("password", pwd);
 			startActivity(intent);
 		}
-		else {
-			// 获取application
+		else {//不是首次登陆，获取application
 			Application application = this.getApplication();
 			MobileApplication mApplication = (MobileApplication) application;
 			// 得到平台账号密码
-			LSUser loginUser = new LSUser();
-			loginUser.setUserName(name);
-			loginUser.setPassword(pwd);
-			mApplication.setmUserInfo(loginUser);
+//			MyUser loginUser = new MyUser();
+//			loginUser.setUserName(name);
+//			loginUser.setPassword(pwd);
+//			mApplication.setmUserInfo(loginUser);
 			// 跳转到主页
-			startActivity(MainPageActivity.class);
+//			startActivity(MainPageActivity.class);
 		}
 		this.finish();
 	}

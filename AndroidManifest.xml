@@ -328,9 +328,9 @@
         <uses-library android:name="android.test.runner" />
     </application>
 
-    <instrumentation
+    <!-- <instrumentation
         android:name="android.test.InstrumentationTestRunner"
         android:label="Tests for My App"
-        android:targetPackage="com.enn.servicepda" />
+        android:targetPackage="com.enn.servicepda" /> -->
 
 </manifest>

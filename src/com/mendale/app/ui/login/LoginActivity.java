@@ -1,12 +1,11 @@
 package com.mendale.app.ui.login;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import com.mendale.app.R;
 import com.mendale.app.application.MobileApplication;
-import com.mendale.app.pojo.LSUser;
+import com.mendale.app.pojo.MyUser;
 import com.mendale.app.ui.base.BaseActivity;
 import com.mendale.app.ui.home.MainPageActivity;
 import com.mendale.app.utils.ClearEditText;
@@ -38,22 +37,20 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.SaveListener;
 
 /**
  * 登录
  * 
- * 友盟三方登录4.3版本的
  */
 public class LoginActivity extends BaseActivity implements OnClickListener {
 
 	/** 用户名 */
-	private ClearEditText username;
+	private ClearEditText etUsername;
 	/** 密码 */
-	private ClearEditText password;
+	private ClearEditText etPassword;
 	/** 登录 */
-	private Button login;
+	private Button btnLogin;
 	private LinearLayout qqlogin;
 	private LinearLayout wxlogin;
 	private LinearLayout sinalogin;
@@ -61,18 +58,18 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	private Dialog loading;
 	/** 友盟第三方登录 */
 	private UMSocialService mController;
-	private boolean isFirstLogin = true;
+	//
+	private String username;
+	private String password;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
-		// 加入全局退出队列
 		ExitApplication.getInstance().addAllActivity(this);
 		initHeaderView();
 		initView();
 		initData();
-		//
 		mController = UMServiceFactory.getUMSocialService("com.umeng.login");
 	}
 
@@ -105,8 +102,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	private void initData() {
 		Intent intent = getIntent();
 		if (intent.getExtras() != null) {
-			username.setText(intent.getStringExtra("username"));
-			password.setText(intent.getStringExtra("password"));
+			etUsername.setText(intent.getStringExtra("username"));
+			etPassword.setText(intent.getStringExtra("password"));
 		}
 	}
 
@@ -114,39 +111,70 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	 * 绑定控件
 	 */
 	private void initView() {
-		username = (ClearEditText) findViewById(R.id.login_et_username);
-		password = (ClearEditText) findViewById(R.id.login_et_password);
-		login = (Button) findViewById(R.id.login_btn_login);
+		etUsername = (ClearEditText) findViewById(R.id.login_et_username);
+		etPassword = (ClearEditText) findViewById(R.id.login_et_password);
+		btnLogin = (Button) findViewById(R.id.login_btn_login);
 		qqlogin = (LinearLayout) findViewById(R.id.qqlogin);
 		wxlogin = (LinearLayout) findViewById(R.id.wxlogin);
 		sinalogin = (LinearLayout) findViewById(R.id.sinalogin);
-		login.setOnClickListener(new MyOnClickListener());
+		btnLogin.setOnClickListener(new MyOnClickListener());
 		sinalogin.setOnClickListener(this);
+		
+		getUserInfo();
 	}
 
-	public class MyOnClickListener implements View.OnClickListener {
+	/**
+	 * 获取用户信息
+	 */
+	private void getUserInfo() {
+		SharedPreferences sp = getSharedPreferences("UserInfo", 0);
+		etUsername.setText(sp.getString("username", null));
+		etPassword.setText(sp.getString("password", null));
+	}
+	
+	/**
+	 * 保存用户的登陆记录
+	 * @param username
+	 * @param password
+	 */
+		private void saveUserInfo(String username, String password) {
+			SharedPreferences sp = getSharedPreferences("UserInfo", 0);
+			Editor editor = sp.edit();
+			editor.putString("username", username);
+			editor.putString("password", password);
+			editor.commit();
+			
+			// 获取application
+			Application application = LoginActivity.this.getApplication();
+			MobileApplication mApplication = (MobileApplication) application;
+			// 得到平台账号密码
+			MyUser user = new MyUser();
+			user.setUsername(username);
+			user.setPassword(password);
+			mApplication.setmUserInfo(user);
+			
+		}
 
+	public class MyOnClickListener implements View.OnClickListener {
 		@Override
 		public void onClick(View v) {
 			switch (v.getId()) {
 				case R.id.login_btn_login:
 					// 过滤重复点击
-					if (ViewUtil.isFastDoubleClick()) {
-						// 重复点击了
+					if (ViewUtil.isFastDoubleClick()) {// 重复点击了
 						return;
 					}
 					// 检查网络
-					if (!NetWorkUtils.isNetworkAvailable(LoginActivity.this)) {
-						// 无网络不操作
-						showToast("网络不存在,无法操作!");
+					if (!NetWorkUtils.isNetworkAvailable(LoginActivity.this)) {// 无网络不操作
+						showToast("亲, 木有网络 ( ⊙ o ⊙ ) ");
 						return;
 					}
 					// 用户名密码输入状态
-					if (username.getText().toString().equals("")) {
-						username.setError("用户名不能为空!");
+					if (etUsername.getText().toString().equals("")) {
+						etUsername.setError("亲, 请输入用戶名");
 					}
-					else if (password.getText().toString().equals("")) {
-						password.setError("密码不能为空!");
+					else if (etPassword.getText().toString().equals("")) {
+						etPassword.setError("密码不能为空!");
 					}
 					else {
 						showProgressDialog("正在登陆中...", "登录提示");
@@ -159,101 +187,42 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		}
 	};
 
+	/**
+	 * 登陆方法，bmob
+	 */
+	private void loginM() {
+		username = etUsername.getText().toString();
+		password = etPassword.getText().toString();
+			MyUser user = new MyUser();
+			user.setUsername(username);
+			user.setPassword(password);
+			user.login(this, new SaveListener() {
+				@Override
+				public void onSuccess() {
+					// 登陆成功
+					dismissProgressDialog();
+					//保存用户信息
+					saveUserInfo(username, password);
+					// 跳转到主页
+					startActivity(MainPageActivity.class);
+					LoginActivity.this.finish();
+				}
+
+				@Override
+				public void onFailure(int arg0, String msg) {
+					showToast("亲, 用户名或密码错误");
+					dismissProgressDialog();
+				}
+			});
+	}
+
+	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		/** 使用SSO授权必须添加如下代码 */
 		UMSsoHandler ssoHandler = mController.getConfig().getSsoHandler(requestCode);
 		if (ssoHandler != null) {
 			ssoHandler.authorizeCallBack(requestCode, resultCode, data);
-		}
-	};
-
-	/**
-	 * 登陆方法，bmob
-	 */
-	private void loginM() {
-		// 查找Person表里面id为6b6c11c537的数据
-		BmobQuery<LSUser> bmobQuery = new BmobQuery<LSUser>();
-		bmobQuery.addWhereEqualTo("userName", username.getText().toString());
-		bmobQuery.addWhereEqualTo("password", password.getText().toString());
-		bmobQuery.findObjects(this, new FindListener<LSUser>() {
-
-			@Override
-			public void onError(int arg0, String arg1) {
-			}
-
-			@Override
-			public void onSuccess(List<LSUser> arg0) {
-				//
-				String result = "";
-				for (LSUser loginUser : arg0) {
-					result += loginUser.getUserName();
-				}
-				if (username.getText().toString().equals(result)) {
-					Message msg = handler.obtainMessage();
-					msg.what = 1;
-					msg.sendToTarget();
-				}
-				else {
-					Message msg = handler.obtainMessage();
-					msg.what = 2;
-					Bundle bundle = new Bundle();
-					bundle.putString("prompt", "不存在此用户");
-					msg.setData(bundle);
-					msg.sendToTarget();
-				}
-			}
-		});
-	}
-
-	@SuppressLint("HandlerLeak")
-	private Handler handler = new Handler() {
-
-		@SuppressLint("CommitPrefEdits")
-		@Override
-		public void handleMessage(Message msg) {
-			switch (msg.what) {
-				case 1:
-					// 成功
-					dismissProgressDialog();
-					// 保存用户信息
-					SharedPreferences sp = LoginActivity.this.getSharedPreferences("user", MODE_PRIVATE);
-					Editor editor = sp.edit();
-					editor.putBoolean("isFirstLogin", false);
-					editor.putString("userName", username.getText().toString());
-					editor.putString("password", password.getText().toString());
-					editor.commit();//不要忘记
-					// 获取application
-					Application application = LoginActivity.this.getApplication();
-					MobileApplication mApplication = (MobileApplication) application;
-					// 得到平台账号密码
-					LSUser loginUser = new LSUser();
-					loginUser.setUserName(username.getText().toString());
-					loginUser.setPassword(password.getText().toString());
-					mApplication.setmUserInfo(loginUser);
-					// 跳转到主页
-					startActivity(MainPageActivity.class);
-					LoginActivity.this.finish();
-					break;
-				case 2:
-					// 失败
-					dismissProgressDialog();
-					Bundle bundle = msg.getData();
-					String promptTitle = bundle.getString("prompt");
-					if (isAPPRunning(LoginActivity.this)) {
-						// 解决弹框无界面报错问题
-						showPopDialog("登录失败:" + promptTitle);
-					}
-					else {
-						// 当前界面不是弹框界面
-						showToast("登录失败:" + promptTitle);
-					}
-					break;
-				default:
-					dismissProgressDialog();
-					break;
-			}
-			super.handleMessage(msg);
 		}
 	};
 
