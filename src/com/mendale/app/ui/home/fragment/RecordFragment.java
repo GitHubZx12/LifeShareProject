@@ -7,6 +7,7 @@ import java.util.List;
 import com.mendale.app.R;
 import com.mendale.app.adapters.CourseInfoLvAdapter2;
 import com.mendale.app.adapters.RecordLvAdapter;
+import com.mendale.app.pojo.MyUser;
 import com.mendale.app.pojo.Record;
 import com.mendale.app.pojo.RecordItemBean;
 import com.mendale.app.ui.record.UpLoadRecordActivity;
@@ -33,6 +34,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.listener.FindListener;
 
 /**
@@ -115,12 +117,11 @@ public class RecordFragment extends Fragment implements IXListViewListener,OnCli
 			public void onError(int arg0, String arg1) {
 				Log.e("tag",arg1);
 			}
-
 			@Override
 			public void onSuccess(List<RecordItemBean> arg0) {
 				recordList=arg0;
 				Message msg=new Message();
-				msg.what=2;
+				msg.what=1;
 				msg.obj=arg0;
 				mhandler.sendMessage(msg);
 			}
@@ -173,25 +174,28 @@ public class RecordFragment extends Fragment implements IXListViewListener,OnCli
 		mhandler.postDelayed(new Runnable() {
 			@Override
 			public void run() {
-//				MyUser user=BmobUser.getCurrentUser(getActivity(),MyUser.class);
-//				BmobQuery<Record> query=new BmobQuery<Record>();
-//				query.addWhereEqualTo("author", user);//查询当前用户发布的所有记录
-//				query.order("-updateAd");
-//				query.include("author");//希望在查询记录信息同时也把发布人的信息查询出来
-//				query.findObjects(getActivity(), new FindListener<Record>() {
-//					
-//					@Override
-//					public void onSuccess(final List<Record> arg0) {
-//						mhandler.sendEmptyMessage(2);
-//					}
-//					
-//					@Override
-//					public void onError(int arg0, String arg1) {
-//						Log.e("tag",arg0+arg1);
-//					}
-//				});
-//				
-//				onLoad();
+				MyUser user=BmobUser.getCurrentUser(getActivity(),MyUser.class);
+				BmobQuery<Record> query=new BmobQuery<Record>();
+				query.addWhereEqualTo("author", user);//查询当前用户发布的所有记录
+				query.order("-updateAd");
+				query.include("author");//希望在查询记录信息同时也把发布人的信息查询出来
+				query.findObjects(getActivity(), new FindListener<Record>() {
+					
+					@Override
+					public void onSuccess(final List<Record> arg0) {
+						Message msg=new Message();
+						msg.what=1;
+						msg.obj=arg0;
+						mhandler.sendEmptyMessage(2);
+					}
+					
+					@Override
+					public void onError(int arg0, String arg1) {
+						Log.e("tag",arg0+arg1);
+					}
+				});
+				
+				onLoad();
 			}
 		}, 2000);
 	}

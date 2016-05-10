@@ -61,10 +61,11 @@ public class RecordDetailsActivity extends BaseActivity{
 	private void BindData() {
 		//绑定数据，更改ui
 		ImageLoader imageLoader = ImageLoader.getInstance();
-		imageLoader.displayImage(item.getHost_pic(), host_pic, options);
-		imageLoader.displayImage(item.getFace_pic(), face_pic, options);
-		
-		
+//		Log.e("tag555","=="+item.getHost_pic());
+//		if(item.getHost_pic()!=null||"".equals(item.getHost_pic())){
+//			imageLoader.displayImage(item.getHost_pic(), host_pic, options);
+//			imageLoader.displayImage(item.getFace_pic(), face_pic, options);
+//		}
 		title.setText(item.getSubject());
 		user_name.setText(item.getUser_name());
 	}

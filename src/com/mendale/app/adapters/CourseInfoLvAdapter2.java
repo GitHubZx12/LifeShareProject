@@ -8,6 +8,7 @@ import com.mendale.app.pojo.CourseListPojo;
 import com.mendale.app.pojo.Record;
 import com.mendale.app.pojo.RecordItemBean;
 import com.mendale.app.ui.home.ShowDetailsActivity;
+import com.mendale.app.ui.record.RecordDetailsActivity;
 import com.mendale.app.utils.imageUtils.RoundImageView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -15,6 +16,7 @@ import com.umeng.socialize.utils.Log;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -89,12 +91,16 @@ public class CourseInfoLvAdapter2 extends BaseAdapter {
 			
 			@Override
 			public void onClick(View v) {//进入详情页
-//				Intent intent = new Intent(context, ShowDetailsActivity.class);
-//				String detail_url = DataURL.COURSE_LIST_DETAILS + recordList.get(position).getHand_id();
-//				intent.putExtra("detail_url", detail_url);
-//				Log.e("tag66",detail_url);
-//				intent.putExtra("step", recordList.get(position).getStep_count());
-//				context.startActivity(intent);
+				Intent intent = new Intent(context, RecordDetailsActivity.class);
+				RecordItemBean recordItem=new RecordItemBean();
+				recordItem.setSubject(recordList.get(position).getTitle());
+				recordItem.setContent(recordList.get(position).getContent());
+				recordItem.setUser_name(recordList.get(position).getAuthor().getUsername());
+				Log.e("tag",recordItem.toString());
+				Bundle bundle=new Bundle();
+				bundle.putSerializable("recordItem", recordItem);
+				intent.putExtras(bundle);
+				context.startActivity(intent);
 			}
 		});
 		

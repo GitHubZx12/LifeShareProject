@@ -28,22 +28,24 @@ import cn.bmob.v3.listener.UploadFileListener;
 
 /**
  * 上传教程分类
+ * 
  * @author zx
  *
  */
-public class UpLoadRecordActivity extends BaseActivity{
-	
+public class UpLoadRecordActivity extends BaseActivity {
+
 	private EditText etTitle;
 	private ImageView ivImgContent;
 	private TextView tvImgContent;
 	private EditText etExperience;
-	
+
 	private String title;
 	private String content;
 	private String experience;
-	//相册选中图片路径
-		private static String iconpath;
-		private String path ;
+	// 相册选中图片路径
+	private static String iconpath;
+	private String path;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -51,46 +53,46 @@ public class UpLoadRecordActivity extends BaseActivity{
 		initHeadView();
 		initView();
 	}
-	
+
 	/**
 	 * 初始化数据
 	 */
 	private void upload() {
-		Log.e("tag","iconPaht"+iconpath+"---Path"+path);
-		title=etTitle.getText().toString();
-		experience=etExperience.getText().toString();
-		final BmobFile file=new BmobFile(new File(path));
-		//添加一对一关联
-		MyUser user=BmobUser.getCurrentUser(this,MyUser.class);
-		//创建记录信息
-		final Record record=new Record();
+		title = etTitle.getText().toString();
+		experience = etExperience.getText().toString();
+		final BmobFile file = new BmobFile(new File(path));
+		// 添加一对一关联
+		MyUser user = BmobUser.getCurrentUser(this, MyUser.class);
+		// 创建记录信息
+		final Record record = new Record();
 		record.setContent(experience);
 		record.setAuthor(user);
 		file.upload(this, new UploadFileListener() {
-			
+
 			@Override
 			public void onSuccess() {
 				record.setImage(file);
-				
+
 				record.save(UpLoadRecordActivity.this, new SaveListener() {
-					
+
 					@Override
 					public void onSuccess() {
 						UpLoadRecordActivity.this.finish();
 					}
+
 					@Override
 					public void onFailure(int arg0, String arg1) {
-						Log.e("tag",arg0+arg1);
+						Log.e("tag", arg0 + arg1);
 					}
 				});
 			}
-			
+
 			@Override
 			public void onFailure(int arg0, String arg1) {
-				Log.e("tag",arg0+arg1);
+				Log.e("tag", arg0 + arg1);
 			}
 		});
-		
+
 	}
 
 	/**
@@ -108,17 +110,18 @@ public class UpLoadRecordActivity extends BaseActivity{
 			ivImgContent.setImageResource(R.drawable.defult_avator);
 		}
 	}
+
 	/**
 	 * 初始化view
 	 */
 	private void initView() {
-		etTitle=(EditText) findViewById(R.id.et_upload_record_title);
-		ivImgContent=(ImageView) findViewById(R.id.iv_upload_record_pic);
-		tvImgContent=(TextView) findViewById(R.id.tv_upload_recordy_pic);
-		etExperience=(EditText) findViewById(R.id.et_upload_record_tip);
-		
+		etTitle = (EditText) findViewById(R.id.et_upload_record_title);
+		ivImgContent = (ImageView) findViewById(R.id.iv_upload_record_pic);
+		tvImgContent = (TextView) findViewById(R.id.tv_upload_recordy_pic);
+		etExperience = (EditText) findViewById(R.id.et_upload_record_tip);
+
 		tvImgContent.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				addmage();
@@ -134,18 +137,19 @@ public class UpLoadRecordActivity extends BaseActivity{
 		setNavigationLeftBtnText(" ");
 		setNavigationRightBtnText("上传");
 	}
-	
+
 	@Override
 	public void leftButtonOnClick() {
 		super.leftButtonOnClick();
 		this.finish();
 	}
+
 	@Override
 	public void rightButtonOnClick() {
 		super.rightButtonOnClick();
 		upload();
 	}
-	
+
 	/**
 	 * 更换头像 弹出选择相册的dialog
 	 */
@@ -165,6 +169,7 @@ public class UpLoadRecordActivity extends BaseActivity{
 			}
 		});
 	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
@@ -190,7 +195,8 @@ public class UpLoadRecordActivity extends BaseActivity{
 			}
 			switch (requestCode) {
 			case 5:
-//				ImageOpera.getInstance(this).loadImage("file://" + path, ivImgContent);
+				// ImageOpera.getInstance(this).loadImage("file://" + path,
+				// ivImgContent);
 				iconpath = "file://" + path;
 				setViewData();
 				break;
@@ -199,6 +205,7 @@ public class UpLoadRecordActivity extends BaseActivity{
 			}
 		}
 	}
+
 	/**
 	 * 得到图片所在的sd卡路径
 	 * 
