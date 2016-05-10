@@ -104,53 +104,14 @@
                     android:horizontalSpacing="15dp"
                     android:numColumns="3"
                     android:verticalSpacing="15dp" />
-            </LinearLayout>
-            <!-- 热门类别 -->
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:orientation="vertical" >
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginTop="40dp" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/hot_category"
-                        android:textSize="@dimen/title_textsize18" />
-
-                    <TextView
-                        android:id="@+id/tv_type_see_more"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:text="@string/see_more"
-                        android:textColor="@color/see_more"
-                        android:textSize="@dimen/title_textsize18" />
-                </RelativeLayout>
-
-                <com.mendale.app.utils.MyListView
-                    android:id="@+id/lv_type"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:divider="@null"
-                    android:dividerHeight="10dp" />
-
                 <Button
-                    android:id="@+id/btn_type_see_more"
+                    android:id="@+id/btn_hand_up_see_more"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
                     android:background="#ffffff"
-                    android:text="点击查看更多分类"
+                    android:text="点击查看更多教程"
                     android:textColor="@color/see_more" />
             </LinearLayout>
         </LinearLayout>

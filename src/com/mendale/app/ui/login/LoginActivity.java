@@ -101,7 +101,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	 */
 	private void initData() {
 		Intent intent = getIntent();
-		if (intent.getExtras() != null) {
+		if (intent.getStringExtra("username") != null) {
 			etUsername.setText(intent.getStringExtra("username"));
 			etPassword.setText(intent.getStringExtra("password"));
 		}

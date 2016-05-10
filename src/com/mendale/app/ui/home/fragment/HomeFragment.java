@@ -47,12 +47,10 @@ public class HomeFragment extends Fragment implements OnClickListener, OnItemCli
 	private TextView tv_Course_SeeMore;// 热门教程查看更多
 	private Button btn_Course_SeeMore;
 	private TextView tv_HandUp_SeeMore;// 手工达人
-	private TextView tv_Type_SeeMore;
-	private Button btn_Type_SeeMore;
+	private Button btn_HandUp_SeeMore;
 	/** GridView */
 	private GridView gv_Course;
 	private GridView gv_HandUp;
-	private ListView lv_Type;
 	//
 	private ImageView iv_loading;
 	private LinearLayout ll_loading;
@@ -60,13 +58,11 @@ public class HomeFragment extends Fragment implements OnClickListener, OnItemCli
 	/** adapter */
 	private HotCourseGVAdapter courseAdapter;
 	private DarenGVAdapter handUpAdapter;
-	private HotTypeGVAdapter typeAdapter;
 	/** DisplayImageOptions */
 	private DisplayImageOptions options;
 	// 数据
 	private List<HomeHotCoursePoJo> courseData;
 	private List<HomeDarenPoJo> darenData;
-	private List<HomeTypePoJo>typeData;
 	
 	@SuppressLint("HandlerLeak")
 	Handler mhandler = new Handler() {
@@ -85,9 +81,6 @@ public class HomeFragment extends Fragment implements OnClickListener, OnItemCli
 					handUpAdapter = new DarenGVAdapter(getActivity(),darenData, options);
 					gv_HandUp.setAdapter(handUpAdapter);
 					break;
-				case 3:
-					typeAdapter = new HotTypeGVAdapter(getActivity(), typeData, options);
-					lv_Type.setAdapter(typeAdapter);
 				default:
 					break;
 			}
@@ -159,19 +152,7 @@ public class HomeFragment extends Fragment implements OnClickListener, OnItemCli
 			public void onError(int arg0, String arg1) {
 			}
 		});
-		BmobQuery<HomeTypePoJo> bQuery3=new BmobQuery<HomeTypePoJo>();
-		bQuery3.findObjects(getActivity(), new FindListener<HomeTypePoJo>() {
-			
-			@Override
-			public void onSuccess(List<HomeTypePoJo> typeList) {//查询成功
-				typeData=typeList;
-				mhandler.sendEmptyMessage(3);
-			}
-			@Override
-			public void onError(int arg0, String arg1) {
-				// TODO Auto-generated method stub
-			}
-		});
+		
 	}
 
 	/**
@@ -181,8 +162,7 @@ public class HomeFragment extends Fragment implements OnClickListener, OnItemCli
 		tv_Course_SeeMore.setOnClickListener(this);
 		btn_Course_SeeMore.setOnClickListener(this);
 		tv_HandUp_SeeMore.setOnClickListener(this);
-		tv_Type_SeeMore.setOnClickListener(this);
-		btn_Type_SeeMore.setOnClickListener(this);
+		btn_HandUp_SeeMore.setOnClickListener(this);
 		gv_Course.setOnItemClickListener(this);
 		gv_HandUp.setOnItemClickListener(new OnItemClickListener() {
 
@@ -191,17 +171,6 @@ public class HomeFragment extends Fragment implements OnClickListener, OnItemCli
 				Intent intent = new Intent(getActivity(), MyCenterActivity.class);
 				intent.putExtra("id",darenData.get(arg2).getUser_id()+"");
 				intent.putExtra("flag",2);
-				startActivity(intent);
-			}
-		});
-		lv_Type.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
-				Intent intent = new Intent(getActivity(), CourseInfoActivity.class);
-				Bundle bundle=new Bundle();
-				bundle.putSerializable("courseItem",Datas.cChildList.get(pos));
-				intent.putExtras(bundle);
 				startActivity(intent);
 			}
 		});
@@ -216,18 +185,12 @@ public class HomeFragment extends Fragment implements OnClickListener, OnItemCli
 		tv_Course_SeeMore = (TextView) view.findViewById(R.id.tv_course_see_more);
 		btn_Course_SeeMore = (Button) view.findViewById(R.id.btn_course_see_more);
 		tv_HandUp_SeeMore = (TextView) view.findViewById(R.id.tv_hand_up_see_more);
-		tv_Type_SeeMore = (TextView) view.findViewById(R.id.tv_type_see_more);
-		btn_Type_SeeMore = (Button) view.findViewById(R.id.btn_type_see_more);
+		btn_HandUp_SeeMore=(Button) view.findViewById(R.id.btn_hand_up_see_more);
 		gv_Course = (GridView) view.findViewById(R.id.gv_coursee);
 		gv_HandUp = (GridView) view.findViewById(R.id.gv_hand_up);
-		lv_Type = (ListView) view.findViewById(R.id.lv_type);
 		iv_loading = (ImageView) view.findViewById(R.id.iv_loading);
 		ll_loading = (LinearLayout) view.findViewById(R.id.ll_home_loading);
 		ll_main = (LinearLayout) view.findViewById(R.id.ll_main);
-		// 加载数据库中的数据
-		// courseData=new ArrayList<HotCourseList>();
-		// courseAdapter=new HotCourseGVAdapter();
-		// gv_Course.setAdapter(courseAdapter);
 	}
 
 	@Override
@@ -239,14 +202,9 @@ public class HomeFragment extends Fragment implements OnClickListener, OnItemCli
 				startActivity(intent);
 				break;
 			case R.id.tv_hand_up_see_more:
+			case R.id.btn_hand_up_see_more:
 				Intent intent2 = new Intent(getActivity(), HandUpAcitivity.class);
 				startActivity(intent2);
-				break;
-			case R.id.tv_type_see_more:
-			case R.id.btn_type_see_more:
-				if (cFragment != null) {
-					cFragment.changeFragmentClick();
-				}
 				break;
 		}
 	}

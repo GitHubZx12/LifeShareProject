@@ -130,16 +130,28 @@ public class RegisterActivity extends BaseActivity implements OnClickListener, O
 							Toast.makeText(RegisterActivity.this,"亲, 拿到身份证了, 一起GoGoGo",Toast.LENGTH_SHORT).show();
 							Intent backLogin = new Intent(RegisterActivity.this,
 									LoginActivity.class);
+							backLogin.putExtra("username", username);
+							backLogin.putExtra("password", password);
 							startActivity(backLogin);
 							RegisterActivity.this.finish();
 						}
 
 						@Override
 						public void onFailure(int arg0, String msg) {
-							if(msg.equals("mobilePhoneNumber Must be valid mobile number")){
+							if(arg0==301){
 								Toast.makeText(RegisterActivity.this,"手机号不符合规范.",Toast.LENGTH_SHORT).show();
+								return;
 							}
-							Toast.makeText(RegisterActivity.this,"亲, 被人捷足先登了, 换个名字吧.",Toast.LENGTH_SHORT).show();
+							if(arg0==209){
+								Toast.makeText(RegisterActivity.this,"手机号"+phone+"已经注册过了",Toast.LENGTH_SHORT).show();
+								return;
+							}
+							if(arg0==202){
+								Toast.makeText(RegisterActivity.this,username+"被人捷足先登了, 换个名字吧",Toast.LENGTH_SHORT).show();
+								return;
+							}
+							
+							Log.e("tag",arg0+msg);
 						}
 
 					});
