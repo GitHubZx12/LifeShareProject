@@ -60,7 +60,6 @@ public class RecordDetailsActivity extends BaseActivity{
 	 */
 	private void BindData() {
 		//绑定数据，更改ui
-		Log.e("tag",item.getFace_pic()+"==="+item.getHost_pic());
 		ImageLoader imageLoader = ImageLoader.getInstance();
 		imageLoader.displayImage(item.getHost_pic(), host_pic, options);
 		imageLoader.displayImage(item.getFace_pic(), face_pic, options);

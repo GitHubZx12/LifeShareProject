@@ -292,9 +292,8 @@ public class ShowDetailsActivity extends Activity implements OnPageChangeListene
 //			// 是否只有已登录用户才能打开分享选择页
 //			mController.openShare(this, false);
 			AndroidShare as = new AndroidShare(
-					ShowDetailsActivity.this,
-					"哈哈--",
-					"http://img6.cache.netease.com/cnews/news2012/img/logo_news.png");
+					ShowDetailsActivity.this,"成功分享了"+detailsItemData.getSubject(),
+					detailsItemData.getStep().get(0).getPic());
 			as.show();
 			break;
 		}

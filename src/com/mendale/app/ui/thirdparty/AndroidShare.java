@@ -122,8 +122,8 @@ public class AndroidShare extends Dialog implements AdapterView.OnItemClickListe
 				"com.tencent.mobileqq.activity.JumpActivity","com.tencent.mobileqq"));
 //		this.mListData.add(new ShareItem("qq空间", R.drawable.logo_qzone,
 //				"com.qzone.ui.operation.QZonePublishMoodActivity","com.qzone"));
-		this.mListData.add(new ShareItem("新浪微博", R.drawable.weibo,
-				"com.sina.weibo.EditActivity", "com.sina.weibo"));
+//		this.mListData.add(new ShareItem("新浪微博", R.drawable.weibo,
+//				"com.sina.weibo.EditActivity", "com.sina.weibo"));
 //		this.mListData.add(new ShareItem("腾讯微博", R.drawable.logo_tencentweibo,
 //				"com.tencent.WBlog.intentproxy.TencentWeiboIntent","com.tencent.WBlog"));
 //		this.mListData.add(new ShareItem("其他", R.drawable.logo_other,

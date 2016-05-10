@@ -11,13 +11,20 @@
     <ImageView 
         android:id="@+id/iv_record_details_pic"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="350dp"
         android:src="@drawable/ic_launcher"/>
     <!-- 标题 -->
-    <TextView 
+    <LinearLayout 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/common_margin_10dp"
+        android:paddingRight="@dimen/common_margin_10dp">
+         <TextView 
         android:id="@+id/tv_record_details_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/title_textsize18"
         android:layout_marginTop="@dimen/common_margin_10dp"
         android:layout_marginBottom="@dimen/common_margin_10dp"
         android:text="hahahahaah"/>
@@ -26,6 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/common_margin_10dp"
+        android:textColor="@color/dark_gray"
         android:text="相当不错"/>
      <LinearLayout 
          android:layout_width="match_parent"
@@ -41,16 +49,19 @@
         android:id="@+id/tv_record_details_face_name"
         android:layout_width="0dp"
         android:layout_weight="3"
+        android:layout_gravity="bottom"
         android:layout_height="wrap_content"
         android:text="zx"/>
      </LinearLayout>
-     <Button 
+    </LinearLayout>
+    <Button 
         android:id="@+id/btn_record_details_comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:layout_margin="@dimen/common_margin_10dp"
         android:hint="请发表评论"/>
+   
      
     
 
