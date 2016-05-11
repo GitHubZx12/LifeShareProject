@@ -96,10 +96,10 @@ public class CourseInfoLvAdapter2 extends BaseAdapter {
 				recordItem.setSubject(recordList.get(position).getTitle());
 				recordItem.setContent(recordList.get(position).getContent());
 				recordItem.setUser_name(recordList.get(position).getAuthor().getUsername());
-				Log.e("tag",recordItem.toString());
 				Bundle bundle=new Bundle();
 				bundle.putSerializable("recordItem", recordItem);
 				intent.putExtras(bundle);
+				intent.putExtra("objectId", value)
 				context.startActivity(intent);
 			}
 		});

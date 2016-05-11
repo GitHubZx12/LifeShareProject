@@ -15,7 +15,7 @@ public class Comment extends BmobObject{
 	private static final long serialVersionUID = 1L;
 	private String content;//评论内容
 	private MyUser user;//评论的用户，Pointer类型，一对一关系
-	private Record post;//所评论的九路，这里体现一对多的关系，一个评论只能属于一个记录
+	private Record record;//所评论的九路，这里体现一对多的关系，一个评论只能属于一个记录
 	public String getContent() {
 		return content;
 	}
@@ -28,11 +28,11 @@ public class Comment extends BmobObject{
 	public void setUser(MyUser user) {
 		this.user = user;
 	}
-	public Record getPost() {
-		return post;
+	public Record getRecord() {
+		return record;
 	}
-	public void setPost(Record post) {
-		this.post = post;
+	public void setRecord(Record record) {
+		this.record = record;
 	}
 
 	

@@ -69,10 +69,6 @@ public class CommentActivity extends BaseActivity implements IXListViewListener{
 		commentList=new ArrayList<CommentList>();
 		 hand_id=getIntent().getStringExtra("hand_id");
 		 allDatasize=getIntent().getIntExtra("comment_count",0);
-//		for(int i=0;i<item.getCommentList().size();i++){
-//			CommentList commentItem=item.getCommentList().get(i);
-//			commentList.add(commentItem);
-//		}
 		 ++page;
 		 final String detail_url=DataURL.COURSE_DETAILS_COMMENT_LIST+hand_id+"&page="+page;
 		new Thread(new Runnable() {

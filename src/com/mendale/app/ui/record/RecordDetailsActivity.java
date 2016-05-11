@@ -3,12 +3,16 @@ package com.mendale.app.ui.record;
 import com.mendale.app.R;
 import com.mendale.app.pojo.RecordItemBean;
 import com.mendale.app.ui.base.BaseActivity;
+import com.mendale.app.ui.home.ShowDetailsActivity;
+import com.mendale.app.ui.home.menu.CommentActivity;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
-import com.umeng.socialize.utils.Log;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -61,11 +65,10 @@ public class RecordDetailsActivity extends BaseActivity{
 	private void BindData() {
 		//绑定数据，更改ui
 		ImageLoader imageLoader = ImageLoader.getInstance();
-//		Log.e("tag555","=="+item.getHost_pic());
-//		if(item.getHost_pic()!=null||"".equals(item.getHost_pic())){
-//			imageLoader.displayImage(item.getHost_pic(), host_pic, options);
-//			imageLoader.displayImage(item.getFace_pic(), face_pic, options);
-//		}
+		if(item.getHost_pic()!=null||"".equals(item.getHost_pic())){
+			imageLoader.displayImage(item.getHost_pic(), host_pic, options);
+			imageLoader.displayImage(item.getFace_pic(), face_pic, options);
+		}
 		title.setText(item.getSubject());
 		user_name.setText(item.getUser_name());
 	}
@@ -108,6 +111,16 @@ public class RecordDetailsActivity extends BaseActivity{
 		desc=(TextView) findViewById(R.id.tv_record_details_desc);
 		user_name=(TextView) findViewById(R.id.tv_record_details_face_name);
 		comment=(Button) findViewById(R.id.btn_record_details_comment);
+		
+		comment.setOnClickListener(new OnClickListener() {//评论
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(RecordDetailsActivity.this, RecordCommentActivity.class);
+				intent.putExtra("objectId", item.getObjectId());
+				startActivity(intent);
+			}
+		});
 	}
 
 }

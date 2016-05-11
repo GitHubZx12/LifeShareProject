@@ -55,6 +55,7 @@
         android:background="#00333333"
         android:orientation="horizontal">
         <EditText
+            android:id="@+id/et_comment"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/common_margin_10dp"
@@ -62,6 +63,7 @@
             android:background="@color/white"
             android:hint="发表评论"/>
         <Button
+            android:id="@+id/btn_comment_send"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
