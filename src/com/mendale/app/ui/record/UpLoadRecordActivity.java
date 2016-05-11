@@ -62,21 +62,23 @@ public class UpLoadRecordActivity extends BaseActivity {
 		experience = etExperience.getText().toString();
 		final BmobFile file = new BmobFile(new File(path));
 		// 添加一对一关联
-		MyUser user = BmobUser.getCurrentUser(this, MyUser.class);
+		final MyUser user = BmobUser.getCurrentUser(this, MyUser.class);
 		// 创建记录信息
-		final Record record = new Record();
-		record.setContent(experience);
-		record.setAuthor(user);
 		file.upload(this, new UploadFileListener() {
 
 			@Override
 			public void onSuccess() {
+				Record record = new Record();
+				record.setContent(experience);
+				record.setAuthor(user);
+				record.setUrl(file.getFileUrl(UpLoadRecordActivity.this));//保存图片路径
 				record.setImage(file);
 
 				record.save(UpLoadRecordActivity.this, new SaveListener() {
 
 					@Override
 					public void onSuccess() {
+						
 						UpLoadRecordActivity.this.finish();
 					}
 

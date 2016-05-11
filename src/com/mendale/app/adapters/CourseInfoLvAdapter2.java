@@ -79,7 +79,7 @@ public class CourseInfoLvAdapter2 extends BaseAdapter {
 //				+ recordList.get(position).getCollect() + "收藏/" + recordList.get(position).getComment() + "评论");
 		ImageLoader imageLoader = ImageLoader.getInstance();
 //		imageLoader.displayImage(recordList.get(position).getFace_pic(), holder.headImage, options);
-//		imageLoader.displayImage(recordList.get(position).getImage(), holder.contentImage, options);
+		imageLoader.displayImage(recordList.get(position).getUrl(), holder.contentImage, options);
 		// BitmapUtils bitMapUtils=new BitmapUtils(context);
 		//
 		// bitMapUtils.display(holder.headImage,
@@ -99,7 +99,7 @@ public class CourseInfoLvAdapter2 extends BaseAdapter {
 				Bundle bundle=new Bundle();
 				bundle.putSerializable("recordItem", recordItem);
 				intent.putExtras(bundle);
-				intent.putExtra("objectId", value)
+				intent.putExtra("objectId", recordList.get(position).getObjectId());
 				context.startActivity(intent);
 			}
 		});

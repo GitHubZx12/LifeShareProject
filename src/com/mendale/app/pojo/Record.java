@@ -18,8 +18,15 @@ public class Record extends BmobObject{
 	private String title;//记录标题
 	private String content;//记录内容
 	private MyUser author;//记录的发布者，一对一关系
-	private BmobFile image;//记录图片
 	private BmobRelation likes;//对对多关系：用于存储喜欢该记录的所有用户
+	private BmobFile image;//记录图片
+	private String url;
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
 	public String getTitle() {
 		return title;
 	}

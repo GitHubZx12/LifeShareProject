@@ -287,6 +287,7 @@ public class MainPageActivity extends FragmentActivity implements OnClickListene
 				break;
 			case R.id.iv_menu_icon:// 个人信息详情
 				Intent intent2 = new Intent(this, MyCenterActivity.class);
+				intent2.putExtra("flag", 1);
 				startActivity(intent2);
 				break;
 			case R.id.tv_menu_help:// 求教程

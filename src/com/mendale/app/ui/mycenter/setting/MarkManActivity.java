@@ -36,8 +36,8 @@ public class MarkManActivity extends BaseActivity implements OnClickListener {
 	private EditText phone;
 	private EditText email;
 	private static String iconpath;
-	private MyUser loginUser;
 	private Handler mHandler = new Handler();
+	private MyUser user;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -92,7 +92,7 @@ public class MarkManActivity extends BaseActivity implements OnClickListener {
 				closeLoadDialog();// 关闭弹框
 				Intent data=new Intent(MarkManActivity.this,MyCenterActivity.class);
 				Bundle extras=new Bundle();
-				extras.putSerializable("userinfo", loginUser);
+				extras.putSerializable("userinfo", user);
 				data.putExtras(extras);
 				setResult(2, data);
 			}
@@ -103,37 +103,27 @@ public class MarkManActivity extends BaseActivity implements OnClickListener {
 	 * 修改个人数据
 	 */
 	protected boolean updateInfo() {
-		loginUser=new MyUser();
-		if (!Utils.isEmpty(name.getText().toString())) {
-			loginUser.setUsername(name.getText().toString());
+		if (this.phone.getText().toString().length() < 11) {
+			showToast("电话号码必须是11位的");
+			closeLoadDialog();
+			return false;
 		}
-		if (!Utils.isEmpty(birthy.getText().toString())) {
-			loginUser.setBirthy(birthy.getText().toString());
-		}
-		if (!Utils.isEmpty(email.getText().toString())) {
-			loginUser.setEmail(email.getText().toString());
-		}
-		if (!Utils.isEmpty(phone.getText().toString())) {// 电话号
-			if (this.phone.getText().toString().length() < 11) {
-				showToast("电话号码必须是11位的");
-				closeLoadDialog();
-				return false;
-			}
-			loginUser.setMobilePhoneNumber(phone.getText().toString());
-		}
+		MyUser user=MyUser.getCurrentUser(this,MyUser.class);
+		user.setUsername(name.getText().toString());
+		user.setBirthy(birthy.getText().toString());
+		user.setEmail(email.getText().toString());
+		user.setMobilePhoneNumber(phone.getText().toString());
 		MobileApplication application=(MobileApplication) getApplication();
-		loginUser.update(this,application.getmUserInfo().getObjectId(), new UpdateListener() {
+		user.update(this,application.getmUserInfo().getObjectId(), new UpdateListener() {
 			
 			@Override
 			public void onSuccess() {
 				showToast("更新成功");
-				// TODO Auto-generated method stub
 			}
 			
 			@Override
 			public void onFailure(int arg0, String arg1) {
 				showToast("更新失败");
-				// TODO Auto-generated method stub
 			}
 		});
 		

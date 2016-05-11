@@ -34,6 +34,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import cn.bmob.v3.BmobQuery;
 
 /**
  * 我的主界面
@@ -117,6 +118,7 @@ public class MyCenterActivity extends BaseActivity implements OnClickListener {
 		init();
 		initOptions();
 		setLinstener();
+		initData();
 	}
 	
 
@@ -150,12 +152,20 @@ public class MyCenterActivity extends BaseActivity implements OnClickListener {
 		int flag=getIntent().getIntExtra("flag", 0);
 		if(flag==1){
 			MobileApplication application = (MobileApplication) getApplication();
+			MyUser user=MyUser.getCurrentUser(this, MyUser.class);
+			//
 			mycenter_background_image.setImageResource(R.drawable.crafter_personal_bg);
 			mycenter_head_image.setImageResource(R.drawable.defult_avator);
-			mycenter_name.setText(application.getmUserInfo().getUsername());
+			mycenter_name.setText(user.getUsername());
 			mycenter_total.setText("江苏徐州");
 			mycenter_vip_image.setImageResource(R.drawable.lv1);
 			mycenter_sex_image.setImageResource(R.drawable.vip_icon_wowam);
+//			mycenter_background_image.setImageResource(R.drawable.crafter_personal_bg);
+//			mycenter_head_image.setImageResource(R.drawable.defult_avator);
+//			mycenter_name.setText(application.getmUserInfo().getUsername());
+//			mycenter_total.setText("江苏徐州");
+//			mycenter_vip_image.setImageResource(R.drawable.lv1);
+//			mycenter_sex_image.setImageResource(R.drawable.vip_icon_wowam);
 		}else{
 			String id=getIntent().getStringExtra("id");
 			doGet(id);
@@ -169,7 +179,6 @@ public class MyCenterActivity extends BaseActivity implements OnClickListener {
 		 */
 		private void doGet(String id) {
 			final String fullUrl=DataURL.PEOPLE_DETAILS+id;
-			Log.e("tag2",fullUrl);
 			new Thread(new Runnable() {
 				@Override
 				public void run() {
@@ -201,15 +210,6 @@ public class MyCenterActivity extends BaseActivity implements OnClickListener {
 			Gson gson = new Gson();
 			if (!Utils.isEmpty(string)) {
 					other=gson.fromJson(string, OtherUser.class);
-//					other.save(this);
-//					CourseData courseData=other.getCourseData();
-//					CollectData collectData=other.getCollectData();
-//					OpusData opusData=other.getOpusData();
-//					OcollectData ocollectData=other.getOcollectData();
-//					courseData.save(this);
-//					collectData.save(this);
-//					opusData.save(this);
-//					ocollectData.save(this);
 					runOnUiThread(new Runnable() {
 						
 						@Override
@@ -239,13 +239,6 @@ public class MyCenterActivity extends BaseActivity implements OnClickListener {
 		mycenter_AllData.setOnClickListener(this);
 		iv_back.setOnClickListener(this);
 	}
-
-	@Override
-	protected void onResume() {
-		initData();
-		super.onResume();
-	}
-
 	/**
 	 * onclick 事件
 	 */
@@ -287,7 +280,6 @@ public class MyCenterActivity extends BaseActivity implements OnClickListener {
 			case R.id.mycenter_serve:// 收藏记录
 				mycenter_serve.setBackgroundColor(getResources().getColor(R.color.gray_x));
 				intent=new Intent(this,CollectRecordActivity.class);
-//				bundle.putSerializable("opusData", other.getOcollectData());
 				intent.putExtras(bundle);
 				startActivity(intent);
 				break;
@@ -303,12 +295,9 @@ public class MyCenterActivity extends BaseActivity implements OnClickListener {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		switch (requestCode) {
+		switch (resultCode) {
 			case 2:
-				if(null!= data.getSerializableExtra("userinfo")){
-					MyUser loginUser=(MyUser) data.getSerializableExtra("userinfo");
-					showToast(loginUser.toString());
-				}
+				showToast(data.getSerializableExtra("userinfo").toString());
 				break;
 			default:
 				break;

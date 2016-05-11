@@ -21,8 +21,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobPointer;
 import cn.bmob.v3.listener.FindListener;
 
 /**
@@ -32,6 +34,7 @@ import cn.bmob.v3.listener.FindListener;
  */
 public class LaunchRecordActivity extends BaseActivity {
 
+	protected static final String TAG = "LaunchRecordActivity";
 	private ListView mListView;
 	private CourseInfoLvAdapter2 mAdapter;
 	private DisplayImageOptions options; // DisplayImageOptions是用于设置图片显示的类
@@ -40,7 +43,7 @@ public class LaunchRecordActivity extends BaseActivity {
 	private ImageView iv_loading;
 	private LinearLayout ll_loading;
 	/**数据*/
-	private OpusData opusData=null;
+	List<Record>recordList ;
 	
 
 	public void onCreate(Bundle savedInstanceState) {
@@ -66,6 +69,8 @@ public class LaunchRecordActivity extends BaseActivity {
 			
 			@Override
 			public void onSuccess(final List<Record> arg0) {
+				recordList=arg0;
+				getCollectSize();
 				runOnUiThread(new Runnable() {
 					
 					@Override
@@ -78,15 +83,39 @@ public class LaunchRecordActivity extends BaseActivity {
 					}
 				});
 			}
-			
+
 			@Override
 			public void onError(int arg0, String arg1) {
 				Log.e("tag",arg0+arg1);
 			}
 		});
-		
+	
 	}
 
+	private void getCollectSize() {
+		for(int i=0;i<recordList.size();i++){
+			//查询喜欢这个记录的所有用户，因此查询的是用户表
+			BmobQuery<MyUser> collQuery=new BmobQuery<MyUser>();
+			Record collRecord=new Record();
+			collRecord.setObjectId(recordList.get(i).getObjectId());
+			//likes是Record表中的字段，用来存储所有喜欢该帖子的用户
+			collQuery.addWhereRelatedTo("likes", new BmobPointer(collRecord));
+			collQuery.findObjects(this, new FindListener<MyUser>() {
+
+				@Override
+				public void onError(int arg0, String arg1) {
+					Log.e(TAG,arg0+arg1);
+					
+				}
+
+				@Override
+				public void onSuccess(List<MyUser> arg0) {
+					showToast("总共有"+arg0.size()+"的人喜欢该记录");
+				}
+			});
+			
+		}
+	}
 	/**
 	 * 初始化头部
 	 */

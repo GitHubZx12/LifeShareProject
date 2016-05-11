@@ -1,13 +1,14 @@
 package com.mendale.app.ui.record;
 
 import com.mendale.app.R;
+import com.mendale.app.pojo.MyUser;
+import com.mendale.app.pojo.Record;
 import com.mendale.app.pojo.RecordItemBean;
 import com.mendale.app.ui.base.BaseActivity;
-import com.mendale.app.ui.home.ShowDetailsActivity;
-import com.mendale.app.ui.home.menu.CommentActivity;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.umeng.socialize.utils.Log;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +17,9 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobRelation;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * 记录详情
@@ -24,6 +28,7 @@ import android.widget.TextView;
  */
 public class RecordDetailsActivity extends BaseActivity{
 	
+	protected static final String TAG = "RecordDetailsActivity";
 	/**记录的图片*/
 	private ImageView host_pic;
 	/**用户头像*/
@@ -39,6 +44,7 @@ public class RecordDetailsActivity extends BaseActivity{
 	/**数据*/
 	private RecordItemBean item;
 	private DisplayImageOptions options; // DisplayImageOptions是用于设置图片显示的类
+	private String objectId;
 	
 	
 	@Override
@@ -57,6 +63,7 @@ public class RecordDetailsActivity extends BaseActivity{
 	 */
 	private void getIntentData() {
 		item=(RecordItemBean) getIntent().getSerializableExtra("recordItem");
+		objectId=getIntent().getStringExtra("objectId");
 	}
 
 	/**
@@ -94,11 +101,41 @@ public class RecordDetailsActivity extends BaseActivity{
 	private void initHeaderView() {
 		setNavigationTitle("记录详情");
 		setNavigationLeftBtnText("");
+		setNavigationRightBtnImage(R.drawable.course_collect);
+		setNavigationRightBtnText("收藏");
 	}
 	@Override
 	public void leftButtonOnClick() {
 		super.leftButtonOnClick();
 		this.finish();
+	}
+	/**
+	 * 添加多对多关联,
+	 * 用户--收藏--记录
+	 */
+	@Override
+	public void rightButtonOnClick() {
+		super.rightButtonOnClick();
+		MyUser user=BmobUser.getCurrentUser(this,MyUser.class);
+		Record record=new Record();
+		record.setObjectId(objectId);
+		//将当前用户添加到Record表中的Likes字段中，表明当前用户喜欢该帖子
+		BmobRelation relation=new BmobRelation();
+		relation.add(user);
+		//多对多关联只想record的likes字段
+		record.setLikes(relation);
+		record.update(this, new UpdateListener() {
+			
+			@Override
+			public void onSuccess() {
+				setNavigationRightBtnImage(R.drawable.collect_yes);
+			}
+			
+			@Override
+			public void onFailure(int arg0, String arg1) {
+				Log.e(TAG,arg0+arg1);
+			}
+		});
 	}
 
 	/**
@@ -117,7 +154,8 @@ public class RecordDetailsActivity extends BaseActivity{
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(RecordDetailsActivity.this, RecordCommentActivity.class);
-				intent.putExtra("objectId", item.getObjectId());
+				intent.putExtra("objectId",objectId);
+				Log.e(TAG,objectId);
 				startActivity(intent);
 			}
 		});
