@@ -1,7 +1,8 @@
 package com.mendale.app.ui.mycenter.setting;
 
+import java.io.File;
+
 import com.mendale.app.R;
-import com.mendale.app.application.MobileApplication;
 import com.mendale.app.constants.URLS;
 import com.mendale.app.pojo.MyUser;
 import com.mendale.app.ui.base.BaseActivity;
@@ -9,6 +10,7 @@ import com.mendale.app.ui.mycenter.MyCenterActivity;
 import com.mendale.app.utils.Utils;
 import com.mendale.app.utils.imageUtils.ImageOpera;
 import com.mendale.app.utils.imageUtils.RoundImageView;
+import com.umeng.socialize.utils.Log;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -20,7 +22,10 @@ import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.listener.UpdateListener;
+import cn.bmob.v3.listener.UploadFileListener;
 
 /**
  * 个人资料详情
@@ -30,14 +35,16 @@ import cn.bmob.v3.listener.UpdateListener;
  */
 public class MarkManActivity extends BaseActivity implements OnClickListener {
 
+	protected static final String TAG = "MarkManActivity";
 	private RoundImageView iv_changeHead;
-	private EditText name;
+	private EditText sign;
 	private EditText birthy;
-	private EditText phone;
+	private EditText sex;
 	private EditText email;
 	private static String iconpath;
 	private Handler mHandler = new Handler();
 	private MyUser user;
+	private String path;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -53,9 +60,9 @@ public class MarkManActivity extends BaseActivity implements OnClickListener {
 	 */
 	private void initView() {
 		iv_changeHead = (RoundImageView) findViewById(R.id.iv_changeHead);
-		name = (EditText) findViewById(R.id.et_mark_username);
+		sign = (EditText) findViewById(R.id.et_mark_sign);
 		birthy = (EditText) findViewById(R.id.et_mark_birthy);
-		phone = (EditText) findViewById(R.id.et_mark_phone);
+		sex = (EditText) findViewById(R.id.et_mark_phone);
 		email = (EditText) findViewById(R.id.et_mark_email);
 		iv_changeHead.setOnClickListener(this);
 	}
@@ -88,46 +95,56 @@ public class MarkManActivity extends BaseActivity implements OnClickListener {
 
 			@Override
 			public void run() {
+				//更新用户信息
 				updateInfo();
-				closeLoadDialog();// 关闭弹框
-				Intent data=new Intent(MarkManActivity.this,MyCenterActivity.class);
-				Bundle extras=new Bundle();
-				extras.putSerializable("userinfo", user);
-				data.putExtras(extras);
-				setResult(2, data);
 			}
+
 		}, 2000);
 	}
-
+	
 	/**
 	 * 修改个人数据
 	 */
-	protected boolean updateInfo() {
-		if (this.phone.getText().toString().length() < 11) {
-			showToast("电话号码必须是11位的");
-			closeLoadDialog();
-			return false;
-		}
-		MyUser user=MyUser.getCurrentUser(this,MyUser.class);
-		user.setUsername(name.getText().toString());
-		user.setBirthy(birthy.getText().toString());
-		user.setEmail(email.getText().toString());
-		user.setMobilePhoneNumber(phone.getText().toString());
-		MobileApplication application=(MobileApplication) getApplication();
-		user.update(this,application.getmUserInfo().getObjectId(), new UpdateListener() {
+	protected void updateInfo() {
+		//
+		final MyUser oldUser=BmobUser.getCurrentUser(this,MyUser.class);
+		BmobFile file=new BmobFile(new File(path));
+		file.upload(this, new UploadFileListener() {
 			
 			@Override
 			public void onSuccess() {
-				showToast("更新成功");
+				final MyUser user=new MyUser();
+				user.setUsername(sign.getText().toString());
+				user.setBirthy(birthy.getText().toString());
+				user.setEmail(email.getText().toString());
+				user.setSex(sex.getText().toString());
+				
+				user.update(MarkManActivity.this,oldUser.getObjectId(), new UpdateListener() {
+					
+					@Override
+					public void onSuccess() {
+						closeLoadDialog();// 关闭弹框
+						Intent data=new Intent(MarkManActivity.this,MyCenterActivity.class);
+						Bundle extras=new Bundle();
+						extras.putSerializable("userinfo", user);
+						data.putExtras(extras);
+						setResult(2, data);
+					}
+					
+					@Override
+					public void onFailure(int arg0, String arg1) {
+						showToast("更新失败");
+						Log.e("tag",arg0+arg1);
+					}
+				});
 			}
 			
 			@Override
 			public void onFailure(int arg0, String arg1) {
-				showToast("更新失败");
+				Log.e(TAG,arg0+arg1);
 			}
 		});
 		
-		return true;
 	}
 
 	@Override
@@ -206,7 +223,6 @@ public class MarkManActivity extends BaseActivity implements OnClickListener {
 	 */
 	@SuppressWarnings("finally")
 	private String getrealPath(Uri mImageCaptureUri) {
-		String path = null;
 		Cursor cursor = null;
 		try {
 			cursor = this.getContentResolver().query(mImageCaptureUri, null, null, null, null);
