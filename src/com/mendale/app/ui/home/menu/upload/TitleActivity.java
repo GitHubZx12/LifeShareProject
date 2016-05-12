@@ -4,9 +4,9 @@ import com.mendale.app.R;
 import com.mendale.app.pojo.Titles;
 import com.mendale.app.ui.base.BaseActivity;
 import com.mendale.app.utils.ExitApplication;
+import com.umeng.socialize.utils.Log;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 import cn.bmob.v3.listener.SaveListener;
@@ -18,6 +18,8 @@ import cn.bmob.v3.listener.SaveListener;
  *
  */
 public class TitleActivity extends BaseActivity {
+	
+	protected static final String TAG = "TitleActivity";
 	/**
 	 * 是否填写完毕
 	 */
@@ -31,8 +33,10 @@ public class TitleActivity extends BaseActivity {
 	 */
 	private EditText et_title_descript;
 
-	View view;
-	Titles titles;
+	/**
+	 * 数据
+	 */
+	private Titles titles;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -67,17 +71,14 @@ public class TitleActivity extends BaseActivity {
 	@Override
 	public void rightImageButtonOnClick() {
 		super.rightImageButtonOnClick();
-		createData();
-		startActivity(MaterialActivity.class);
-//		Toast.makeText(this, "下一步", Toast.LENGTH_SHORT).show();
 		isEmpty();
 	}
 	
 	
 	/**
-	 * 创建数据
+	 * 上传
 	 */
-	public void createData(){
+	public void updateTitleData(){
 		titles = new Titles();
 		titles.setTitles_name(et_title.getText().toString());
 		titles.setTitle_description(et_title_descript.getText().toString());
@@ -86,13 +87,14 @@ public class TitleActivity extends BaseActivity {
 			
 			@Override
 			public void onSuccess() {
-				// TODO Auto-generated method stub
-				showToast("创建成功");
+				closeLoadDialog();
+				startActivity(MaterialActivity.class);
 			}
 			
 			@Override
 			public void onFailure(int arg0, String arg1) {
-				// TODO Auto-generated method stub
+				closeLoadDialog();
+				Log.e(TAG,arg0+arg1);
 				showToast("创建失败："+arg1);
 			}
 		});
@@ -111,7 +113,8 @@ public class TitleActivity extends BaseActivity {
 			finished = false;
 			Toast.makeText(this, "请填写内容", Toast.LENGTH_LONG).show();
 		}else{
-			startActivity(MaterialActivity.class);
+			showLoadDialog("正在保存信息，请稍后");
+			updateTitleData();
 		}
 
 	}

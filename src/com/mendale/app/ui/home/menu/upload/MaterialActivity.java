@@ -7,24 +7,23 @@ import com.mendale.app.R;
 import com.mendale.app.adapters.UpLoadAddMaterialAdaper;
 import com.mendale.app.pojo.MaterialPoJo;
 import com.mendale.app.pojo.Materials;
-import com.mendale.app.pojo.Tools;
+import com.mendale.app.pojo.MyUser;
 import com.mendale.app.ui.base.BaseActivity;
+import com.umeng.socialize.utils.Log;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.Toast;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.listener.SaveListener;
 
 /**
@@ -35,17 +34,16 @@ import cn.bmob.v3.listener.SaveListener;
  */
 public class MaterialActivity extends BaseActivity {
 
+	protected static final String TAG = "MaterialActivity";
 	private ListView listView;
+	private UpLoadAddMaterialAdaper mAdapter;
 	/** 添加 */
 	private ImageView btn_add;
-	private List<MaterialPoJo> text = new ArrayList<MaterialPoJo>();
-	private UpLoadAddMaterialAdaper mAdapter;
-	private int count;
-
-	EditText name;
-	EditText amount;
-	
-	Materials materials;
+	private EditText name;
+	private EditText amount;
+	private Materials materials;
+	private List<MaterialPoJo> materialList = new ArrayList<MaterialPoJo>();
+//	private List<Materials> mDatas=new ArrayList<Materials>();
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -79,35 +77,42 @@ public class MaterialActivity extends BaseActivity {
 	@Override
 	public void rightImageButtonOnClick() {
 		super.rightImageButtonOnClick();
+		showLoadDialog("正在保存材料，请等待");
 		createData();
-		startActivity(ToolActivity.class);
-		// TODO 保存到数据库中
 	}
 
+	
 	/**
-	 * 创建数据
+	 * 上传
 	 */
-	public void createData(){
-		materials = new Materials();
-		materials.setNum(name.getText().toString());
-		materials.setName(amount.getText().toString());
+	private void createData() {
+		materials=new Materials();
+		MyUser user=BmobUser.getCurrentUser(this, MyUser.class);
+		List<String>name=new ArrayList<String>();
+		List<String>count=new ArrayList<String>();
+		for(int i=0;i<materialList.size();i++){
+			name.add(materialList.get(i).getName());
+			count.add(materialList.get(i).getDesc());
+		}
+		materials.setName(name);
+		materials.setNum(count);
+		materials.setAuthor(user);
 		materials.save(this, new SaveListener() {
-		
 			
 			@Override
 			public void onSuccess() {
-				// TODO Auto-generated method stub
-				showToast("创建成功");
+				closeLoadDialog();
+				startActivity(ToolActivity.class);
 			}
 			
 			@Override
 			public void onFailure(int arg0, String arg1) {
-				// TODO Auto-generated method stub
-				showToast("创建失败："+arg1);
+				Log.e(TAG,arg0+arg1);
 			}
 		});
+		
 	}
-	
+
 	/**
 	 * 点击事件
 	 */
@@ -116,7 +121,6 @@ public class MaterialActivity extends BaseActivity {
 
 			@Override
 			public void onClick(View v) {
-				
 				// 增加
 				showPopWindow(MaterialActivity.this, v);
 			}
@@ -146,8 +150,9 @@ public class MaterialActivity extends BaseActivity {
 				mp.setDesc(amount.getText().toString());
 				mp.setName(name.getText().toString());
 				mp.setFlag(false);
-				text.add(mp);
+				materialList.add(mp);
 				mAdapter.notifyDataSetChanged();
+				
 				popWindow.dismiss();
 			}
 		});
@@ -169,7 +174,7 @@ public class MaterialActivity extends BaseActivity {
 	private void initView() {
 		listView = (ListView) findViewById(R.id.listview_material);
 		btn_add = (ImageView) findViewById(R.id.btn_add);
-		mAdapter=new UpLoadAddMaterialAdaper(this, text);
+		mAdapter=new UpLoadAddMaterialAdaper(this, materialList);
 		listView.setAdapter(mAdapter);
 	}
 }
