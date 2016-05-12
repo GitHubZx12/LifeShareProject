@@ -16,11 +16,18 @@ public class MyUser extends BmobUser{
 	private String url;
 	private BmobFile img;
 	private String sex;
-	private String name;
+	private String sign;
+	private String city;
 	
-	
-	
-	
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
 	public String getUrl() {
 		return url;
 	}
@@ -45,12 +52,12 @@ public class MyUser extends BmobUser{
 		this.sex = sex;
 	}
 
-	public String getName() {
-		return name;
+	public String getSign() {
+		return sign;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setSign(String sign) {
+		this.sign = sign;
 	}
 
 

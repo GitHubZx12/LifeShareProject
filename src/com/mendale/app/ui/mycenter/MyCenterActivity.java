@@ -35,6 +35,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
 
 /**
  * 我的主界面
@@ -98,7 +99,7 @@ public class MyCenterActivity extends BaseActivity implements OnClickListener {
 	private MyScrollView scrollview;
 	private TextView view;
 	private MemberPojo memberbean;
-	private Context context;
+//	private Context context;
 	private int current_id;
 	/**
 	 * 数据
@@ -142,7 +143,6 @@ public class MyCenterActivity extends BaseActivity implements OnClickListener {
 		view = (TextView) findViewById(R.id.mycenter_background_view);
 		scrollview = (MyScrollView) findViewById(R.id.myScrollView);
 		scrollview.setImageView(mycenter_background_image);
-		context = this;
 	}
 
 	/**
@@ -151,26 +151,11 @@ public class MyCenterActivity extends BaseActivity implements OnClickListener {
 	private void initData() {
 		int flag=getIntent().getIntExtra("flag", 0);
 		if(flag==1){
-			MobileApplication application = (MobileApplication) getApplication();
-			MyUser user=MyUser.getCurrentUser(this, MyUser.class);
-			//
-			mycenter_background_image.setImageResource(R.drawable.crafter_personal_bg);
-			mycenter_head_image.setImageResource(R.drawable.defult_avator);
-			mycenter_name.setText(user.getUsername());
-			mycenter_total.setText("江苏徐州");
-			mycenter_vip_image.setImageResource(R.drawable.lv1);
-			mycenter_sex_image.setImageResource(R.drawable.vip_icon_wowam);
-//			mycenter_background_image.setImageResource(R.drawable.crafter_personal_bg);
-//			mycenter_head_image.setImageResource(R.drawable.defult_avator);
-//			mycenter_name.setText(application.getmUserInfo().getUsername());
-//			mycenter_total.setText("江苏徐州");
-//			mycenter_vip_image.setImageResource(R.drawable.lv1);
-//			mycenter_sex_image.setImageResource(R.drawable.vip_icon_wowam);
+			bindView();
 		}else{
 			String id=getIntent().getStringExtra("id");
 			doGet(id);
 		}
-		
 	}
 
 		/**
@@ -292,12 +277,28 @@ public class MyCenterActivity extends BaseActivity implements OnClickListener {
 		}
 	}
 
+	/**给控件赋值
+	 * 
+	 */
+	private void bindView(){
+		MyUser user=BmobUser.getCurrentUser(MyCenterActivity.this,MyUser.class);
+		mycenter_background_image.setImageResource(R.drawable.crafter_personal_bg);
+		ImageLoader imageLoader=ImageLoader.getInstance();
+		imageLoader.displayImage(user.getUrl(), mycenter_head_image);
+		mycenter_name.setText(user.getUsername());
+		mycenter_total.setText(user.getCity());
+		if(user.getSex().equals("女")){
+			mycenter_sex_image.setImageResource(R.drawable.vip_icon_wowam);
+		}else{
+			mycenter_sex_image.setImageResource(R.drawable.vip_icon_man);
+		}
+	}
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		switch (resultCode) {
 			case 2:
-				showToast(data.getSerializableExtra("userinfo").toString());
+				bindView();
 				break;
 			default:
 				break;

@@ -14,7 +14,7 @@
         android:layout_margin="20dp"
         android:layout_weight="2" >
 
-        <ImageView
+        <com.mendale.app.utils.imageUtils.RoundImageView
             android:id="@+id/iv_menu_icon"
             android:layout_width="wrap_content"
             android:layout_height="60dp"

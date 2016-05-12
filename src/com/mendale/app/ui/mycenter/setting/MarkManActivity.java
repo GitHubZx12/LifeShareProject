@@ -40,10 +40,9 @@ public class MarkManActivity extends BaseActivity implements OnClickListener {
 	private EditText sign;
 	private EditText birthy;
 	private EditText sex;
-	private EditText email;
+	private EditText city;
 	private static String iconpath;
 	private Handler mHandler = new Handler();
-	private MyUser user;
 	private String path;
 
 	@Override
@@ -52,7 +51,6 @@ public class MarkManActivity extends BaseActivity implements OnClickListener {
 		setContentView(R.layout.activity_mark_man);
 		initHeaderView();
 		initView();
-		setViewData();
 	}
 
 	/**
@@ -63,8 +61,22 @@ public class MarkManActivity extends BaseActivity implements OnClickListener {
 		sign = (EditText) findViewById(R.id.et_mark_sign);
 		birthy = (EditText) findViewById(R.id.et_mark_birthy);
 		sex = (EditText) findViewById(R.id.et_mark_phone);
-		email = (EditText) findViewById(R.id.et_mark_email);
+		city = (EditText) findViewById(R.id.et_mark_city);
 		iv_changeHead.setOnClickListener(this);
+		
+		//
+		MyUser user=BmobUser.getCurrentUser(this,MyUser.class);
+		sign.setText(user.getSign());
+		birthy.setText(user.getBirthy());
+		sex.setText(user.getSex());
+		city.setText(user.getCity());
+		if (user.getUrl() != "") {
+			ImageOpera.getInstance(this).loadImage(user.getUrl(), iv_changeHead);
+		}
+		else {
+			iv_changeHead.setImageResource(R.drawable.defult_avator);
+		}
+		
 	}
 
 	/**
@@ -108,19 +120,20 @@ public class MarkManActivity extends BaseActivity implements OnClickListener {
 	protected void updateInfo() {
 		//
 		final MyUser oldUser=BmobUser.getCurrentUser(this,MyUser.class);
-		BmobFile file=new BmobFile(new File(path));
-		file.upload(this, new UploadFileListener() {
+		final BmobFile file=new BmobFile(new File(path));
+		file.upload(this, new UploadFileListener() {//上传图片
 			
 			@Override
 			public void onSuccess() {
 				final MyUser user=new MyUser();
-				user.setUsername(sign.getText().toString());
+				user.setUrl(file.getFileUrl(MarkManActivity.this));//保存图片路径
+				user.setImg(file);//保存图片
+				user.setSign(sign.getText().toString());
 				user.setBirthy(birthy.getText().toString());
-				user.setEmail(email.getText().toString());
+				user.setCity(city.getText().toString());
 				user.setSex(sex.getText().toString());
 				
 				user.update(MarkManActivity.this,oldUser.getObjectId(), new UpdateListener() {
-					
 					@Override
 					public void onSuccess() {
 						closeLoadDialog();// 关闭弹框
@@ -129,11 +142,15 @@ public class MarkManActivity extends BaseActivity implements OnClickListener {
 						extras.putSerializable("userinfo", user);
 						data.putExtras(extras);
 						setResult(2, data);
+						MarkManActivity.this.finish();
 					}
 					
 					@Override
 					public void onFailure(int arg0, String arg1) {
-						showToast("更新失败");
+						if(arg0==301){
+							showToast("更新失败   email Must be a valid email address");
+						}
+						closeLoadDialog();
 						Log.e("tag",arg0+arg1);
 					}
 				});
@@ -205,9 +222,7 @@ public class MarkManActivity extends BaseActivity implements OnClickListener {
 				case 5:
 					ImageOpera.getInstance(this).loadImage("file://" + path, iv_changeHead);
 					iconpath = "file://" + path;
-					String path_avator = URLS.SDCARD_DIR + "ButlerImage" + "/avator_temp.jpg";
-					// new ImageCompressTask(path, path_avator, avator,
-					// true).execute(4);
+					setViewData();
 					break;
 				default:
 					break;

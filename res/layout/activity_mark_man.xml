@@ -35,7 +35,7 @@
             android:layout_height="50dp"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/icon_touxiang" />
+            android:background="@drawable/defult_avator" />
 
     </RelativeLayout>
 
@@ -147,24 +147,25 @@
         android:background="@color/white" >
 
         <TextView
-            android:id="@+id/tv_email"
+            android:id="@+id/tv_city"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:text="邮箱"
+            android:text="城市"
             android:textColor="@color/text_color_light"
             android:textSize="17sp" />
 
         <EditText
-            android:id="@+id/et_mark_email"
+            android:id="@+id/et_mark_city"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/tv_email"
             android:layout_alignBottom="@+id/tv_email"
             android:layout_centerHorizontal="true"
-            android:hint="请输入您的邮箱地址"
+            android:hint="请输入您的城市"
+            android:layout_centerVertical="true"
             android:textColor="@color/text_tishi"
             android:background="@color/white"
             android:textSize="17sp" />

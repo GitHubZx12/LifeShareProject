@@ -2,6 +2,7 @@ package com.mendale.app.ui.home;
 
 import com.mendale.app.R;
 import com.mendale.app.application.MobileApplication;
+import com.mendale.app.pojo.MyUser;
 import com.mendale.app.ui.home.fragment.CourseFragment;
 import com.mendale.app.ui.home.fragment.HomeFragment;
 import com.mendale.app.ui.home.fragment.HomeFragment.ChangeFragment;
@@ -14,6 +15,7 @@ import com.mendale.app.ui.home.menu.SearchCourseActivity;
 import com.mendale.app.ui.home.menu.upload.TitleActivity;
 import com.mendale.app.ui.mycenter.MyCenterActivity;
 import com.mendale.app.utils.ExitApplication;
+import com.mendale.app.utils.imageUtils.RoundImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.slidingmenu.lib.SlidingMenu;
 
@@ -36,6 +38,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
+import cn.bmob.v3.BmobUser;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,7 +72,7 @@ public class MainPageActivity extends FragmentActivity implements OnClickListene
 	/** 上传教程 */
 	private TextView tv_menu_upload;
 	/** 头像 */
-	private ImageView iv_menu_icon;
+	private RoundImageView iv_menu_icon;
 	/** 设置 */
 	private ImageView iv_menu_setting;
 	private TextView tv_menu_classify;
@@ -149,11 +152,20 @@ public class MainPageActivity extends FragmentActivity implements OnClickListene
 		tv_menu_login = (TextView) findViewById(R.id.tv_menu_login);
 		tv_menu_news = (TextView) findViewById(R.id.tv_menu_news);
 		tv_menu_search = (TextView) findViewById(R.id.tv_menu_search);
-		iv_menu_icon = (ImageView) findViewById(R.id.iv_menu_icon);
+		iv_menu_icon = (RoundImageView) findViewById(R.id.iv_menu_icon);
 		iv_menu_setting = (ImageView) findViewById(R.id.iv_menu_set);
 		//
-		MobileApplication application=(MobileApplication) this.getApplication();
-		tv_menu_login.setText(application.getmUserInfo().getUsername());
+		MyUser user=BmobUser.getCurrentUser(this,MyUser.class);
+		ImageLoader imageLoader=ImageLoader.getInstance();
+		if(user.getUrl()!=null){
+			imageLoader.displayImage(user.getUrl(), iv_menu_icon);
+		}else{
+			iv_menu_icon.setImageResource(R.drawable.defult_avator);
+		}
+		if(user.getUsername()!=null){
+			tv_menu_login.setText(user.getUsername());
+		}
+		
 	}
 
 	/**
