@@ -8,7 +8,6 @@ import cn.bmob.v3.BmobObject;
  *
  */
 public class Tool extends BmobObject{
-	
 	/**
 	 * 
 	 */

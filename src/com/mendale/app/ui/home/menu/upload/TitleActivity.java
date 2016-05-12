@@ -25,6 +25,7 @@ import cn.bmob.v3.listener.SaveListener;
 public class TitleActivity extends BaseActivity {
 	
 	protected static final String TAG = "TitleActivity";
+	public static String objectId;
 	/**
 	 * 是否填写完毕
 	 */
@@ -86,6 +87,7 @@ public class TitleActivity extends BaseActivity {
 	public void updateTitleData(){
 		final MyUser user=BmobUser.getCurrentUser(this,MyUser.class);
 		final Titles titles = new Titles();
+		titles.setUser(user);
 		titles.setTitles_name(et_title.getText().toString());
 		titles.setTitle_description(et_title_descript.getText().toString());
 		titles.save(this, new SaveListener() {
@@ -98,10 +100,9 @@ public class TitleActivity extends BaseActivity {
 					
 					@Override
 					public void onSuccess() {
+						objectId=bean.getObjectId();
 						closeLoadDialog();
-						Intent intent=new Intent(TitleActivity.this,MaterialActivity.class);
-						intent.putExtra("objectId", bean.getObjectId());
-						startActivity(intent);
+						startActivity(MaterialActivity.class);
 					}
 					
 					@Override

@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.mendale.app.R;
-import com.mendale.app.adapters.UpLoadAddMaterialAdaper;
-import com.mendale.app.pojo.Tools;
+import com.mendale.app.adapters.UpLoadAddToolAdaper;
 import com.mendale.app.ui.base.BaseActivity;
-import com.mendale.app.vo.Material;
+import com.mendale.app.vo.CourseDetailsBean;
+import com.mendale.app.vo.Tool;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +22,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * 上传教程--工具
@@ -31,17 +32,15 @@ import cn.bmob.v3.listener.SaveListener;
  */
 public class ToolActivity extends BaseActivity {
 
+	protected static final String TAG = "ToolActivity";
 	private ListView listView;
 	/** 添加 */
 	private ImageView btn_add;
-	private List<Material> text = new ArrayList<Material>();
-	private UpLoadAddMaterialAdaper mAdapter;
-	private int count;
-
-	EditText name;
-	EditText amount;
-	
-	Tools tools;
+	private UpLoadAddToolAdaper mAdapter;
+	private EditText name;
+	private EditText amount;
+	private List<Tool> toolList = new ArrayList<Tool>();
+	private Tool tools;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -75,31 +74,29 @@ public class ToolActivity extends BaseActivity {
 	@Override
 	public void rightImageButtonOnClick() {
 		super.rightImageButtonOnClick();
+		showLoadDialog("正在保存，請稍後");
 		createData();
-		startActivity(StepActivity.class);
-		// TODO 保存到数据库中
 	}
 	
 	/**
-	 * 创建数据
+	 *保存數據
 	 */
 	public void createData(){
-		tools = new Tools();
-		tools.setNum(name.getText().toString());
-		tools.setName(amount.getText().toString());
-		tools.save(this, new SaveListener() {
-		
+		CourseDetailsBean bean=new CourseDetailsBean();
+		bean.setTools(toolList);
+		bean.update(this,TitleActivity.objectId,new UpdateListener() {
 			
 			@Override
 			public void onSuccess() {
-				// TODO Auto-generated method stub
-				showToast("创建成功");
+				startActivity(StepActivity.class);
 			}
 			
 			@Override
 			public void onFailure(int arg0, String arg1) {
-				// TODO Auto-generated method stub
-				showToast("创建失败："+arg1);
+				closeDialog();
+				showToast("添加失败："+arg1);
+				Log.e(TAG,arg0+arg1);
+				
 			}
 		});
 	}
@@ -136,10 +133,10 @@ public class ToolActivity extends BaseActivity {
 
 			@Override
 			public void onClick(View v) {
-				Material mp=new Material();
-				mp.setDesc(amount.getText().toString());
+				Tool mp=new Tool();
+				mp.setNum(amount.getText().toString());
 				mp.setName(name.getText().toString());
-				text.add(mp);
+				toolList.add(mp);
 				mAdapter.notifyDataSetChanged();
 				popWindow.dismiss();
 			}
@@ -162,7 +159,7 @@ public class ToolActivity extends BaseActivity {
 	private void initView() {
 		listView = (ListView) findViewById(R.id.listview_material);
 		btn_add = (ImageView) findViewById(R.id.btn_add);
-		mAdapter=new UpLoadAddMaterialAdaper(this, text);
+		mAdapter=new UpLoadAddToolAdaper(this, toolList);
 		listView.setAdapter(mAdapter);
 	}
 }

@@ -86,11 +86,8 @@ public class MaterialActivity extends BaseActivity {
 	 * 上传
 	 */
 	private void createData() {
-		String objectId=getIntent().getStringExtra("objectId");
 		bean.setMaterial(materialList);
-		MyUser user=BmobUser.getCurrentUser(this,MyUser.class);
-		bean.setAuthor(user);
-		bean.update(this,objectId,new UpdateListener() {
+		bean.update(this,TitleActivity.objectId,new UpdateListener() {
 			
 			@Override
 			public void onSuccess() {

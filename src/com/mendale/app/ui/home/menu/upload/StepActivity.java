@@ -5,13 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.mendale.app.R;
-import com.mendale.app.adapters.UpLoadAddReplayLVAdapter;
+import com.mendale.app.adapters.UpLoadAddStepLVAdapter;
 import com.mendale.app.constants.URLS;
-import com.mendale.app.pojo.ReplayPoJo;
 import com.mendale.app.pojo.Steps;
 import com.mendale.app.ui.base.BaseActivity;
 import com.mendale.app.utils.Utils;
 import com.mendale.app.utils.imageUtils.ImageOpera;
+import com.mendale.app.vo.CourseDetailsBean;
+import com.mendale.app.vo.Step;
+import com.umeng.socialize.utils.Log;
 
 import android.app.Activity;
 import android.content.Context;
@@ -32,7 +34,7 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import cn.bmob.v3.datatype.BmobFile;
-import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadFileListener;
 
 /**
@@ -42,18 +44,19 @@ import cn.bmob.v3.listener.UploadFileListener;
  *
  */
 public class StepActivity extends BaseActivity {
+	
+	protected static final String TAG = "StepActivity";
 
 	private ListView listView;
 	/** 添加 */
 	private ImageView btn_add;
-	private List<ReplayPoJo> text = new ArrayList<ReplayPoJo>();
-	private UpLoadAddReplayLVAdapter mAdapter;
+	private UpLoadAddStepLVAdapter mAdapter;
 	private static String iconpath;
 	private ImageView ivPic = null;
 	private TextView tvPic;
 	private EditText desc;
 	private String path ;
-	Steps steps;
+	private List<Step>stepList=new ArrayList<Step>();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -87,41 +90,29 @@ public class StepActivity extends BaseActivity {
 	@Override
 	public void rightImageButtonOnClick() {
 		super.rightImageButtonOnClick();
+		showLoadDialog("正在保存");
 		submit();
-		startActivity(ClassifyActivity.class);
 	}
 
 	/**
-	 * 创建数据
+	 * 保存數據
 	 */
-	
 	private void submit() {
-        //上传图片
-        final BmobFile file=new BmobFile(new File(path)); //创建BmobFile对象，转换为Bmob对象
-        file.upload(StepActivity.this, new UploadFileListener() {
+		CourseDetailsBean bean=new CourseDetailsBean();
+		bean.setStep(stepList);
+        bean.update(this, TitleActivity.objectId,new UpdateListener() {
 			
 			@Override
 			public void onSuccess() {
-				// TODO Auto-generated method stub
-				steps=new Steps();
-                steps.setContent(desc.getText().toString());
-                steps.setPicture(file);  //设置图片
-                steps.save(StepActivity.this, new SaveListener() {
-					@Override
-					public void onSuccess() {
-						showToast("上传成功");
-					}
-					
-					@Override
-					public void onFailure(int arg0, String arg1) {
-						showToast("上传失败");
-					}
-				});
+				closeLoadDialog();
+				startActivity(ClassifyActivity.class);
 			}
 			
 			@Override
 			public void onFailure(int arg0, String arg1) {
-				showToast("上传失败"+arg1);
+				closeDialog();
+				showToast("添加失败："+arg1);
+				Log.e(TAG,arg0+arg1);
 			}
 		});
      }
@@ -172,11 +163,24 @@ public class StepActivity extends BaseActivity {
 
 			@Override
 			public void onClick(View v) {
-				ReplayPoJo mp = new ReplayPoJo();
-				mp.setPath(iconpath);
-				mp.setFlag(false);
-				mp.setDesc(desc.getText().toString());
-				text.add(mp);
+				final Step step = new Step();
+				step.setContent(desc.getText().toString());
+				final BmobFile file=new BmobFile(new File(path));
+				file.upload(StepActivity.this,new UploadFileListener() {
+					
+					@Override
+					public void onSuccess() {
+						step.setUrl(file.getFileUrl(StepActivity.this));
+						step.setImg(file);
+					}
+					
+					@Override
+					public void onFailure(int arg0, String arg1) {
+						Log.e(TAG,arg0+arg1);
+					}
+				});
+				
+				stepList.add(step);
 				mAdapter.notifyDataSetChanged();
 				popWindow.dismiss();
 			}
@@ -235,7 +239,7 @@ public class StepActivity extends BaseActivity {
 	private void initView() {
 		listView = (ListView) findViewById(R.id.listview_material);
 		btn_add = (ImageView) findViewById(R.id.btn_add);
-		mAdapter = new UpLoadAddReplayLVAdapter(this, text);
+		mAdapter = new UpLoadAddStepLVAdapter(this, stepList);
 		listView.setAdapter(mAdapter);
 	}
 
