@@ -3,6 +3,9 @@ package com.mendale.app.vo;
 import java.io.Serializable;
 import java.util.List;
 
+import com.mendale.app.pojo.MyUser;
+import com.mendale.app.pojo.Titles;
+
 import cn.bmob.v3.BmobObject;
 
 /**
@@ -30,8 +33,28 @@ public class CourseDetailsBean extends BmobObject implements Serializable{
 	private List<Tool>tools;
     private List<Material>material;
     private List<CommentList>comment_list;
+    private MyUser author;
+    private Titles title;//一对一关系
 	
 	
+	public List<CommentList> getComment_list() {
+		return comment_list;
+	}
+	public void setComment_list(List<CommentList> comment_list) {
+		this.comment_list = comment_list;
+	}
+	public MyUser getAuthor() {
+		return author;
+	}
+	public void setAuthor(MyUser author) {
+		this.author = author;
+	}
+	public Titles getTitle() {
+		return title;
+	}
+	public void setTitle(Titles title) {
+		this.title = title;
+	}
 	public List<Tool> getTools() {
 		return tools;
 	}

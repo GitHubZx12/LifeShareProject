@@ -1,14 +1,19 @@
 package com.mendale.app.ui.home.menu.upload;
 
 import com.mendale.app.R;
+import com.mendale.app.pojo.MyUser;
 import com.mendale.app.pojo.Titles;
 import com.mendale.app.ui.base.BaseActivity;
+import com.mendale.app.ui.login.LoginActivity;
 import com.mendale.app.utils.ExitApplication;
+import com.mendale.app.vo.CourseDetailsBean;
 import com.umeng.socialize.utils.Log;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.Toast;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.listener.SaveListener;
 
 /**
@@ -36,7 +41,7 @@ public class TitleActivity extends BaseActivity {
 	/**
 	 * 数据
 	 */
-	private Titles titles;
+	private CourseDetailsBean bean=new CourseDetailsBean();
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -79,26 +84,40 @@ public class TitleActivity extends BaseActivity {
 	 * 上传
 	 */
 	public void updateTitleData(){
-		titles = new Titles();
+		final MyUser user=BmobUser.getCurrentUser(this,MyUser.class);
+		final Titles titles = new Titles();
 		titles.setTitles_name(et_title.getText().toString());
 		titles.setTitle_description(et_title_descript.getText().toString());
 		titles.save(this, new SaveListener() {
-		
 			
 			@Override
 			public void onSuccess() {
-				closeLoadDialog();
-				startActivity(MaterialActivity.class);
+				bean.setTitle(titles);
+				bean.setAuthor(user);
+				bean.save(TitleActivity.this, new SaveListener() {
+					
+					@Override
+					public void onSuccess() {
+						closeLoadDialog();
+						Intent intent=new Intent(TitleActivity.this,MaterialActivity.class);
+						intent.putExtra("objectId", bean.getObjectId());
+						startActivity(intent);
+					}
+					
+					@Override
+					public void onFailure(int arg0, String arg1) {
+						closeLoadDialog();
+						Log.e(TAG,arg0+arg1);
+						showToast("添加失败："+arg1);
+					}
+				});
 			}
 			
 			@Override
 			public void onFailure(int arg0, String arg1) {
-				closeLoadDialog();
 				Log.e(TAG,arg0+arg1);
-				showToast("创建失败："+arg1);
 			}
 		});
-			
 			
 	}
 	

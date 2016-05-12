@@ -5,10 +5,10 @@ import java.util.List;
 
 import com.mendale.app.R;
 import com.mendale.app.adapters.UpLoadAddMaterialAdaper;
-import com.mendale.app.pojo.MaterialPoJo;
-import com.mendale.app.pojo.Materials;
 import com.mendale.app.pojo.MyUser;
 import com.mendale.app.ui.base.BaseActivity;
+import com.mendale.app.vo.CourseDetailsBean;
+import com.mendale.app.vo.Material;
 import com.umeng.socialize.utils.Log;
 
 import android.content.Context;
@@ -25,6 +25,7 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * 上传教程--材料
@@ -41,9 +42,8 @@ public class MaterialActivity extends BaseActivity {
 	private ImageView btn_add;
 	private EditText name;
 	private EditText amount;
-	private Materials materials;
-	private List<MaterialPoJo> materialList = new ArrayList<MaterialPoJo>();
-//	private List<Materials> mDatas=new ArrayList<Materials>();
+	private List<Material> materialList = new ArrayList<Material>();
+	private CourseDetailsBean bean=new CourseDetailsBean();
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -86,18 +86,11 @@ public class MaterialActivity extends BaseActivity {
 	 * 上传
 	 */
 	private void createData() {
-		materials=new Materials();
-		MyUser user=BmobUser.getCurrentUser(this, MyUser.class);
-		List<String>name=new ArrayList<String>();
-		List<String>count=new ArrayList<String>();
-		for(int i=0;i<materialList.size();i++){
-			name.add(materialList.get(i).getName());
-			count.add(materialList.get(i).getDesc());
-		}
-		materials.setName(name);
-		materials.setNum(count);
-		materials.setAuthor(user);
-		materials.save(this, new SaveListener() {
+		String objectId=getIntent().getStringExtra("objectId");
+		bean.setMaterial(materialList);
+		MyUser user=BmobUser.getCurrentUser(this,MyUser.class);
+		bean.setAuthor(user);
+		bean.update(this,objectId,new UpdateListener() {
 			
 			@Override
 			public void onSuccess() {
@@ -107,10 +100,11 @@ public class MaterialActivity extends BaseActivity {
 			
 			@Override
 			public void onFailure(int arg0, String arg1) {
+				closeLoadDialog();
 				Log.e(TAG,arg0+arg1);
+				showToast("添加失败："+arg1);
 			}
 		});
-		
 	}
 
 	/**
@@ -146,10 +140,9 @@ public class MaterialActivity extends BaseActivity {
 
 			@Override
 			public void onClick(View v) {
-				MaterialPoJo mp=new MaterialPoJo();
+				Material mp=new Material();
 				mp.setDesc(amount.getText().toString());
 				mp.setName(name.getText().toString());
-				mp.setFlag(false);
 				materialList.add(mp);
 				mAdapter.notifyDataSetChanged();
 				

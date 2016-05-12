@@ -5,10 +5,9 @@ import java.util.List;
 
 import com.mendale.app.R;
 import com.mendale.app.adapters.UpLoadAddMaterialAdaper;
-import com.mendale.app.pojo.MaterialPoJo;
-import com.mendale.app.pojo.Titles;
 import com.mendale.app.pojo.Tools;
 import com.mendale.app.ui.base.BaseActivity;
+import com.mendale.app.vo.Material;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -17,13 +16,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.Toast;
 import cn.bmob.v3.listener.SaveListener;
 
 /**
@@ -37,7 +34,7 @@ public class ToolActivity extends BaseActivity {
 	private ListView listView;
 	/** 添加 */
 	private ImageView btn_add;
-	private List<MaterialPoJo> text = new ArrayList<MaterialPoJo>();
+	private List<Material> text = new ArrayList<Material>();
 	private UpLoadAddMaterialAdaper mAdapter;
 	private int count;
 
@@ -139,10 +136,9 @@ public class ToolActivity extends BaseActivity {
 
 			@Override
 			public void onClick(View v) {
-				MaterialPoJo mp=new MaterialPoJo();
+				Material mp=new Material();
 				mp.setDesc(amount.getText().toString());
 				mp.setName(name.getText().toString());
-				mp.setFlag(false);
 				text.add(mp);
 				mAdapter.notifyDataSetChanged();
 				popWindow.dismiss();

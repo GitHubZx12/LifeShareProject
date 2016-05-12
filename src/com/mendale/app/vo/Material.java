@@ -14,18 +14,18 @@ public class Material extends BmobObject{
 	 */
 	private static final long serialVersionUID = 1L;
 	private String name;
-	private String num;
+	private String desc;
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getNum() {
-		return num;
+	public String getDesc() {
+		return desc;
 	}
-	public void setNum(String num) {
-		this.num = num;
+	public void setDesc(String desc) {
+		this.desc = desc;
 	}
 	
 

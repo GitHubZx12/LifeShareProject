@@ -5,15 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.mendale.app.R;
-import com.mendale.app.adapters.UpLoadAddMaterialAdaper;
 import com.mendale.app.adapters.UpLoadAddReplayLVAdapter;
 import com.mendale.app.constants.URLS;
-import com.mendale.app.pojo.MaterialPoJo;
-import com.mendale.app.pojo.Materials;
 import com.mendale.app.pojo.ReplayPoJo;
 import com.mendale.app.pojo.Steps;
 import com.mendale.app.ui.base.BaseActivity;
-import com.mendale.app.ui.mycenter.setting.MarkManActivity;
 import com.mendale.app.utils.Utils;
 import com.mendale.app.utils.imageUtils.ImageOpera;
 
