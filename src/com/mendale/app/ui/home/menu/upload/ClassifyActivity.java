@@ -4,11 +4,13 @@ import java.io.File;
 
 import com.mendale.app.R;
 import com.mendale.app.pojo.Classifications;
+import com.mendale.app.pojo.MyUser;
 import com.mendale.app.ui.base.BaseActivity;
-import com.mendale.app.ui.home.MainPageActivity;
 import com.mendale.app.ui.home.menu.ChooseClassify;
 import com.mendale.app.utils.Utils;
 import com.mendale.app.utils.imageUtils.ImageOpera;
+import com.mendale.app.vo.CourseDetailsBean;
+import com.umeng.socialize.utils.Log;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -22,8 +24,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadFileListener;
 
 /**
@@ -34,6 +38,7 @@ import cn.bmob.v3.listener.UploadFileListener;
  */
 public class ClassifyActivity extends BaseActivity implements OnClickListener {
 
+	protected static final String TAG = "ClassifyActivity";
 	/** 上传图片 */
 	private TextView tvLauchPic;
 	/** 图片 */
@@ -42,13 +47,10 @@ public class ClassifyActivity extends BaseActivity implements OnClickListener {
 	private Button btnClassify;
 	/** 注意的地方 */
 	private EditText etTips;
-	
 	private String path;
-	
-	//相册选中图片路径
 	private static String iconpath;
-
-	Classifications classification;
+	private Classifications classification;
+	private String classify;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -93,36 +95,52 @@ public class ClassifyActivity extends BaseActivity implements OnClickListener {
 	 */
 	
 	private void submit() {
+		final CourseDetailsBean bean=new CourseDetailsBean();
         //上传图片
         final BmobFile file=new BmobFile(new File(path)); //创建BmobFile对象，转换为Bmob对象
         file.upload(ClassifyActivity.this, new UploadFileListener() {
 			
 			@Override
 			public void onSuccess() {
-				// TODO Auto-generated method stub
+				MyUser user=BmobUser.getCurrentUser(ClassifyActivity.this, MyUser.class);
 				classification=new Classifications();
+				classification.setAuthor(user);
 				classification.setClassify(btnClassify.getText().toString());
 				classification.setCoverage(file);  //设置图片
 				classification.setTips(etTips.getText().toString());
+				classification.setUrl(file.getFileUrl(ClassifyActivity.this));
 				classification.save(ClassifyActivity.this, new SaveListener() {
+					
 					@Override
 					public void onSuccess() {
 						// TODO Auto-generated method stub
-						showToast("上传成功");
-						startActivity(MainPageActivity.class);
+						
 					}
 					
 					@Override
 					public void onFailure(int arg0, String arg1) {
 						// TODO Auto-generated method stub
-						showToast("上传失败");
+						
+					}
+				});
+				bean.setClassify(classification);
+				bean.update(ClassifyActivity.this, TitleActivity.objectId,new UpdateListener() {
+					
+					
+					@Override
+					public void onSuccess() {
+						
+					}
+					
+					@Override
+					public void onFailure(int arg0, String arg1) {
+						Log.e(TAG,arg0+arg1);
 					}
 				});
 			}
 			
 			@Override
 			public void onFailure(int arg0, String arg1) {
-				// TODO Auto-generated method stub
 				showToast("上传失败"+arg1);
 			}
 		});
@@ -137,23 +155,8 @@ public class ClassifyActivity extends BaseActivity implements OnClickListener {
 		tvLauchPic=(TextView) findViewById(R.id.tv_classify_pic);
 		ivPic=(ImageView) findViewById(R.id.iv_classify_pic);
 		btnClassify=(Button) findViewById(R.id.btn_classify_choose_classify);
-		
-		
 		etTips=(EditText) findViewById(R.id.et_classify_tip);
 
-	}
-	String classify;
-	@Override
-	protected void onNewIntent(Intent intent) {
-		// TODO Auto-generated method stub
-		super.onNewIntent(intent);
-		setIntent(intent);
-		classify=intent.getStringExtra("classify");
-//		showToast("执行了onNewIntent"+classify);
-		getIntent().putExtras(intent);
-		if(classify!=null){			
-			btnClassify.setText(classify);
-		}
 	}
 	
 	@Override
@@ -164,10 +167,13 @@ public class ClassifyActivity extends BaseActivity implements OnClickListener {
 			break;
 
 		case R.id.btn_classify_choose_classify:// 选择分类
-			startActivity(ChooseClassify.class);
+			Intent intent=new Intent(ClassifyActivity.this,ChooseClassify.class);
+			startActivityForResult(intent, 1);
 			break;
 		}
 	}
+	
+	
 	
 	/**
 	 * 页面控件赋值
@@ -235,6 +241,10 @@ public class ClassifyActivity extends BaseActivity implements OnClickListener {
 			default:
 				break;
 			}
+		}
+		if(resultCode==2){
+			classify=data.getStringExtra("name");
+			btnClassify.setText(classify);
 		}
 	}
 	/**

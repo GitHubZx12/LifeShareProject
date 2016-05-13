@@ -3,6 +3,7 @@ package com.mendale.app.vo;
 import java.io.Serializable;
 import java.util.List;
 
+import com.mendale.app.pojo.Classifications;
 import com.mendale.app.pojo.MyUser;
 import com.mendale.app.pojo.Titles;
 
@@ -22,21 +23,27 @@ public class CourseDetailsBean extends BmobObject implements Serializable{
 	public String host_pic;//图片
 	public String subject;//标题
 	public String hand_id;//详情页的id
-	
 	public String face_pic;//做着的图像
 	public String summary;//简介
 	public Integer view;//人气
 	public Integer laud;//赞
 	public Integer collect;//收藏
 	public Integer comment_count;//评论
-	public List<Step>step;
-	private List<Tool>tools;
-    private List<Material>material;
-    private List<CommentList>comment_list;
-    private MyUser author;
+	public List<Step>step;//步骤
+	private List<Tool>tools;//工具
+    private List<Material>material;//材料
+    private List<CommentList>comment_list;//评论列表
+    private MyUser author;//author
     private Titles title;//一对一关系
+    private Classifications classify;
 	
 	
+	public Classifications getClassify() {
+		return classify;
+	}
+	public void setClassify(Classifications classify) {
+		this.classify = classify;
+	}
 	public List<CommentList> getComment_list() {
 		return comment_list;
 	}

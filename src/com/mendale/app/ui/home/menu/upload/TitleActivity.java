@@ -4,12 +4,10 @@ import com.mendale.app.R;
 import com.mendale.app.pojo.MyUser;
 import com.mendale.app.pojo.Titles;
 import com.mendale.app.ui.base.BaseActivity;
-import com.mendale.app.ui.login.LoginActivity;
 import com.mendale.app.utils.ExitApplication;
 import com.mendale.app.vo.CourseDetailsBean;
 import com.umeng.socialize.utils.Log;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -86,15 +84,18 @@ public class TitleActivity extends BaseActivity {
 	 */
 	public void updateTitleData(){
 		final MyUser user=BmobUser.getCurrentUser(this,MyUser.class);
-		final Titles titles = new Titles();
-		titles.setUser(user);
-		titles.setTitles_name(et_title.getText().toString());
-		titles.setTitle_description(et_title_descript.getText().toString());
-		titles.save(this, new SaveListener() {
+		final Titles title = new Titles();
+//		title.setObjectId("1234");
+		title.setUser(user);
+		title.setTitles_name(et_title.getText().toString());
+		title.setTitle_description(et_title_descript.getText().toString());
+//		bean.setTitle(title);
+//		bean.setAuthor(user);
+		title.save(this, new SaveListener() {
 			
 			@Override
 			public void onSuccess() {
-				bean.setTitle(titles);
+				bean.setTitle(title);
 				bean.setAuthor(user);
 				bean.save(TitleActivity.this, new SaveListener() {
 					
