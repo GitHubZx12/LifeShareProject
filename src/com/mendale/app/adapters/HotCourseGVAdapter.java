@@ -3,6 +3,7 @@ package com.mendale.app.adapters;
 import java.util.List;
 
 import com.mendale.app.R;
+import com.mendale.app.vo.CourseDetailsBean;
 import com.mendale.app.vo.HomeHotCoursePoJo;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -25,11 +26,11 @@ import android.widget.TextView;
  */
 public class HotCourseGVAdapter extends BaseAdapter {
 
-	private List<HomeHotCoursePoJo> mDatas;
+	private List<CourseDetailsBean> mDatas;
 	private Context context;
 	private DisplayImageOptions options;
 
-	public HotCourseGVAdapter(Context context, List<HomeHotCoursePoJo> mDatas,DisplayImageOptions options) {
+	public HotCourseGVAdapter(Context context, List<CourseDetailsBean> mDatas,DisplayImageOptions options) {
 		this.mDatas = mDatas;
 		this.context = context;
 		this.options=options;
@@ -53,7 +54,7 @@ public class HotCourseGVAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
-		HomeHotCoursePoJo mItem = mDatas.get(position);
+		CourseDetailsBean mItem = mDatas.get(position);
 		if (convertView == null) {
 			holder = new ViewHolder();
 			convertView = View.inflate(context, R.layout.gridview_home_course,

@@ -1,16 +1,20 @@
 package com.mendale.app.ui.home.menu;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.mendale.app.R;
-import com.mendale.app.adapters.CourseGvAdapter;
 import com.mendale.app.adapters.MyExpandableListAdapter;
 import com.mendale.app.constants.DataURL;
 import com.mendale.app.constants.Datas;
+import com.mendale.app.pojo.CourseChildPojo;
 import com.mendale.app.pojo.CoursePoJo;
 import com.mendale.app.tasks.CourseTask;
 import com.mendale.app.ui.base.BaseActivity;
 import com.mendale.app.ui.course.CourseInfoActivity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,19 +23,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.FindListener;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * 教程分类（侧滑菜单部分）
@@ -55,7 +53,6 @@ public class CourseClassifyActivity extends BaseActivity implements OnScrollList
         intData();
         initHeaderView();
         initView();
-        setListener();
     }
     /**
 	 * 初始化标题
@@ -69,60 +66,27 @@ public class CourseClassifyActivity extends BaseActivity implements OnScrollList
 		super.leftButtonOnClick();
 		this.finish();
 	}
-    /**
-     * 临时
-     * 获取数据
-     */
-    private Handler mhandler = new Handler() {
-        @SuppressWarnings("unchecked")
-        public void handleMessage(android.os.Message msg) {
-            switch (msg.what) {
-                case 1:
-                    if (msg.obj != null) {
-                        Datas.courseList = (List<CoursePoJo>) msg.obj;
-                        List<Map<String, String>> courseList = formatList(Datas.courseList);
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
 
-
-    };
-
-    /**
-     * 初始化数据
-     */
-    private void intData() {
-
-        new Thread() {
-            public void run() {
-                new CourseTask(CourseClassifyActivity.this, mhandler).send(1, "utf-8", DataURL.COURSE_URL);
-            }
-        }.start();
-    }
-
-    /**
-     * 提取child的数据
-     *
-     * @param courseList
-     * @return
-     */
-    private List<Map<String, String>> formatList(List<CoursePoJo> courseList) {
-//		List<Map<String,String>>list=new ArrayList<Map<String,String>>();
-        Datas.list = new ArrayList<Map<String, String>>();
-        Map<String, String> map;
-        for (int i = 0; i < courseList.size(); i++) {
-            for (int j = 0; j < courseList.get(i).getChild().size(); j++) {
-                map = new HashMap<String, String>();
-                map.put("childName", courseList.get(i).getChild().get(j).getName());
-                Datas.list.add(map);
-            }
-        }
-        return Datas.list;
-    }
-
+	/**
+	 * 初始化数据
+	 */
+	private void intData() {
+		BmobQuery<CoursePoJo>bmobQuery=new BmobQuery<CoursePoJo>();
+		bmobQuery.findObjects(this, new FindListener<CoursePoJo>() {
+			
+			@Override
+			public void onSuccess(List<CoursePoJo> arg0) {
+				Datas.courseList=arg0;
+				formatList(arg0);
+				setListener();
+			}
+			
+			@Override
+			public void onError(int arg0, String arg1) {
+				Log.e("tag",arg1);
+			}
+		});
+	}
 
     /**
      * 监听事件
@@ -211,9 +175,26 @@ public class CourseClassifyActivity extends BaseActivity implements OnScrollList
                 .getLayoutParams();
         layoutParams.topMargin = -(indicatorGroupHeight - showHeight);
         indicatorGroup.setLayoutParams(layoutParams);
-
-
     }
+
+	/**
+	 * 提取child的数据
+	 * 
+	 * @param courseList
+	 * @return
+	 */
+	private List<CourseChildPojo> formatList(List<CoursePoJo> courseList) {
+		Datas.list = new ArrayList<Map<String, String>>();
+		Datas.cChildList=new ArrayList<CourseChildPojo>();
+		CourseChildPojo item;
+		for(int i=0;i<courseList.size();i++){
+			for (int j = 0; j < courseList.get(i).getChild().size(); j++) {
+				item=courseList.get(i).getChild().get(j);
+				Datas.cChildList.add(item);
+			}
+		}
+		return Datas.cChildList;
+	};
 
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -225,7 +206,7 @@ public class CourseClassifyActivity extends BaseActivity implements OnScrollList
     public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
     	Intent intent = new Intent(this, CourseInfoActivity.class);
 		Bundle bundle=new Bundle();
-		bundle.putSerializable("courseItem",Datas.cChildList.get(childPosition) );
+		bundle.putSerializable("courseItem",Datas.courseList.get(groupPosition).getChild().get(childPosition) );
 		intent.putExtras(bundle);
 		startActivity(intent);
         return false;

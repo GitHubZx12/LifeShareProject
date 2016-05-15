@@ -6,8 +6,6 @@ import java.util.List;
 
 import com.mendale.app.R;
 import com.mendale.app.adapters.UpLoadAddStepLVAdapter;
-import com.mendale.app.constants.URLS;
-import com.mendale.app.pojo.Steps;
 import com.mendale.app.ui.base.BaseActivity;
 import com.mendale.app.utils.Utils;
 import com.mendale.app.utils.imageUtils.ImageOpera;
@@ -57,6 +55,7 @@ public class StepActivity extends BaseActivity {
 	private EditText desc;
 	private String path ;
 	private List<Step>stepList=new ArrayList<Step>();
+	private Step step;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -82,6 +81,7 @@ public class StepActivity extends BaseActivity {
 	@Override
 	public void leftButtonOnClick() {
 		super.leftButtonOnClick();
+		this.finish();
 	}
 
 	/**
@@ -106,6 +106,7 @@ public class StepActivity extends BaseActivity {
 			public void onSuccess() {
 				closeLoadDialog();
 				startActivity(ClassifyActivity.class);
+				StepActivity.this.finish();
 			}
 			
 			@Override
@@ -163,15 +164,16 @@ public class StepActivity extends BaseActivity {
 
 			@Override
 			public void onClick(View v) {
-				final Step step = new Step();
-				step.setContent(desc.getText().toString());
 				final BmobFile file=new BmobFile(new File(path));
 				file.upload(StepActivity.this,new UploadFileListener() {
 					
 					@Override
 					public void onSuccess() {
+						step = new Step();
 						step.setUrl(file.getFileUrl(StepActivity.this));
+						step.setContent(desc.getText().toString());
 						step.setImg(file);
+						stepList.add(step);
 					}
 					
 					@Override
@@ -179,8 +181,6 @@ public class StepActivity extends BaseActivity {
 						Log.e(TAG,arg0+arg1);
 					}
 				});
-				
-				stepList.add(step);
 				mAdapter.notifyDataSetChanged();
 				popWindow.dismiss();
 			}
@@ -270,7 +270,6 @@ public class StepActivity extends BaseActivity {
 			case 5:
 				ImageOpera.getInstance(this).loadImage("file://" + path, ivPic);
 				iconpath = "file://" + path;
-				String path_avator = URLS.SDCARD_DIR + "ButlerImage" + "/avator_temp.jpg";
 				setViewData();
 				break;
 			default:

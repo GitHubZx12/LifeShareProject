@@ -55,7 +55,7 @@ public class UpLoadRecordActivity extends BaseActivity {
 	}
 
 	/**
-	 * 初始化数据
+	 *上传
 	 */
 	private void upload() {
 		title = etTitle.getText().toString();
@@ -68,6 +68,7 @@ public class UpLoadRecordActivity extends BaseActivity {
 
 			@Override
 			public void onSuccess() {
+				closeLoadDialog();
 				Record record = new Record();
 				record.setContent(experience);
 				record.setAuthor(user);
@@ -91,6 +92,7 @@ public class UpLoadRecordActivity extends BaseActivity {
 
 			@Override
 			public void onFailure(int arg0, String arg1) {
+				showToast("上传失败"+arg1);
 				Log.e("tag", arg0 + arg1);
 			}
 		});
@@ -149,6 +151,7 @@ public class UpLoadRecordActivity extends BaseActivity {
 	@Override
 	public void rightButtonOnClick() {
 		super.rightButtonOnClick();
+		showLoadDialog("正在上传，请稍后");
 		upload();
 	}
 

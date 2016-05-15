@@ -42,7 +42,7 @@ public class RecordDetailsActivity extends BaseActivity{
 	/**评论*/
 	private Button comment;
 	/**数据*/
-	private RecordItemBean item;
+	private Record item;
 	private DisplayImageOptions options; // DisplayImageOptions是用于设置图片显示的类
 	private String objectId;
 	
@@ -62,8 +62,7 @@ public class RecordDetailsActivity extends BaseActivity{
 	 * 初始化intent
 	 */
 	private void getIntentData() {
-		item=(RecordItemBean) getIntent().getSerializableExtra("recordItem");
-		objectId=getIntent().getStringExtra("objectId");
+		item=(Record) getIntent().getSerializableExtra("recordItem");
 	}
 
 	/**
@@ -72,12 +71,12 @@ public class RecordDetailsActivity extends BaseActivity{
 	private void BindData() {
 		//绑定数据，更改ui
 		ImageLoader imageLoader = ImageLoader.getInstance();
-		if(item.getHost_pic()!=null||"".equals(item.getHost_pic())){
-			imageLoader.displayImage(item.getHost_pic(), host_pic, options);
-			imageLoader.displayImage(item.getFace_pic(), face_pic, options);
+		if(item.getAuthor().getUrl()!=null||"".equals(item.getUrl())){
+			imageLoader.displayImage(item.getUrl(), host_pic, options);
+			imageLoader.displayImage(item.getAuthor().getUrl(), face_pic, options);
 		}
-		title.setText(item.getSubject());
-		user_name.setText(item.getUser_name());
+		title.setText(item.getContent());
+		user_name.setText(item.getAuthor().getUsername());
 	}
 
 	/**
@@ -154,8 +153,7 @@ public class RecordDetailsActivity extends BaseActivity{
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(RecordDetailsActivity.this, RecordCommentActivity.class);
-				intent.putExtra("objectId",objectId);
-				Log.e(TAG,objectId);
+				intent.putExtra("objectId",item.getObjectId());
 				startActivity(intent);
 			}
 		});

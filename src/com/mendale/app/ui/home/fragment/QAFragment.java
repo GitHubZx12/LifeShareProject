@@ -78,6 +78,7 @@ IPopupItemClick, OnItemLongClickListener {
 		mListView = (ListView) view.findViewById(R.id.listview_record);
 		iv_loading = (ImageView) view.findViewById(R.id.iv_loading);
 		ll_loading = (LinearLayout) view.findViewById(R.id.ll_record_loading);
+		tv_no_data=(TextView) view.findViewById(R.id.tv_loading);
 		mListView.setOnItemLongClickListener(this);
 		// 初始化长按弹窗
 		initEditPop();
@@ -149,8 +150,10 @@ IPopupItemClick, OnItemLongClickListener {
 		mListView.setVisibility(View.GONE);
 		ll_loading.setVisibility(View.VISIBLE);
 		if (tag == 0) {
+			iv_loading.setVisibility(View.GONE);
 			tv_no_data.setText(getResources().getText(R.string.list_no_data_lost));
 		} else {
+			iv_loading.setVisibility(View.GONE);
 			tv_no_data.setText(getResources().getText(R.string.list_no_data_found));
 		}
 	}

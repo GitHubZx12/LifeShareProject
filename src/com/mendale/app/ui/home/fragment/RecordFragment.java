@@ -35,7 +35,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobQueryResult;
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.SQLQueryListener;
 
 /**
  * 记录
@@ -45,7 +48,7 @@ import cn.bmob.v3.listener.FindListener;
 public class RecordFragment extends Fragment implements IXListViewListener,OnClickListener{
 
 	private XListView mListView;
-	private RecordLvAdapter mAdapter;
+	private CourseInfoLvAdapter2 mAdapter;
 	private CourseInfoLvAdapter2 courseAdapter;
 	private DisplayImageOptions options; // DisplayImageOptions是用于设置图片显示的类
 	/** 显示没有更多数据 */												
@@ -56,7 +59,7 @@ public class RecordFragment extends Fragment implements IXListViewListener,OnCli
     /**记录*/
 	private TextView recordAction;
 	//
-	private List<RecordItemBean> recordList;
+	private List<Record> recordList;
 
 	@SuppressLint("HandlerLeak")
 	private Handler mhandler = new Handler() {
@@ -67,7 +70,7 @@ public class RecordFragment extends Fragment implements IXListViewListener,OnCli
 					iv_loading.clearAnimation();
 					ll_loading.setVisibility(View.INVISIBLE);
 					mListView.setVisibility(View.VISIBLE);
-					mAdapter = new RecordLvAdapter(getActivity(), recordList,
+					mAdapter = new CourseInfoLvAdapter2(getActivity(), recordList,
 							options);
 					mListView.setAdapter(mAdapter);
 				}
@@ -111,21 +114,24 @@ public class RecordFragment extends Fragment implements IXListViewListener,OnCli
 	 * 请求接口
 	 */
 	private void initData() {
-		BmobQuery<RecordItemBean>bmobQuery=new BmobQuery<RecordItemBean>();
-		bmobQuery.findObjects(getActivity(), new FindListener<RecordItemBean>() {
+		BmobQuery<Record>bmobQuery=new BmobQuery<Record>();
+		bmobQuery.include("author");
+		bmobQuery.findObjects(getActivity(), new FindListener<Record>() {
 			@Override
 			public void onError(int arg0, String arg1) {
 				Log.e("tag",arg1);
 			}
 			@Override
-			public void onSuccess(List<RecordItemBean> arg0) {
+			public void onSuccess(List<Record> arg0) {
 				recordList=arg0;
+				Log.e("tag111",arg0.toString());
 				Message msg=new Message();
 				msg.what=1;
 				msg.obj=arg0;
 				mhandler.sendMessage(msg);
 			}
 		});
+		
 	}
 
 	/**

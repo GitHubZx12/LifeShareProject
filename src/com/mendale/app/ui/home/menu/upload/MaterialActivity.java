@@ -69,6 +69,7 @@ public class MaterialActivity extends BaseActivity {
 	@Override
 	public void leftButtonOnClick() {
 		super.leftButtonOnClick();
+		this.finish();
 	}
 
 	/**
@@ -93,6 +94,7 @@ public class MaterialActivity extends BaseActivity {
 			public void onSuccess() {
 				closeLoadDialog();
 				startActivity(ToolActivity.class);
+				MaterialActivity.this.finish();
 			}
 			
 			@Override

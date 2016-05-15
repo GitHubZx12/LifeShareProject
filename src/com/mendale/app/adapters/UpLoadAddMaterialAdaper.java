@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.mendale.app.R;
 import com.mendale.app.pojo.MaterialPoJo;
+import com.mendale.app.vo.Material;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -21,10 +22,10 @@ import android.widget.TextView;
 public class UpLoadAddMaterialAdaper extends BaseAdapter {
 
 	private LayoutInflater mInflater;
-	private List<MaterialPoJo> text;
+	private List<Material> text;
 	ViewHolder holder;
 
-	public UpLoadAddMaterialAdaper(Context context, List<MaterialPoJo> text) {
+	public UpLoadAddMaterialAdaper(Context context, List<Material> text) {
 		this.mInflater = LayoutInflater.from(context);
 		this.text = text;
 	}
@@ -33,7 +34,7 @@ public class UpLoadAddMaterialAdaper extends BaseAdapter {
 		return text.size();
 	}
 
-	public MaterialPoJo getItem(int position) {
+	public Material getItem(int position) {
 		return text.get(position);
 	}
 

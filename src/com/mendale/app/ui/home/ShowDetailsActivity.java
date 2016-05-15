@@ -52,39 +52,19 @@ public class ShowDetailsActivity extends Activity implements OnPageChangeListene
 	// 步骤的图标、退、赞、收集、材料、分享
 	ImageView icon, back, laud, collect, material, share;
 	private CourseDetailsBean detailsItemData;
-	private String detail_url;
-	private int step;
 	private ImageLoader imageLoader;
-	private String hand_id;
 	private String objectId;
 	// 友盟分享相关
 	UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.share");
 	UMSocialService controller = UMServiceFactory.getUMSocialService("com.umeng.share");
-	private Context mContext;
-	private int flag;
-
-	private Handler mhandler = new Handler() {
-		public void handleMessage(android.os.Message msg) {
-			switch (msg.what) {
-			case 1:
-				initView();// 初始化
-				break;
-
-			default:
-				break;
-			}
-		};
-	};
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_details);
 		getIntentData();
-		requestData();
+//		requestData();
 
 		// 7友盟评论相关
-		mContext = this;
 		// 首先在您的Activity中添加如下成员变量
 		mController = UMServiceFactory.getUMSocialService("com.umeng.share");
 		// 设置分享内容
@@ -104,13 +84,12 @@ public class ShowDetailsActivity extends Activity implements OnPageChangeListene
 		// };
 		// }.start();
 		BmobQuery<CourseDetailsBean> bmobQuery = new BmobQuery<CourseDetailsBean>();
-		bmobQuery.addWhereEqualTo("hand_id", hand_id);
+		bmobQuery.addWhereEqualTo("hand_id", detailsItemData.getObjectId());
 		bmobQuery.findObjects(this, new FindListener<CourseDetailsBean>() {
 
 			@Override
 			public void onSuccess(List<CourseDetailsBean> arg0) {
 				detailsItemData = arg0.get(0);
-				mhandler.sendEmptyMessage(1);
 			}
 
 			@Override
@@ -126,9 +105,8 @@ public class ShowDetailsActivity extends Activity implements OnPageChangeListene
 	 */
 	private void getIntentData() {
 		Intent intent = getIntent();
-		detail_url = intent.getStringExtra("detail_url");
-		step = intent.getIntExtra("step", 0);
-		hand_id = intent.getIntExtra("hand_id", 0) + "";
+		detailsItemData=(CourseDetailsBean) intent.getSerializableExtra("courseDetails");
+		initView();// 初始化
 	}
 
 	/**
@@ -148,7 +126,7 @@ public class ShowDetailsActivity extends Activity implements OnPageChangeListene
 		imageLoader = ImageLoader.getInstance();
 		mViewList = new ArrayList<View>();
 		// 动态创建view
-		addView(step);
+		addView(detailsItemData.getStep().size());
 
 		// ViewPage的切换事件
 		mViewPager.setOnPageChangeListener(this);
@@ -206,7 +184,7 @@ public class ShowDetailsActivity extends Activity implements OnPageChangeListene
 		count.setText(detailsItemData.getSummary());
 
 		TextView all = (TextView) itemView.findViewById(R.id.viewpage_1_tv_all);
-		all.setText(detailsItemData.getView() + "/" + detailsItemData.getLaud() + "/" + detailsItemData.getCollect()
+		all.setText(detailsItemData.getLaud() + "/" + detailsItemData.getCollect()
 				+ "/" + detailsItemData.getComment_count());
 	}
 
@@ -222,6 +200,7 @@ public class ShowDetailsActivity extends Activity implements OnPageChangeListene
 		ViewHolder viewHolder = new ViewHolder();
 		// 图片
 		viewHolder.imageView = (ImageView) itemView.findViewById(R.id.iv_pic);
+		Log.e("tag",detailsItemData.toString());
 		imageLoader.displayImage(detailsItemData.getStep().get(position).getUrl(), viewHolder.imageView);
 		// 内容
 		viewHolder.content = (TextView) itemView.findViewById(R.id.tv_content);
@@ -230,7 +209,6 @@ public class ShowDetailsActivity extends Activity implements OnPageChangeListene
 		viewHolder.count = (TextView) itemView.findViewById(R.id.tv_comment_count);
 		viewHolder.count.setText(detailsItemData.getComment_count() + "");
 		viewHolder.comment_fl = (ViewGroup) itemView.findViewById(R.id.details_2_fl);
-
 		// 添加点击事件
 		viewHolder.comment_fl.setOnClickListener(viewHolder);
 	}
@@ -249,7 +227,7 @@ public class ShowDetailsActivity extends Activity implements OnPageChangeListene
 			case R.id.details_2_fl:// 评论
 				// mController.openComment(mContext, false);
 				Intent intent = new Intent(ShowDetailsActivity.this, CommentActivity.class);
-				intent.putExtra("hand_id", hand_id);
+				intent.putExtra("hand_id", detailsItemData.getHand_id());
 				intent.putExtra("comment_count", detailsItemData.getComment_count());
 //				Bundle bundle = new Bundle();
 //				bundle.putSerializable("hand_id", hand_id);
@@ -327,7 +305,7 @@ public class ShowDetailsActivity extends Activity implements OnPageChangeListene
 	 */
 	private void getObjectId(final int flag) {
 		BmobQuery<CourseDetailsBean> bQuery = new BmobQuery<CourseDetailsBean>();
-		bQuery.addWhereEqualTo("hand_id", hand_id);
+		bQuery.addWhereEqualTo("hand_id", detailsItemData.getHand_id());
 		bQuery.findObjects(this, new FindListener<CourseDetailsBean>() {
 
 			@Override

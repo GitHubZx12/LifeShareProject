@@ -1,26 +1,18 @@
 package com.mendale.app.ui.home.menu.upload;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.mendale.app.R;
 import com.mendale.app.adapters.ChooseClassifyLvAdapter;
-import com.mendale.app.adapters.SecondListAdapter;
-import com.mendale.app.pojo.Classifications;
 import com.mendale.app.pojo.MainMenu;
-import com.mendale.app.pojo.Steps;
 import com.mendale.app.ui.base.BaseActivity;
-import com.mendale.app.ui.record.UpLoadRecordActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import cn.bmob.v3.datatype.BmobFile;
-import cn.bmob.v3.listener.SaveListener;
-import cn.bmob.v3.listener.UploadFileListener;
 import android.widget.ListView;
 
 /**
@@ -74,7 +66,7 @@ public class ChooseClassify extends BaseActivity implements OnItemClickListener{
 	private void initHeadView() {
 		setNavigationTitle("分类选择");
 		setNavigationLeftBtnText("取消");
-		setNavigationRightBtnText("完成");
+		setNavigationRightBtnText("");
 	}
 	/**
 	 * 取消
@@ -102,11 +94,11 @@ public class ChooseClassify extends BaseActivity implements OnItemClickListener{
 	 */
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//		startActivity(UpLoadRecordActivity.class);
 		Intent intent=new Intent();
 		intent.setClass(ChooseClassify.this, ClassifyActivity.class);
 		intent.putExtra("classify",name[position]);
-		this.startActivity(intent);
+		setResult(2, intent);
+		this.finish();
 	}
 
 }

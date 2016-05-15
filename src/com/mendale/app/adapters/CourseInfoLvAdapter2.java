@@ -73,33 +73,21 @@ public class CourseInfoLvAdapter2 extends BaseAdapter {
 			holder = (ViewHolder) convertView.getTag();
 		}
 		//
+		Log.e("tag",recordList.get(position).toString());
 		holder.name.setText(recordList.get(position).getAuthor().getUsername());
 		holder.content.setText(recordList.get(position).getContent());
-//		holder.recordAll.setText(recordList.get(position).getView() + "人气/" + recordList.get(position).getLaud() + "赞/"
-//				+ recordList.get(position).getCollect() + "收藏/" + recordList.get(position).getComment() + "评论");
 		ImageLoader imageLoader = ImageLoader.getInstance();
-//		imageLoader.displayImage(recordList.get(position).getFace_pic(), holder.headImage, options);
+		imageLoader.displayImage(recordList.get(position).getAuthor().getUrl(), holder.headImage, options);
 		imageLoader.displayImage(recordList.get(position).getUrl(), holder.contentImage, options);
-		// BitmapUtils bitMapUtils=new BitmapUtils(context);
-		//
-		// bitMapUtils.display(holder.headImage,
-		// recordList.get(position).getFace_pic());
-		// bitMapUtils.display(holder.contentImage,
-		// recordList.get(position).getHost_pic());
 		
 		holder.contentImage.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {//进入详情页
 				Intent intent = new Intent(context, RecordDetailsActivity.class);
-				RecordItemBean recordItem=new RecordItemBean();
-				recordItem.setSubject(recordList.get(position).getTitle());
-				recordItem.setContent(recordList.get(position).getContent());
-				recordItem.setUser_name(recordList.get(position).getAuthor().getUsername());
 				Bundle bundle=new Bundle();
-				bundle.putSerializable("recordItem", recordItem);
+				bundle.putSerializable("recordItem", recordList.get(position));
 				intent.putExtras(bundle);
-				intent.putExtra("objectId", recordList.get(position).getObjectId());
 				context.startActivity(intent);
 			}
 		});

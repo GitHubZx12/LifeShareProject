@@ -11,6 +11,12 @@ import cn.bmob.v3.datatype.BmobFile;
 public class MyUser extends BmobUser{
 	
 	
+	@Override
+	public String toString() {
+		return "MyUser [birthy=" + birthy + ", url=" + url + ", img=" + img + ", sex=" + sex + ", sign=" + sign
+				+ ", city=" + city + "]";
+	}
+
 	private static final long serialVersionUID = 1L;
 	private String birthy;
 	private String url;

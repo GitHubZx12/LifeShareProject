@@ -1,5 +1,7 @@
 package com.mendale.app.pojo;
 
+import java.io.Serializable;
+
 import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.datatype.BmobRelation;
@@ -9,8 +11,13 @@ import cn.bmob.v3.datatype.BmobRelation;
  * @author zx
  *
  */
-public class Record extends BmobObject{
+public class Record extends BmobObject implements Serializable{
 	
+	@Override
+	public String toString() {
+		return "Record [title=" + title + ", content=" + content + ", author=" + author + ", likes=" + likes
+				+ ", image=" + image + ", url=" + url + "]";
+	}
 	/**
 	 * 
 	 */

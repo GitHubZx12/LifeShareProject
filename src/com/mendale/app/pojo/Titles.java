@@ -3,8 +3,21 @@ package com.mendale.app.pojo;
 import cn.bmob.v3.BmobObject;
 
 public class Titles extends BmobObject{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String titles_name;
 	private String title_description;
+	private MyUser user;
+	
+	public MyUser getUser() {
+		return user;
+	}
+	
+	public void setUser(MyUser user) {
+		this.user = user;
+	}
 	public String getTitles_name() {
 		return titles_name;
 	}

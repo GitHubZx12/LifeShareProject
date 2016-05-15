@@ -27,10 +27,6 @@ public class OtherUser extends BmobObject{
 	private String level;
 	private String scores;
 	private String _id;
-	private CourseData courseData;
-	private CollectData collectData;
-	private OpusData opusData;
-	private OcollectData ocollectData;
 	public String getOcollect() {
 		return ocollect;
 	}
@@ -144,30 +140,6 @@ public class OtherUser extends BmobObject{
 	}
 	public void set_id(String _id) {
 		this._id = _id;
-	}
-	public CourseData getCourseData() {
-		return courseData;
-	}
-	public void setCourseData(CourseData courseData) {
-		this.courseData = courseData;
-	}
-	public CollectData getCollectData() {
-		return collectData;
-	}
-	public void setCollectData(CollectData collectData) {
-		this.collectData = collectData;
-	}
-	public OpusData getOpusData() {
-		return opusData;
-	}
-	public void setOpusData(OpusData opusData) {
-		this.opusData = opusData;
-	}
-	public OcollectData getOcollectData() {
-		return ocollectData;
-	}
-	public void setOcollectData(OcollectData ocollectData) {
-		this.ocollectData = ocollectData;
 	}
 
 }

@@ -73,8 +73,8 @@ public class CollectCourseActivity extends BaseActivity implements OnClickListen
 		if(null==collectData){
 			return;
 		}
-		courseAdapter=new HotCourseGVAdapter(CollectCourseActivity.this,collectData.getList(),options);
-		mGridView.setAdapter(courseAdapter);
+//		courseAdapter=new HotCourseGVAdapter(CollectCourseActivity.this,collectData.getList(),options);
+//		mGridView.setAdapter(courseAdapter);
 	}
 
 	@Override

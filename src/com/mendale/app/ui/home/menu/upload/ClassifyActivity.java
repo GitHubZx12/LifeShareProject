@@ -6,7 +6,6 @@ import com.mendale.app.R;
 import com.mendale.app.pojo.Classifications;
 import com.mendale.app.pojo.MyUser;
 import com.mendale.app.ui.base.BaseActivity;
-import com.mendale.app.ui.home.menu.ChooseClassify;
 import com.mendale.app.utils.Utils;
 import com.mendale.app.utils.imageUtils.ImageOpera;
 import com.mendale.app.vo.CourseDetailsBean;
@@ -87,6 +86,7 @@ public class ClassifyActivity extends BaseActivity implements OnClickListener {
 	@Override
 	public void rightButtonOnClick() {
 		super.rightButtonOnClick();
+		showLoadDialog("正在上传，请稍后");
 		submit();
 	}
 
@@ -104,7 +104,6 @@ public class ClassifyActivity extends BaseActivity implements OnClickListener {
 			public void onSuccess() {
 				MyUser user=BmobUser.getCurrentUser(ClassifyActivity.this, MyUser.class);
 				classification=new Classifications();
-				classification.setAuthor(user);
 				classification.setClassify(btnClassify.getText().toString());
 				classification.setCoverage(file);  //设置图片
 				classification.setTips(etTips.getText().toString());
@@ -113,14 +112,12 @@ public class ClassifyActivity extends BaseActivity implements OnClickListener {
 					
 					@Override
 					public void onSuccess() {
-						// TODO Auto-generated method stub
-						
+						ClassifyActivity.this.finish();
 					}
 					
 					@Override
 					public void onFailure(int arg0, String arg1) {
-						// TODO Auto-generated method stub
-						
+						showToast(arg1);
 					}
 				});
 				bean.setClassify(classification);
@@ -129,11 +126,13 @@ public class ClassifyActivity extends BaseActivity implements OnClickListener {
 					
 					@Override
 					public void onSuccess() {
-						
+						closeLoadDialog();
+						ClassifyActivity.this.finish();
 					}
 					
 					@Override
 					public void onFailure(int arg0, String arg1) {
+						showToast(arg1);
 						Log.e(TAG,arg0+arg1);
 					}
 				});
@@ -243,7 +242,7 @@ public class ClassifyActivity extends BaseActivity implements OnClickListener {
 			}
 		}
 		if(resultCode==2){
-			classify=data.getStringExtra("name");
+			classify=data.getStringExtra("classify");
 			btnClassify.setText(classify);
 		}
 	}

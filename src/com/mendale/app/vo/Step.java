@@ -10,6 +10,10 @@ import cn.bmob.v3.datatype.BmobFile;
  */
 public class Step extends BmobObject{
 	
+	@Override
+	public String toString() {
+		return "Step [url=" + url + ", content=" + content + ", img=" + img + "]";
+	}
 	/**
 	 * 
 	 */
@@ -17,7 +21,6 @@ public class Step extends BmobObject{
 	public String url;
 	public String content;
 	public BmobFile img;
-	
 	
 	public String getUrl() {
 		return url;

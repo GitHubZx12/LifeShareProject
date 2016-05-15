@@ -104,6 +104,7 @@ public class TitleActivity extends BaseActivity {
 						objectId=bean.getObjectId();
 						closeLoadDialog();
 						startActivity(MaterialActivity.class);
+						TitleActivity.this.finish();
 					}
 					
 					@Override

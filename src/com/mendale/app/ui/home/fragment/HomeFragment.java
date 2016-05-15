@@ -13,6 +13,7 @@ import com.mendale.app.ui.home.HandUpAcitivity;
 import com.mendale.app.ui.home.HotCourseActivity;
 import com.mendale.app.ui.home.ShowDetailsActivity;
 import com.mendale.app.ui.mycenter.MyCenterActivity;
+import com.mendale.app.vo.CourseDetailsBean;
 import com.mendale.app.vo.HomeDarenPoJo;
 import com.mendale.app.vo.HomeHotCoursePoJo;
 import com.mendale.app.vo.HomeTypePoJo;
@@ -61,7 +62,7 @@ public class HomeFragment extends Fragment implements OnClickListener, OnItemCli
 	/** DisplayImageOptions */
 	private DisplayImageOptions options;
 	// 数据
-	private List<HomeHotCoursePoJo> courseData;
+	private List<CourseDetailsBean> courseData;
 	private List<HomeDarenPoJo> darenData;
 	
 	@SuppressLint("HandlerLeak")
@@ -125,11 +126,12 @@ public class HomeFragment extends Fragment implements OnClickListener, OnItemCli
 	 * 请求bmob数据
 	 */
 	private void initData() {
-		BmobQuery<HomeHotCoursePoJo> bQuery=new BmobQuery<HomeHotCoursePoJo>();
-		bQuery.findObjects(getActivity(), new FindListener<HomeHotCoursePoJo>() {
+		BmobQuery<CourseDetailsBean> bQuery=new BmobQuery<CourseDetailsBean>();
+		bQuery.setLimit(9);
+		bQuery.findObjects(getActivity(), new FindListener<CourseDetailsBean>() {
 			
 			@Override
-			public void onSuccess(List<HomeHotCoursePoJo> courseList) {//查询成功
+			public void onSuccess(List<CourseDetailsBean> courseList) {//查询成功
 				courseData=courseList;
 				mhandler.sendEmptyMessage(1);
 			}
@@ -229,10 +231,9 @@ public class HomeFragment extends Fragment implements OnClickListener, OnItemCli
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		Intent intent = new Intent(getActivity(), ShowDetailsActivity.class);
 		// 进入详情页
-		String detail_url = DataURL.DETAILS_RMJC + courseData.get(position).getHand_id();
-		intent.putExtra("detail_url", detail_url);
-		intent.putExtra("step", courseData.get(position).getStep_count());
-		intent.putExtra("hand_id", courseData.get(position).getHand_id());
+		Bundle bundle=new Bundle();
+		bundle.putSerializable("courseDetails", courseData.get(position));
+		intent.putExtras(bundle);
 		startActivity(intent);
 	}
 }

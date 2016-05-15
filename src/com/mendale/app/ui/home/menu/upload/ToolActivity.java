@@ -66,6 +66,7 @@ public class ToolActivity extends BaseActivity {
 	@Override
 	public void leftButtonOnClick() {
 		super.leftButtonOnClick();
+		this.finish();
 	}
 
 	/**
@@ -88,7 +89,9 @@ public class ToolActivity extends BaseActivity {
 			
 			@Override
 			public void onSuccess() {
+				closeLoadDialog();
 				startActivity(StepActivity.class);
+				ToolActivity.this.finish();
 			}
 			
 			@Override
