@@ -53,9 +53,15 @@ public class RecordCommentActivity extends BaseActivity implements OnClickListen
 		@SuppressWarnings("unchecked")
 		public void handleMessage(android.os.Message msg) {
 			if(msg.obj!=null){
+				ll_tips.setVisibility(View.GONE);
+				mListView.setVisibility(View.VISIBLE);
 				commentList=(List<Comment>) msg.obj;
 				mAdapter=new RecordCommentLvAdapter(RecordCommentActivity.this, commentList);
 				mListView.setAdapter(mAdapter);
+			}else{
+				iv_loading.setVisibility(View.GONE);
+				tv_tips.setText("暂无评论");
+				mListView.setVisibility(View.GONE);
 			}
 		};
 	};

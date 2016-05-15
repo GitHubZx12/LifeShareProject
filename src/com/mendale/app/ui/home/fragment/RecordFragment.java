@@ -49,7 +49,6 @@ public class RecordFragment extends Fragment implements IXListViewListener,OnCli
 
 	private XListView mListView;
 	private CourseInfoLvAdapter2 mAdapter;
-	private CourseInfoLvAdapter2 courseAdapter;
 	private DisplayImageOptions options; // DisplayImageOptions是用于设置图片显示的类
 	/** 显示没有更多数据 */												
 	private TextView tv_no_data;
@@ -75,15 +74,6 @@ public class RecordFragment extends Fragment implements IXListViewListener,OnCli
 					mListView.setAdapter(mAdapter);
 				}
 				break;
-			case 2:
-				List<Record> recordList=(List<Record>) msg.obj;
-				ll_loading.setVisibility(View.GONE);
-				iv_loading.setVisibility(View.GONE);
-				mListView.setVisibility(View.VISIBLE);
-				courseAdapter = new CourseInfoLvAdapter2(getActivity(),recordList, options);
-				mListView.setAdapter(mAdapter);			
-				break;
-
 			default:
 				break;
 			}
@@ -124,7 +114,6 @@ public class RecordFragment extends Fragment implements IXListViewListener,OnCli
 			@Override
 			public void onSuccess(List<Record> arg0) {
 				recordList=arg0;
-				Log.e("tag111",arg0.toString());
 				Message msg=new Message();
 				msg.what=1;
 				msg.obj=arg0;

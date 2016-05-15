@@ -88,12 +88,12 @@ public class CourseInfoLvAdapter extends BaseAdapter {
 			
 			@Override
 			public void onClick(View v) {//进入详情页
-				Intent intent = new Intent(context, ShowDetailsActivity.class);
-				String detail_url = DataURL.COURSE_LIST_DETAILS + recordList.get(position).getHand_id();
-				intent.putExtra("detail_url", detail_url);
-				Log.e("tag66",detail_url);
-				intent.putExtra("step", recordList.get(position).getStep_count());
-				context.startActivity(intent);
+//				Intent intent = new Intent(context, ShowDetailsActivity.class);
+//				String detail_url = DataURL.COURSE_LIST_DETAILS + recordList.get(position).getHand_id();
+//				intent.putExtra("detail_url", detail_url);
+//				Log.e("tag66",detail_url);
+//				intent.putExtra("step", recordList.get(position).getStep_count());
+//				context.startActivity(intent);
 			}
 		});
 		

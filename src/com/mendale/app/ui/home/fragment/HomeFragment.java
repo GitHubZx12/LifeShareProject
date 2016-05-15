@@ -127,7 +127,7 @@ public class HomeFragment extends Fragment implements OnClickListener, OnItemCli
 	 */
 	private void initData() {
 		BmobQuery<CourseDetailsBean> bQuery=new BmobQuery<CourseDetailsBean>();
-		bQuery.setLimit(9);
+		bQuery.setLimit(8);
 		bQuery.findObjects(getActivity(), new FindListener<CourseDetailsBean>() {
 			
 			@Override

@@ -40,6 +40,7 @@ public class LaunchCourseActivity extends BaseActivity implements OnClickListene
 	/**DisplayImageOptions*/
 	private DisplayImageOptions options;
 	private List<CourseDetailsBean>courseList;
+	private MyUser user;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -70,13 +71,14 @@ public class LaunchCourseActivity extends BaseActivity implements OnClickListene
 	private void initView() {
 		mGridView=(GridView) findViewById(R.id.gv_launch);
 		mGridView.setOnItemClickListener(this);
+		
+		user=(MyUser) getIntent().getSerializableExtra("userInfo");
 	}
 
 	/**
 	 * 得到传递过来的参数
 	 */
 	private void getIntentData() {
-		MyUser user=BmobUser.getCurrentUser(this,MyUser.class);
 		BmobQuery<CourseDetailsBean> query=new BmobQuery<CourseDetailsBean>();
 		query.addWhereEqualTo("author", user);//查询当前用户发布的所有记录
 		query.order("-updateAd");

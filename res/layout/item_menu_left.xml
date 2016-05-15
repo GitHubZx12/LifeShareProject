@@ -38,6 +38,7 @@
             android:layout_alignBottom="@+id/iv_menu_icon"
             android:layout_alignParentLeft="true"
             android:layout_marginBottom="15dp"
+            android:visibility="gone"
             android:src="@drawable/crafter_setting_menu" />
 
     </RelativeLayout>
@@ -87,7 +88,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="消息" />
+            android:text="反馈信息" />
 
         <TextView
             android:id="@+id/tv_menurecommond"
@@ -95,6 +96,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center"
+            android:visibility="gone"
             android:text="应用推荐" />
         <View 
             android:layout_width="match_parent"

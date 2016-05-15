@@ -3,8 +3,7 @@ package com.mendale.app.adapters;
 import java.util.List;
 
 import com.mendale.app.R;
-import com.mendale.app.pojo.HandUpMorePoJo;
-import com.mendale.app.pojo.HotCoursePoJo;
+import com.mendale.app.pojo.MyUser;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -23,11 +22,11 @@ import android.widget.TextView;
  */
 public class HandUpLvAdapter extends BaseAdapter {
 
-	public List<HandUpMorePoJo> mDatas;
+	public List<MyUser> mDatas;
 	private Context context;
 	private DisplayImageOptions options;
 
-	public HandUpLvAdapter(Context context, List<HandUpMorePoJo> mDatas,DisplayImageOptions options) {
+	public HandUpLvAdapter(Context context, List<MyUser> mDatas,DisplayImageOptions options) {
 		this.mDatas = mDatas;
 		this.context = context;
 		this.options=options;
@@ -64,9 +63,14 @@ public class HandUpLvAdapter extends BaseAdapter {
 		}
 		//
 		holder.pos.setText("" + (position + 1)); 
-		holder.username.setText(mDatas.get(position).getUser_name());
-		ImageLoader imageLoader=ImageLoader.getInstance();
-		imageLoader.displayImage(mDatas.get(position).getFace_pic(), holder.host_pic,options);
+		holder.username.setText(mDatas.get(position).getUsername());
+		if(mDatas.get(position).getUrl()!=null){
+			ImageLoader imageLoader=ImageLoader.getInstance();
+			imageLoader.displayImage(mDatas.get(position).getUrl(), holder.host_pic,options);
+		}else{
+			holder.host_pic.setImageResource(R.drawable.defult_avator);
+		}
+		
 		return convertView;
 	}
 

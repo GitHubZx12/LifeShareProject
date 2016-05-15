@@ -3,10 +3,8 @@ package com.mendale.app.ui.mycenter;
 import java.util.List;
 
 import com.mendale.app.R;
-import com.mendale.app.adapters.CourseInfoLvAdapter;
 import com.mendale.app.adapters.CourseInfoLvAdapter2;
 import com.mendale.app.pojo.MyUser;
-import com.mendale.app.pojo.OpusData;
 import com.mendale.app.pojo.Record;
 import com.mendale.app.ui.base.BaseActivity;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -21,7 +19,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobPointer;
@@ -44,6 +41,7 @@ public class LaunchRecordActivity extends BaseActivity {
 	private LinearLayout ll_loading;
 	/**数据*/
 	List<Record>recordList ;
+	private MyUser user;
 	
 
 	public void onCreate(Bundle savedInstanceState) {
@@ -60,7 +58,6 @@ public class LaunchRecordActivity extends BaseActivity {
 	 * 查询一对一关联
 	 */
 	private void initData() {
-		MyUser user=BmobUser.getCurrentUser(this,MyUser.class);
 		BmobQuery<Record> query=new BmobQuery<Record>();
 		query.addWhereEqualTo("author", user);//查询当前用户发布的所有记录
 		query.order("-updateAd");
@@ -70,16 +67,22 @@ public class LaunchRecordActivity extends BaseActivity {
 			@Override
 			public void onSuccess(final List<Record> arg0) {
 				recordList=arg0;
-				getCollectSize();
+//				getCollectSize();
 				runOnUiThread(new Runnable() {
 					
 					@Override
 					public void run() {
-						ll_loading.setVisibility(View.GONE);
-						iv_loading.setVisibility(View.GONE);
-						mListView.setVisibility(View.VISIBLE);
-						mAdapter = new CourseInfoLvAdapter2(LaunchRecordActivity.this,arg0, options);
-						mListView.setAdapter(mAdapter);						
+						if(null!=arg0){
+							ll_loading.setVisibility(View.GONE);
+							iv_loading.setVisibility(View.GONE);
+							mListView.setVisibility(View.VISIBLE);
+							mAdapter = new CourseInfoLvAdapter2(LaunchRecordActivity.this,arg0, options);
+							mListView.setAdapter(mAdapter);	
+						}else{
+							iv_loading.setVisibility(View.GONE);
+							mListView.setVisibility(View.GONE);
+							tvTip.setText("还没发过记录");
+						}
 					}
 				});
 			}
@@ -89,9 +92,7 @@ public class LaunchRecordActivity extends BaseActivity {
 				Log.e("tag",arg0+arg1);
 			}
 		});
-	
 	}
-
 	private void getCollectSize() {
 		for(int i=0;i<recordList.size();i++){
 			//查询喜欢这个记录的所有用户，因此查询的是用户表
@@ -147,6 +148,8 @@ public class LaunchRecordActivity extends BaseActivity {
 		iv_loading = (ImageView) findViewById(R.id.iv_course_info_loading);
 		ll_loading = (LinearLayout) findViewById(R.id.ll_course_info_loading);
 		tvTip=(TextView) findViewById(R.id.tv_course_info_tips);
+		
+		user=(MyUser) getIntent().getSerializableExtra("userInfo");
 	}
 	/**
 	 * 初始化图片的相关参数

@@ -1,5 +1,7 @@
 package com.mendale.app.pojo;
 
+import java.io.Serializable;
+
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
 
@@ -8,7 +10,7 @@ import cn.bmob.v3.datatype.BmobFile;
  * @author zhangxue 
    @date 2016年4月9日
  */
-public class MyUser extends BmobUser{
+public class MyUser extends BmobUser implements Serializable{
 	
 	
 	@Override

@@ -17,6 +17,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobRelation;
 import cn.bmob.v3.listener.UpdateListener;
@@ -127,11 +128,13 @@ public class RecordDetailsActivity extends BaseActivity{
 			
 			@Override
 			public void onSuccess() {
+				showToast("收藏成功");
 				setNavigationRightBtnImage(R.drawable.collect_yes);
 			}
 			
 			@Override
 			public void onFailure(int arg0, String arg1) {
+				showToast(arg1);
 				Log.e(TAG,arg0+arg1);
 			}
 		});

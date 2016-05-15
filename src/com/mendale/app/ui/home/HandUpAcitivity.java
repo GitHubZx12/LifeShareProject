@@ -1,6 +1,5 @@
 package com.mendale.app.ui.home;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,20 +11,14 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mendale.app.R;
 import com.mendale.app.adapters.HandUpLvAdapter;
-import com.mendale.app.adapters.HotCourseLvAdapter;
 import com.mendale.app.constants.DataURL;
 import com.mendale.app.pojo.HandUpMorePoJo;
-import com.mendale.app.pojo.HotCoursePoJo;
+import com.mendale.app.pojo.MyUser;
 import com.mendale.app.ui.base.BaseActivity;
 import com.mendale.app.ui.mycenter.MyCenterActivity;
 import com.mendale.app.utils.Utils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
-import com.squareup.okhttp.Call;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 import com.umeng.socialize.utils.Log;
 
 import android.content.Intent;
@@ -35,6 +28,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.listener.FindListener;
 
 /**
@@ -45,10 +39,11 @@ import cn.bmob.v3.listener.FindListener;
  */
 public class HandUpAcitivity extends BaseActivity implements OnItemClickListener {
 
+	protected static final String TAG = "HandUpAcitivity";
 	private ListView mListView;
 	private HandUpLvAdapter mAdapter;
 	/** 数据 */
-	private List<HandUpMorePoJo> mDatas = null;
+	private List<MyUser> mDatas = null;
 	private DisplayImageOptions options;
 
 	@Override
@@ -66,7 +61,6 @@ public class HandUpAcitivity extends BaseActivity implements OnItemClickListener
 	 * 一个记录可以被多个用户收藏
 	 * 一个用户也可以收藏多个记录
 	 * 记录   和    用户之间是多对多的
-	 *
 	 *添加多对多关联
 	 */
 	
@@ -118,24 +112,39 @@ public class HandUpAcitivity extends BaseActivity implements OnItemClickListener
 		// });
 		// }
 		// }).start();
-		BmobQuery<HandUpMorePoJo> bQuery = new BmobQuery<HandUpMorePoJo>();
-		bQuery.findObjects(this, new FindListener<HandUpMorePoJo>() {
-
-			@Override
-			public void onSuccess(List<HandUpMorePoJo> arg0) {
-				mDatas = arg0;
-				runOnUiThread(new Runnable() {
-
-					@Override
-					public void run() {
-						setListViewAdapter(mDatas);
-					}
-				});
-			}
+//		BmobQuery<HandUpMorePoJo> bQuery = new BmobQuery<HandUpMorePoJo>();
+//		bQuery.findObjects(this, new FindListener<HandUpMorePoJo>() {
+//
+//			@Override
+//			public void onSuccess(List<HandUpMorePoJo> arg0) {
+//				mDatas = arg0;
+//				runOnUiThread(new Runnable() {
+//
+//					@Override
+//					public void run() {
+//						setListViewAdapter(mDatas);
+//					}
+//				});
+//			}
+//
+//			@Override
+//			public void onError(int arg0, String arg1) {
+//				Log.e("tag", "errorCode" + arg0 + "errorString" + arg1);
+//			}
+//		});
+		BmobQuery<MyUser>query=new BmobQuery<MyUser>();
+		query.findObjects(this, new FindListener<MyUser>() {
 
 			@Override
 			public void onError(int arg0, String arg1) {
-				Log.e("tag", "errorCode" + arg0 + "errorString" + arg1);
+				Log.e(TAG,arg0+arg1);
+				
+			}
+
+			@Override
+			public void onSuccess(List<MyUser> arg0) {
+				mDatas=arg0;
+				setListViewAdapter(arg0);
 			}
 		});
 	}
@@ -146,29 +155,29 @@ public class HandUpAcitivity extends BaseActivity implements OnItemClickListener
 	 * @param string
 	 */
 	private void parserData(String string) {
-		Gson gson = new Gson();
-		if (!Utils.isEmpty(string)) {
-			try {
-				JSONObject jsonObject = new JSONObject(string);
-				JSONArray handUpList = jsonObject.getJSONArray("list");
-				mDatas = new ArrayList<HandUpMorePoJo>();
-				for (int i = 0; i < handUpList.length(); i++) {
-					HandUpMorePoJo item = gson.fromJson(handUpList.get(i).toString(), new TypeToken<HandUpMorePoJo>() {
-					}.getType());
-					item.save(this);
-					mDatas.add(item);
-				}
-				runOnUiThread(new Runnable() {
-
-					@Override
-					public void run() {
-						setListViewAdapter(mDatas);
-					}
-				});
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-		}
+//		Gson gson = new Gson();
+//		if (!Utils.isEmpty(string)) {
+//			try {
+//				JSONObject jsonObject = new JSONObject(string);
+//				JSONArray handUpList = jsonObject.getJSONArray("list");
+//				mDatas = new ArrayList<HandUpMorePoJo>();
+//				for (int i = 0; i < handUpList.length(); i++) {
+//					HandUpMorePoJo item = gson.fromJson(handUpList.get(i).toString(), new TypeToken<HandUpMorePoJo>() {
+//					}.getType());
+//					item.save(this);
+//					mDatas.add(item);
+//				}
+//				runOnUiThread(new Runnable() {
+//
+//					@Override
+//					public void run() {
+//						setListViewAdapter(mDatas);
+//					}
+//				});
+//			} catch (JSONException e) {
+//				e.printStackTrace();
+//			}
+//		}
 	}
 
 	/**
@@ -176,7 +185,7 @@ public class HandUpAcitivity extends BaseActivity implements OnItemClickListener
 	 * 
 	 * @param newsDatas
 	 */
-	private void setListViewAdapter(List<HandUpMorePoJo> newsDatas) {
+	private void setListViewAdapter(List<MyUser> newsDatas) {
 		mAdapter = new HandUpLvAdapter(this, mDatas, options);
 		mListView.setAdapter(mAdapter);
 	}
@@ -206,8 +215,9 @@ public class HandUpAcitivity extends BaseActivity implements OnItemClickListener
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		Intent intent = new Intent(this, MyCenterActivity.class);
-		intent.putExtra("id", mDatas.get(position).getUser_id());
-		intent.putExtra("flag", 2);
+		Bundle bundle=new Bundle();
+		bundle.putSerializable("userInfo", mDatas.get(position));
+		intent.putExtras(bundle);
 		startActivity(intent);
 	}
 }
