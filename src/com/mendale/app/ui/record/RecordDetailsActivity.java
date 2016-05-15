@@ -3,7 +3,6 @@ package com.mendale.app.ui.record;
 import com.mendale.app.R;
 import com.mendale.app.pojo.MyUser;
 import com.mendale.app.pojo.Record;
-import com.mendale.app.pojo.RecordItemBean;
 import com.mendale.app.ui.base.BaseActivity;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -17,7 +16,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobRelation;
 import cn.bmob.v3.listener.UpdateListener;
@@ -45,7 +43,6 @@ public class RecordDetailsActivity extends BaseActivity{
 	/**数据*/
 	private Record item;
 	private DisplayImageOptions options; // DisplayImageOptions是用于设置图片显示的类
-	private String objectId;
 	
 	
 	@Override
@@ -118,7 +115,7 @@ public class RecordDetailsActivity extends BaseActivity{
 		super.rightButtonOnClick();
 		MyUser user=BmobUser.getCurrentUser(this,MyUser.class);
 		Record record=new Record();
-		record.setObjectId(objectId);
+		record.setObjectId(item.getObjectId());
 		//将当前用户添加到Record表中的Likes字段中，表明当前用户喜欢该帖子
 		BmobRelation relation=new BmobRelation();
 		relation.add(user);

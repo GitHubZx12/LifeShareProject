@@ -1,14 +1,12 @@
 package com.mendale.app.ui.home;
 
 import com.mendale.app.R;
-import com.mendale.app.application.MobileApplication;
 import com.mendale.app.pojo.MyUser;
 import com.mendale.app.ui.home.fragment.CourseFragment;
 import com.mendale.app.ui.home.fragment.HomeFragment;
 import com.mendale.app.ui.home.fragment.HomeFragment.ChangeFragment;
 import com.mendale.app.ui.home.fragment.QAFragment;
 import com.mendale.app.ui.home.fragment.RecordFragment;
-import com.mendale.app.ui.home.menu.CommentActivity;
 import com.mendale.app.ui.home.menu.CourseClassifyActivity;
 import com.mendale.app.ui.home.menu.HelpMakeCourseActivity;
 import com.mendale.app.ui.home.menu.SearchCourseActivity;
@@ -40,9 +38,9 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
-import cn.bmob.v3.BmobUser;
 import android.widget.TextView;
 import android.widget.Toast;
+import cn.bmob.v3.BmobUser;
 
 /**
  * 使用TabView的Activity
