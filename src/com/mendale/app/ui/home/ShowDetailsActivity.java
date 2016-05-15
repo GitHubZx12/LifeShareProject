@@ -222,7 +222,7 @@ public class ShowDetailsActivity extends Activity implements OnPageChangeListene
 		ViewHolder viewHolder = new ViewHolder();
 		// 图片
 		viewHolder.imageView = (ImageView) itemView.findViewById(R.id.iv_pic);
-		imageLoader.displayImage(detailsItemData.getStep().get(position).pic, viewHolder.imageView);
+		imageLoader.displayImage(detailsItemData.getStep().get(position).getUrl(), viewHolder.imageView);
 		// 内容
 		viewHolder.content = (TextView) itemView.findViewById(R.id.tv_content);
 		viewHolder.content.setText(detailsItemData.getStep().get(position).content);
@@ -293,7 +293,7 @@ public class ShowDetailsActivity extends Activity implements OnPageChangeListene
 //			mController.openShare(this, false);
 			AndroidShare as = new AndroidShare(
 					ShowDetailsActivity.this,"成功分享了"+detailsItemData.getSubject(),
-					detailsItemData.getStep().get(0).getPic());
+					detailsItemData.getStep().get(0).getUrl());
 			as.show();
 			break;
 		}
