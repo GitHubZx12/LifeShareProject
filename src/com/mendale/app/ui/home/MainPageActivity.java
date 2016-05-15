@@ -10,6 +10,7 @@ import com.mendale.app.ui.home.fragment.RecordFragment;
 import com.mendale.app.ui.home.menu.CourseClassifyActivity;
 import com.mendale.app.ui.home.menu.HelpMakeCourseActivity;
 import com.mendale.app.ui.home.menu.SearchCourseActivity;
+import com.mendale.app.ui.home.menu.SendFeekBackActivity;
 import com.mendale.app.ui.home.menu.upload.TitleActivity;
 import com.mendale.app.ui.login.LoginActivity;
 import com.mendale.app.ui.mycenter.MyCenterActivity;
@@ -310,8 +311,8 @@ public class MainPageActivity extends FragmentActivity implements OnClickListene
 				startActivity(intent3);
 				break;
 			case R.id.tv_menu_news:// 反馈
-//				Intent intent4 = new Intent(this, CommentActivity.class);
-//				startActivity(intent4);
+				Intent intent4 = new Intent(this, SendFeekBackActivity.class);
+				startActivity(intent4);
 				break;
 			case R.id.tv_menu_classify:// 分类
 				Intent intent5 = new Intent(this, CourseClassifyActivity.class);

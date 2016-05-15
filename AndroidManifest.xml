@@ -332,6 +332,12 @@
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
+         <!-- 反馈信息-->
+        <activity
+            android:name="com.mendale.app.ui.home.menu.SendFeekBackActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
         <uses-library android:name="android.test.runner" />
     </application>
 
