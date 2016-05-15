@@ -13,6 +13,7 @@ import com.mendale.app.ui.home.menu.CourseClassifyActivity;
 import com.mendale.app.ui.home.menu.HelpMakeCourseActivity;
 import com.mendale.app.ui.home.menu.SearchCourseActivity;
 import com.mendale.app.ui.home.menu.upload.TitleActivity;
+import com.mendale.app.ui.login.LoginActivity;
 import com.mendale.app.ui.mycenter.MyCenterActivity;
 import com.mendale.app.utils.ExitApplication;
 import com.mendale.app.utils.imageUtils.RoundImageView;
@@ -32,6 +33,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -89,6 +91,7 @@ public class MainPageActivity extends FragmentActivity implements OnClickListene
 	RecordFragment recordFragment;
 	/** 侧滑菜单 */
 	private SlidingMenu menu;
+	private Button btnExit;
 	public long exitTime;// 储存点击退出时间
 	// ImageLoader
 	protected ImageLoader imageLoader = ImageLoader.getInstance();
@@ -154,6 +157,7 @@ public class MainPageActivity extends FragmentActivity implements OnClickListene
 		tv_menu_search = (TextView) findViewById(R.id.tv_menu_search);
 		iv_menu_icon = (RoundImageView) findViewById(R.id.iv_menu_icon);
 		iv_menu_setting = (ImageView) findViewById(R.id.iv_menu_set);
+		btnExit=(Button)findViewById(R.id.btn_exit);
 		//
 		MyUser user=BmobUser.getCurrentUser(this,MyUser.class);
 		ImageLoader imageLoader=ImageLoader.getInstance();
@@ -232,6 +236,7 @@ public class MainPageActivity extends FragmentActivity implements OnClickListene
 		tv_menu_news.setOnClickListener(this);
 		tv_menu_classify.setOnClickListener(this);
 		tv_menu_search.setOnClickListener(this);
+		btnExit.setOnClickListener(this);
 	}
 
 	@Override
@@ -306,9 +311,9 @@ public class MainPageActivity extends FragmentActivity implements OnClickListene
 				Intent intent3 = new Intent(this, HelpMakeCourseActivity.class);
 				startActivity(intent3);
 				break;
-			case R.id.tv_menu_news:// 消息
-				Intent intent4 = new Intent(this, CommentActivity.class);
-				startActivity(intent4);
+			case R.id.tv_menu_news:// 反馈
+//				Intent intent4 = new Intent(this, CommentActivity.class);
+//				startActivity(intent4);
 				break;
 			case R.id.tv_menu_classify:// 分类
 				Intent intent5 = new Intent(this, CourseClassifyActivity.class);
@@ -317,6 +322,12 @@ public class MainPageActivity extends FragmentActivity implements OnClickListene
 			case R.id.tv_menu_search:// 搜索
 				Intent intent6 = new Intent(this, SearchCourseActivity.class);
 				startActivity(intent6);
+				break;
+			case R.id.btn_exit://退出登录
+				BmobUser.logOut(this);   //清除缓存用户对象
+				BmobUser currentUser = BmobUser.getCurrentUser(this); // 现在的currentUser是null了
+				Intent intent7 = new Intent(this, LoginActivity.class);
+				startActivity(intent7);
 				break;
 		}
 	}

@@ -3,18 +3,13 @@ package com.mendale.app.ui.mycenter;
 import java.util.List;
 
 import com.mendale.app.R;
-import com.mendale.app.adapters.CourseInfoLvAdapter2;
 import com.mendale.app.adapters.HotCourseGVAdapter;
-import com.mendale.app.constants.DataURL;
-import com.mendale.app.pojo.CourseData;
 import com.mendale.app.pojo.MyUser;
-import com.mendale.app.pojo.Record;
 import com.mendale.app.ui.base.BaseActivity;
 import com.mendale.app.ui.home.ShowDetailsActivity;
 import com.mendale.app.vo.CourseDetailsBean;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
-import com.umeng.socialize.utils.Log;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,7 +19,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.listener.FindListener;
 
 /**
@@ -110,9 +104,12 @@ public class LaunchCourseActivity extends BaseActivity implements OnClickListene
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		Intent intent=new Intent(this,ShowDetailsActivity.class);
 		// 进入详情页
-		String detail_url = courseList.get(position).getHand_id();
-		intent.putExtra("detail_url", detail_url);
-		intent.putExtra("step", courseList.get(position).getStep().size());
+//		String detail_url = courseList.get(position).getHand_id();
+//		intent.putExtra("detail_url", detail_url);
+//		intent.putExtra("step", courseList.get(position).getStep().size());
+		Bundle bundle=new Bundle();
+		bundle.putSerializable("courseDetails", courseList.get(position));
+		intent.putExtras(bundle);
 		startActivity(intent);
 		
 	}

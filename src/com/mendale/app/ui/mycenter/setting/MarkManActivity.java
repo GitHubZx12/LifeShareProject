@@ -70,7 +70,7 @@ public class MarkManActivity extends BaseActivity implements OnClickListener {
 		birthy.setText(user.getBirthy());
 		sex.setText(user.getSex());
 		city.setText(user.getCity());
-		if (user.getUrl() != "") {
+		if (null!=user.getUrl()) {
 			ImageOpera.getInstance(this).loadImage(user.getUrl(), iv_changeHead);
 		}
 		else {
@@ -118,50 +118,59 @@ public class MarkManActivity extends BaseActivity implements OnClickListener {
 	 * 修改个人数据
 	 */
 	protected void updateInfo() {
-		//
 		final MyUser oldUser=BmobUser.getCurrentUser(this,MyUser.class);
-		final BmobFile file=new BmobFile(new File(path));
-		file.upload(this, new UploadFileListener() {//上传图片
-			
+		if(null!=path){
+			final BmobFile file=new BmobFile(new File(path));
+			file.upload(this, new UploadFileListener() {//上传图片
+				
+				@Override
+				public void onSuccess() {
+					final MyUser user=new MyUser();
+					user.setUrl(file.getFileUrl(MarkManActivity.this));//保存图片路径
+					user.setImg(file);//保存图片
+					uploadOtherInfo(oldUser,user);
+				}
+				
+				@Override
+				public void onFailure(int arg0, String arg1) {
+					Log.e(TAG,arg0+arg1);
+				}
+			});
+		}else{
+			MyUser user=new MyUser();
+			uploadOtherInfo(oldUser,user);
+		}
+		
+		
+	}
+
+	protected void uploadOtherInfo(MyUser oldUser,final MyUser user) {
+		user.setSign(sign.getText().toString());
+		user.setBirthy(birthy.getText().toString());
+		user.setCity(city.getText().toString());
+		user.setSex(sex.getText().toString());
+		
+		user.update(MarkManActivity.this,oldUser.getObjectId(), new UpdateListener() {
 			@Override
 			public void onSuccess() {
-				final MyUser user=new MyUser();
-				user.setUrl(file.getFileUrl(MarkManActivity.this));//保存图片路径
-				user.setImg(file);//保存图片
-				user.setSign(sign.getText().toString());
-				user.setBirthy(birthy.getText().toString());
-				user.setCity(city.getText().toString());
-				user.setSex(sex.getText().toString());
-				
-				user.update(MarkManActivity.this,oldUser.getObjectId(), new UpdateListener() {
-					@Override
-					public void onSuccess() {
-						closeLoadDialog();// 关闭弹框
-						Intent data=new Intent(MarkManActivity.this,MyCenterActivity.class);
-						Bundle extras=new Bundle();
-						extras.putSerializable("userinfo", user);
-						data.putExtras(extras);
-						setResult(2, data);
-						MarkManActivity.this.finish();
-					}
-					
-					@Override
-					public void onFailure(int arg0, String arg1) {
-						if(arg0==301){
-							showToast("更新失败   email Must be a valid email address");
-						}
-						closeLoadDialog();
-						Log.e("tag",arg0+arg1);
-					}
-				});
+				closeLoadDialog();// 关闭弹框
+				Intent data=new Intent(MarkManActivity.this,MyCenterActivity.class);
+				Bundle extras=new Bundle();
+				extras.putSerializable("userinfo", user);
+				data.putExtras(extras);
+				setResult(2, data);
+				MarkManActivity.this.finish();
 			}
 			
 			@Override
 			public void onFailure(int arg0, String arg1) {
-				Log.e(TAG,arg0+arg1);
+				if(arg0==301){
+					showToast("更新失败   email Must be a valid email address");
+				}
+				closeLoadDialog();
+				Log.e("tag",arg0+arg1);
 			}
 		});
-		
 	}
 
 	@Override

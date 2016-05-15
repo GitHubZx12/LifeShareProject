@@ -66,7 +66,6 @@ public class CollectRecordActivity extends BaseActivity{
 			@Override
 			public void onSuccess(final List<Record> item) {
 				getUser(item);
-
 			}
 			
 
